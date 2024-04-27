@@ -1,0 +1,262 @@
+.navbar{
+    display: flex;
+    height: 136px;
+    flex-direction: column;
+    width: 99vw;
+}
+
+.navbar_Menu{
+    background-color: #0060b1;
+    height: 105px;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    gap: 30px;
+    justify-content: center;
+}
+
+.navbar_menuMobile{
+    background-color: #0060b1;
+    height: 105px;
+    display: none;
+    align-items: center;
+    padding-top: 5px;
+    gap: 30px;
+    justify-content: center;
+}
+
+.svg_Logo{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    min-width: max-content;
+}
+
+.menu_Bars{
+    color: white;
+    font-size: 32px;
+}
+
+
+.menu_Barsearch{
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: white;
+    border-radius: 5px;
+    padding: 2.5px 1.5px 2.5px 2px;
+  
+}
+
+.barsearch_Icon{
+    position: absolute;
+    top: -2.7px;
+    right: -41px;
+}
+.barSearch{
+    width: 42vw;
+    height: 31px;
+    padding-left: 15px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.barSearch:hover{
+    outline-style:solid;
+    outline-width: 2px;
+}
+
+.barSearch input{
+    width: 95%;
+    height: 100%;
+    outline: none;
+    border: none;
+}
+.menu_Cadastro{
+   display: flex;
+   font-weight: 400;
+   gap: 5px;
+   line-height: 18px;
+   font-size: 12px;
+   margin-left: 50px;
+   min-width: max-content;
+}
+
+.cadastro_Icon{
+    border: solid 3px #347bbe;
+    border-radius: 50%;
+    width: 31px;
+    height: 31px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu_Icons{
+    margin-left: 45px;
+    min-width: max-content;
+    display: flex;
+    align-items: center;
+    
+}
+.menu_Icons a:not(:first-child){
+    margin-left: 32px;
+}
+.cadastro_Login{
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.cadastro_Login a{
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.cadastro_Login a:hover{
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.navbar_downMenu{
+    background-color: #ff6500;
+    height: 33px;
+    width: 99vw;
+}
+
+.navbar_downMenu ul{
+    display: flex;
+    list-style: none;
+    font-size: 20px;
+    justify-content: center;
+    height: 100%;
+}
+
+.downMenu_List{
+    position: relative;
+    cursor: pointer;
+    min-width: max-content;
+}
+
+
+
+.downMenu_List a{
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 0.7em;
+    position: relative;
+    line-height: 18px;
+    padding: 0px 18px 0px 18px;
+}
+
+.downMenu_List:first-child{
+    background-color: #e35214;
+}
+.downMenu_List:not(:last-child)::after{
+    content: "";
+    top: 1px;
+    height: 29px;
+    border-left: 1px #ff8b1f solid;
+    position: absolute;
+    right: 0px;
+}
+
+.downMenu_List .fa-chevron-down{
+    margin-left: 10px;
+}
+.downMenu_List:not(:first-child):hover{
+    background-color: #e35214;
+}
+
+
+@media screen and (max-width: 1440px){
+   
+
+    .barSearch{
+        width: 35vw;
+    }
+
+    .navbar_Menu{
+        gap: 10px;
+    }
+
+    .menu_Icons{
+        margin-left: 5px;
+        min-width: max-content;
+    }
+
+    .downMenu_List a{
+        padding: 0px 5px 0px 5px;
+    }
+
+}
+
+@media screen and (max-width: 1230px){
+   .downMenu_List a{
+    font-size: 12px;
+   }
+
+}
+
+@media screen and (max-width: 1020px){
+   .navbar{
+    height: max-content;
+    
+   }
+    .navbar_Menu{
+        display: none;
+    }
+
+    .navbar_menuMobile{
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }
+
+    .menuMobile{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 94vw;
+    }
+
+    .menuMobile img{
+        width: 105px;
+        height: 36px;
+    }
+
+    .barSearch{
+        width: 94vw;
+    }
+
+    .barSearch input{
+        width: 97%;
+    }
+
+    .barsearch_Icon_Mobile{
+        position: absolute;
+        right: 10px;
+
+    }
+
+    .navbar_downMenu{
+        display: none;
+    }
+
+    
+
+
+
+    
+}

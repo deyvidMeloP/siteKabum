@@ -1,0 +1,108 @@
+<div class="api_Sale">
+  <div class="title_Sale">
+
+    <h1>#SEGUE A CALL</h1>
+    <span>TERMINA EM: 07D 18 : 19 : 16</span>
+  
+  </div>
+
+ 
+  <div class="box_Product" *ngIf="dadosDoServico.length > 0">  
+   
+    <i class="fa-solid fa-chevron-left"></i>
+   
+    <ul>
+
+      <li class="product_Item" *ngFor="let produto of dadosDoServico; let index = index">
+      
+          
+        <div class="product_Discount_Stock">
+       
+          <div class="product_Discount">
+          
+            {{ produto.discount }}%
+            <svg width="16" viewBox="0 0 16 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowDownChevron"><path d="M0 -3.65575e-06L16 0L8 8L0 -3.65575e-06Z" fill="#fff"></path></svg>
+          
+          </div>
+       
+      
+          
+          <div *ngIf="produto.stock_Quantity >= 100" class="product_Stock stockFull">
+          
+            <strong>EM<br>ESTOQUE</strong>
+          
+          </div>
+          
+          <div *ngIf="produto.stock_Quantity < 100" class="product_Stock">
+          
+            <small>APENAS<br><strong>{{produto.stock_Quantity}}</strong><br>UNID.</small>
+          
+          </div>
+       
+        </div>
+        
+        <div class="product_Image">
+        
+          <img [src]="dadosDoServicoImages[index].imageUrl" alt="Product">
+        
+        </div>
+      
+        <div class="product_Description">
+
+          <div class="product_Name">{{ produto.name_Product }}</div> 
+         
+          <div class="total_Price">
+            
+            {{ produto.price | currency:'BRL' }}
+           
+          </div> 
+  
+          <div class="discount_Price">
+          
+            {{ produto.price - ((produto.price * produto.discount) / 100) | currency:'BRL' }}
+          
+          </div> 
+
+          <span>À vista no PIX</span>
+
+          <div *ngIf="(produto.idProduct)%2 == 0" class="free_Shipping">
+          
+            <svg width="12" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconTruck"><path d="M20.1818 7.5H17.4545V5.25C17.4545 4.0125 16.4727 3 15.2727 3H2.18182C0.981818 3 0 4.0125 0 5.25V15.375C0 16.6125 0.981818 17.625 2.18182 17.625C2.18182 19.4925 3.64364 21 5.45455 21C7.26545 21 8.72727 19.4925 8.72727 17.625H15.2727C15.2727 19.4925 16.7345 21 18.5455 21C20.3564 21 21.8182 19.4925 21.8182 17.625H22.9091C23.5091 17.625 24 17.1187 24 16.5V12.7537C24 12.27 23.8473 11.7975 23.5636 11.4038L21.0545 7.95C20.8473 7.66875 20.52 7.5 20.1818 7.5ZM5.45455 18.75C4.85455 18.75 4.36364 18.2437 4.36364 17.625C4.36364 17.0063 4.85455 16.5 5.45455 16.5C6.05455 16.5 6.54545 17.0063 6.54545 17.625C6.54545 18.2437 6.05455 18.75 5.45455 18.75ZM20.1818 9.1875L22.32 12H17.4545V9.1875H20.1818ZM18.5455 18.75C17.9455 18.75 17.4545 18.2437 17.4545 17.625C17.4545 17.0063 17.9455 16.5 18.5455 16.5C19.1455 16.5 19.6364 17.0063 19.6364 17.625C19.6364 18.2437 19.1455 18.75 18.5455 18.75Z" fill="#ff6500"></path></svg>
+            <span>frete grátis</span>
+          
+          </div>
+
+          
+        </div>
+
+        <div class="product_Buy">
+          
+          <div class="buy_Svg">
+           
+            <svg width="24" height="24" viewBox="0 0 18 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconJustArrived"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8768 0.102663C14.0236 0.18777 14.1372 0.320148 14.1991 0.478169C14.2609 0.63619 14.2673 0.810514 14.2173 0.972663L11.5158 9.75066H16.5003C16.6468 9.7506 16.7901 9.79344 16.9125 9.87389C17.0349 9.95434 17.1311 10.0689 17.1892 10.2034C17.2472 10.3378 17.2646 10.4864 17.2393 10.6306C17.2139 10.7749 17.1468 10.9086 17.0463 11.0152L5.0463 23.7652C4.93019 23.8886 4.77568 23.9691 4.60796 23.9935C4.44024 24.018 4.26919 23.9848 4.1227 23.8996C3.97622 23.8143 3.86292 23.682 3.80129 23.5241C3.73965 23.3662 3.73331 23.1921 3.7833 23.0302L6.4848 14.2507H1.5003C1.35382 14.2507 1.21052 14.2079 1.08811 14.1274C0.965693 14.047 0.869515 13.9325 0.811447 13.798C0.753379 13.6635 0.735963 13.5149 0.761349 13.3707C0.786735 13.2264 0.853812 13.0927 0.954299 12.9862L12.9543 0.236163C13.0703 0.112861 13.2245 0.0324155 13.392 0.00790543C13.5595 -0.0166046 13.7304 0.0162624 13.8768 0.101163V0.102663Z" fill="white"></path></svg>
+        
+          </div>
+          
+          <div class="buy_Discount_Timer">
+
+              TERMINA EM:<strong>03D 14 : 01 : 03</strong>
+  
+          </div>
+
+       </div>
+       
+      
+      </li>
+    
+    </ul>
+ 
+    <i class="fa-solid fa-chevron-right"></i>
+  </div>
+  
+  
+  <div *ngIf="dadosDoServico.length === 0">
+    <p>Nenhum dado encontrado.</p>
+  </div>
+  
+</div>
+

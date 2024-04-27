@@ -1,0 +1,206 @@
+.api_Sale{
+    width: 95.9vw;
+}
+
+.title_Sale{
+    height: 66px;
+    background-color: orange;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    color: white;
+    
+}
+h1{
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+span{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 28px;
+}
+
+.box_Product{
+    justify-content: space-between;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 25px 0 25px;
+}
+.box_Product .fa-chevron-right{
+   
+}
+
+.box_Product ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    list-style: none;
+    gap: 35px;
+    margin-top: 30px;
+}
+
+.product_Discount{
+    font-size: 13px;
+    width: 40px;
+    height: 40px;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #f17a28;
+    border-radius: 4px;
+}
+
+.product_Discount_Stock{
+    position: absolute;
+    display: flex;
+    gap: 8px;
+}
+
+.product_Stock{
+    border: 1px #f17b2a solid;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 9.7px;
+    color: #f17b2a;
+    line-height: 10px;
+}
+
+
+.stockFull{
+    font-weight: 800;
+    font-size: 8px;
+}
+
+.product_Item{
+   width: 268px;
+   height: 436px;
+   box-shadow: #42464d;
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   justify-content:space-between;
+   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+   transition: 0.3s all ease;
+   position: relative;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.product_Item:hover{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.product_Description{
+    padding-left: 15px;
+}
+
+
+
+.product_Description span{
+    font-size: 12px;
+    color: #565c69;
+    line-height: 16px;
+    font-weight: 400;
+}
+.product_Name{
+    display: -webkit-box;
+  -webkit-line-clamp: 3; /* Número de linhas antes de cortar */
+  -webkit-box-orient: vertical;
+    width: 225px;
+    white-space: normal;
+    color: #42464d;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    margin-bottom: 20px;
+   
+ }
+
+.product_Image{
+    display: flex;
+    justify-content: center;
+    width: 268px;
+    height: 162px;
+    margin-top: 50px;
+}
+
+.total_Price{
+    text-decoration: line-through;
+    font-size: 12px;
+    color: #565c69;
+    
+}
+
+.discount_Price{
+    font-size: 20px;
+    color: #ff6500;
+    font-weight: 700;
+    line-height: 30px;
+    height: 22px;
+
+}
+
+.free_Shipping{
+    display: flex;
+    align-items: center;
+    width: max-content;
+    font-size: 10px;
+    color: #565c69;
+    gap: 4px;
+}
+.IconTruck path{
+    fill: rgb(0, 96, 177);
+}
+
+.product_Buy{
+    width: calc(94% + 3px);
+    height: 38px;
+    border-radius: 4px;
+    border: 2px solid #ff6500;
+    display: flex;
+    margin-left: 6px;
+}
+.buy_Svg{
+    background-color: #ff6500;
+    width:  56px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.buy_Discount_Timer{
+  color: #ff6500;
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 400;
+}
+
+.buy_Discount_Timer strong{
+    font-size: 14px;
+    font-weight: 700;
+    
+}
+/* ALINHAR OS ITEMS QUE FALTAM, CRIE UMA CAIXA PARA NOME E DEIXE A POSIÇÃO DOS ELEMENTOS PRE DETERMINADA PARA QUE TUDO FIQUE ALINHADO INDEPENDENTE DO NOME OU FRETE*/

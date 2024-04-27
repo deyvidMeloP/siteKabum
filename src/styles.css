@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    font-family: "Poppins", sans-serif;
+   
+}
+.navbar_Navigation{
+    background-color: #a32106;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

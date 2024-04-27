@@ -1,0 +1,11 @@
+.navigation{
+    width: 95.9vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.navigation_pair{
+    background-color: white;
+    width: 100%;
+}
