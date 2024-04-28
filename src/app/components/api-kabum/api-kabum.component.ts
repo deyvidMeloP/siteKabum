@@ -52,6 +52,39 @@ export class ApiKabumComponent implements OnInit {
     )
   }
   
+ 
+  
+
+  enterProductItem(event: MouseEvent){
+     
+    const targetElem = event.currentTarget as HTMLElement;
+    const elm_Leave= targetElem.querySelector('.product_Buy') as HTMLElement;
+    elm_Leave.style.display = 'none'
+
+    const elm_Enter = targetElem.querySelector(".product_Buy_Enter") as HTMLElement
+    elm_Enter.style.display = 'flex'
+
+    const elm_Discount_Stock = targetElem.querySelector(".product_Discount_Stock") as HTMLElement
+    elm_Discount_Stock.style.display = 'none'
+  
+
+  }
+
+  leaveProductItem(event: MouseEvent){
+    
+    const targetElem = event.currentTarget as HTMLElement;
+    const elm_Leave = targetElem.querySelector(".product_Buy") as HTMLElement
+    elm_Leave.style.display = 'flex'
+
+    const elm_Enter = targetElem.querySelector(".product_Buy_Enter") as HTMLElement
+    elm_Enter.style.display = 'none'
+
+    const elm_Discount_Stock = targetElem.querySelector(".product_Discount_Stock") as HTMLElement
+    elm_Discount_Stock.style.display = 'flex'
+
+  }
+
+ 
   
 }
 
