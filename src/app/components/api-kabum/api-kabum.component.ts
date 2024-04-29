@@ -1,13 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { ElementRef } from '@angular/core';
+
+let cont: number = 0
+let travaNext: boolean = false
+let travaBack: boolean = false
+
 
 @Component({
   selector: 'app-api-kabum',
   templateUrl: './api-kabum.component.html',
   styleUrls: ['./api-kabum.component.css']
 })
-export class ApiKabumComponent implements OnInit {
+export class ApiKabumComponent implements OnInit{
  
   dadosDoServico: any[] = [];
   dadosDoServicoImages: any[] = [];
@@ -19,6 +25,7 @@ export class ApiKabumComponent implements OnInit {
     this.getDadosServiceImages();
     
   }
+
 
   getDadosDoServico() {
     this.dadosService.getDados().subscribe(
@@ -83,6 +90,44 @@ export class ApiKabumComponent implements OnInit {
     elm_Discount_Stock.style.display = 'flex'
 
   }
+
+ 
+ 
+  nextProductItem() {
+    cont++
+    
+    let translate = cont*(-275)
+   
+    const elms = document.querySelectorAll(".product_Item") as NodeListOf<HTMLElement>
+    
+    elms.forEach((elm)=>{
+    
+      elm.style.transform = `translateX(${translate}px)`
+    
+    })
+    
+  }
+  
+  backProductItem(){ 
+
+      cont--
+
+      let translate = cont*(-275)
+  
+      let elms = document.querySelectorAll(".product_Item") as NodeListOf<HTMLElement>
+  
+      elms.forEach((elm)=>{
+  
+        elm.style.transform = `translateX(${translate}px)`
+     
+      } )
+
+  }
+
+  
+
+    
+
 
  
   

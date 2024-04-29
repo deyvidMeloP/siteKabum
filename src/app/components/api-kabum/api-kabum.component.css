@@ -8,7 +8,8 @@
     display: flex;
     align-items: center;
     justify-content:space-between;
-    color: white;
+    color: #fafafb;
+    padding: 0px 30px 0px 30px;
     
 }
 h1{
@@ -24,24 +25,27 @@ span{
 }
 
 .box_Product{
-    justify-content: space-between;
     position: relative;
+    width: 100%;
     display: flex;
+    gap: 30px;
     align-items: center;
-    padding: 0 25px 0 25px;
+    padding: 0 0px 0 30px;
 }
-.box_Product .fa-chevron-right{
-   
+.IconBackward, .IconForward{
+    cursor: pointer;
 }
 
 .box_Product ul{
     display: flex;
-    justify-content: center;
+    width: 89%;
+    overflow: hidden;
     align-items: center;
     text-decoration: none;
     list-style: none;
-    gap: 35px;
+    gap: 15px;
     margin-top: 30px;
+    
 }
 
 .product_Discount{
@@ -87,9 +91,8 @@ span{
 }
 
 .product_Item{
-   width: 268px;
+   width: 260px;
    height: 436px;
-   box-shadow: #42464d;
    position: relative;
    display: flex;
    flex-direction: column;
@@ -99,6 +102,7 @@ span{
    position: relative;
    border-radius: 5px;
    cursor: pointer;
+
 }
 
 .product_Item:hover{
@@ -126,7 +130,6 @@ span{
     height: 53px;
     white-space: normal;
     color: #42464d;
-    background-color: red;
     font-size: 14px;
     font-weight: 600;
     line-height: 18px;
@@ -142,6 +145,7 @@ span{
     width: 268px;
     height: 162px;
     margin-top: 50px;
+   
 }
 
 .total_Price{
