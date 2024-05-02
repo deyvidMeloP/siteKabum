@@ -96,7 +96,11 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              
+             "src/assets/teste.js"
+              
+            ]
           }
         }
       }

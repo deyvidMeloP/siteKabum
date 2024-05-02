@@ -1,29 +1,28 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit } from '@angular/core';
 import { ElementRef } from '@angular/core';
 
-let cont: number = 0
-let travaNext: boolean = false
-let travaBack: boolean = false
-
+declare function TesteHello(): any;
 
 @Component({
   selector: 'app-api-kabum',
   templateUrl: './api-kabum.component.html',
   styleUrls: ['./api-kabum.component.css']
 })
+
 export class ApiKabumComponent implements OnInit{
+ 
  
   dadosDoServico: any[] = [];
   dadosDoServicoImages: any[] = [];
-
+  
   constructor(private dadosService: KabumServiceService, private dadosServiceImages: KabumServiceService) { }
-
+  
   ngOnInit(): void {
     this.getDadosDoServico();
     this.getDadosServiceImages();
-    
   }
 
 
@@ -41,6 +40,8 @@ export class ApiKabumComponent implements OnInit{
     
   }
 
+  
+
   getDadosServiceImages(){
     this.dadosServiceImages.getDadosImages().subscribe(
       (data: any[])=> {
@@ -49,8 +50,11 @@ export class ApiKabumComponent implements OnInit{
           if(!uniqueProducts.has(image.productId)){
             uniqueProducts.add(image.productId);
             return true;
+            TesteHello()
           }
+          TesteHello()
           return false;
+          
         })
       },
       (error: any)=>{
@@ -91,40 +95,6 @@ export class ApiKabumComponent implements OnInit{
 
   }
 
- 
- 
-  nextProductItem() {
-    cont++
-    
-    let translate = cont*(-275)
-   
-    const elms = document.querySelectorAll(".product_Item") as NodeListOf<HTMLElement>
-    
-    elms.forEach((elm)=>{
-    
-      elm.style.transform = `translateX(${translate}px)`
-    
-    })
-    
-  }
-  
-  backProductItem(){ 
-
-      cont--
-
-      let translate = cont*(-275)
-  
-      let elms = document.querySelectorAll(".product_Item") as NodeListOf<HTMLElement>
-  
-      elms.forEach((elm)=>{
-  
-        elm.style.transform = `translateX(${translate}px)`
-     
-      } )
-
-  }
-
-  
 
     
 
