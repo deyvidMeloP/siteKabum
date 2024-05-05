@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { AfterViewInit } from '@angular/core';
@@ -17,12 +17,14 @@ export class ApiKabumComponent implements OnInit{
  
   dadosDoServico: any[] = [];
   dadosDoServicoImages: any[] = [];
-  
+  offer_Time: string = '';
+
   constructor(private dadosService: KabumServiceService, private dadosServiceImages: KabumServiceService) { }
   
   ngOnInit(): void {
     this.getDadosDoServico();
     this.getDadosServiceImages();
+    this.contador();
   }
 
 
@@ -40,8 +42,6 @@ export class ApiKabumComponent implements OnInit{
     
   }
 
-  
-
   getDadosServiceImages(){
     this.dadosServiceImages.getDadosImages().subscribe(
       (data: any[])=> {
@@ -49,8 +49,8 @@ export class ApiKabumComponent implements OnInit{
         this.dadosDoServicoImages = data.filter(image =>{
           if(!uniqueProducts.has(image.productId)){
             uniqueProducts.add(image.productId);
-            return true;
             TesteHello()
+            return true;
           }
           TesteHello()
           return false;
@@ -95,6 +95,48 @@ export class ApiKabumComponent implements OnInit{
 
   }
 
+
+  contador() {
+    // Defina a data-alvo para o temporizador
+    const targetDate = new Date('2024-06-03T09:59:47');
+
+    // Função para atualizar o temporizador
+    const updateTimer = () => {
+      // Obtém a data e hora atual
+      const currentDate = new Date();
+
+      // Calcula a diferença entre a data atual e a data-alvo em milissegundos
+      const difference = targetDate.getTime() - currentDate.getTime();
+
+      // Verifica se a data-alvo já foi atingida
+      if (difference <= 0) {
+        clearInterval(timerInterval);
+        console.log('Tempo esgotado!');
+        return;
+      }
+
+      // Calcula os componentes do tempo restante
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      const formattedDays = days.toString().padStart(2, '0')
+      const formattedHours = hours.toString().padStart(2, '0');
+      const formattedMinutes = minutes.toString().padStart(2, '0');
+      const formattedSeconds = seconds.toString().padStart(2, '0');
+
+     // Exibe o tempo restante
+      this.offer_Time = `${formattedDays}D ${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
+
+    };
+
+    // Atualiza o temporizador a cada segundo
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    // Atualiza o temporizador pela primeira vez para evitar um atraso inicial
+    updateTimer();
+   
+  }
 
     
 

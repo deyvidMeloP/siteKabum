@@ -9,6 +9,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { BannerComponent } from './components/banner/banner.component';
 import { ProductsSaleComponent } from './components/products-sale/products-sale.component';
 import { register } from 'swiper/element/bundle';
+import { BannerPairComponent } from './components/banner-pair/banner-pair.component';
 // register Swiper custom elements
 register();
 
@@ -22,6 +23,7 @@ register();
     NavigationComponent,
     BannerComponent,
     ProductsSaleComponent,
+    BannerPairComponent,
   ],
   imports: [
     BrowserModule,

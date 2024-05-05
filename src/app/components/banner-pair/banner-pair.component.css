@@ -1,0 +1,15 @@
+.images_Banner{
+    display: flex;
+    gap: 30px;
+}
+
+img{
+    width: 45vw;
+    cursor: pointer;
+}
+
+.test{
+    position: absolute;
+    z-index: 3;
+    right: 50%;
+}

@@ -6,6 +6,13 @@
 }
 
 .navigation_pair{
-    background-color: white;
+    background-color: #fafafb;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+app-banner-pair{
+    margin-top: 50px;
 }

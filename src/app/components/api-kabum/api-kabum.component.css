@@ -16,54 +16,86 @@
     padding: 0px 30px 0px 30px;
     
 }
-h1{
+.title_Sale h1{
     font-weight: 800;
     font-size: 20px;
     line-height: 30px;
 }
 
-span{
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 28px;
+.title_Sale span{
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 34px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
+.title_Sale span h1{
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 700;
+}
+
+.box_All{
+    width: 92vw;
+    margin-left: 30px;
+    display: flex;
+    background-color: #fafafb;
+    flex-direction: column;
+    align-items: end;
+}
 .box_Product{
-    z-index: 2;
     position: relative;
     width: 100%;
     display: flex;
-    gap: 30px;
     align-items: center;
-    padding: 0 0px 0 30px;
-    background-color: #fafafb;
+   
 }
 
+.box_All_Products{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 50px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.box_All_Products a{
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #ff6500;
+}
 .IconBackward, .IconForward{
     cursor: pointer;
 }
+
+.IconBackward{
+    margin-right: 20px;
+}
+.IconForward{
+    margin-left: 20px;
+}
+
 :host {
     --swiper-theme-color: red;
- 
+
 }
 
-.swiper-button-next{
- color: red;
-}
 
-.swiper-button-next{
-    color: red;
-   }
 
 .box_Product .swiper{
     display: flex;
-    width: 89%;
+    width: 100%;
     overflow: hidden;
     align-items: center;
     text-decoration: none;
     list-style: none;
     margin-top: 30px;
     position: relative;
+   
 }
 
 .swiper .swiper-wrapper{
@@ -122,7 +154,7 @@ span{
 }
 
 .product_Item{
-   width: 260px;
+   width: 269px;
    height: 436px;
    position: relative;
    display: flex;
