@@ -2,7 +2,6 @@
 .banner{
     margin: 0 auto;
     width: 99vw;
- 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,6 +28,7 @@
     display: flex;
     justify-content: center;
     position: absolute;
+    align-items: center;
 }
 
 .manual-btn{
@@ -37,6 +37,33 @@
     background-color: white;
     cursor: pointer;
     border-radius: 5px;
+    display: flex;
+
+    align-items: center;
+}
+
+
+.btn_Pause{
+  width: 31px;
+  height: 31px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.filling{
+  background-color: #ffa500;
+  width: 0px;
+  height: 6px;
+  border-radius: 5px;
+}
+
+.btn_Play{
+  width: 30px;
+  transition: width 7s;
 }
 
 .image{

@@ -8,8 +8,24 @@ img{
     cursor: pointer;
 }
 
-.test{
-    position: absolute;
-    z-index: 3;
-    right: 50%;
+.teste{
+   width: 200px;
+   height: 40px;
+   margin-bottom: 100px;
+   margin-left: 500px;
+   border: solid 1px red;
+   display: flex;
+   align-items: center;
+}
+.under{
+    width: 0px; 
+    height: 40px;
+    background-color: red;
+
+
+}
+
+.teste:hover .under{
+    width: 200px;
+    transition:width 5s;
 }

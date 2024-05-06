@@ -1,5 +1,6 @@
-<div class="navbar_Navigation">
+<div class="navbar_Navigation" [style.background-color]="backgroundColor">
     <app-navbar></app-navbar>
+    <app-banner (styleChange)="onStyleChange($event)"></app-banner>
     <app-navigation></app-navigation>
 </div>
 

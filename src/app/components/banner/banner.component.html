@@ -1,7 +1,6 @@
 
 <div class="banner">
     
-    
         <input type="radio" name="radio-btn" id="radio_1" ><input type="radio" name="radio-btn" id="radio_2">
        
         <input type="radio" name="radio-btn" id="radio_3"><input type="radio" name="radio-btn" id="radio_4">
@@ -43,17 +42,24 @@
             </div>
 
             <div class="manual-navigation">
-                <label for="radio_1" class="manual-btn"></label>
-                <label for="radio_2" class="manual-btn"></label>
-                <label for="radio_3" class="manual-btn"></label>
-                <label for="radio_4" class="manual-btn"></label>
-                <label for="radio_5" class="manual-btn"></label>
-                <label for="radio_6" class="manual-btn"></label>
-                <label for="radio_7" class="manual-btn"></label>
-                <label for="radio_8" class="manual-btn"></label>
-                <label for="radio_9" class="manual-btn"></label>
-                <label for="radio_10" class="manual-btn"></label>
-                <label for="radio_11" class="manual-btn"></label>
+                <label for="radio_1" class="manual-btn" (click)="btn_Complete1()" ><div class="filling"></div></label>
+                <label for="radio_2" class="manual-btn" (click)="btn_Complete2()" ><div class="filling"></div></label>
+                <label for="radio_3" class="manual-btn" (click)="btn_Complete3()" ><div class="filling"></div></label>
+                <label for="radio_4" class="manual-btn" (click)="btn_Complete4()" ><div class="filling"></div></label>
+                <label for="radio_5" class="manual-btn" (click)="btn_Complete5()"><div class="filling"></div></label>
+                <label for="radio_6" class="manual-btn" (click)="btn_Complete6()"><div class="filling"></div></label>
+                <label for="radio_7" class="manual-btn" (click)="btn_Complete7()"><div class="filling"></div></label>
+                <label for="radio_8" class="manual-btn" (click)="btn_Complete8()"><div class="filling"></div></label>
+                <label for="radio_9" class="manual-btn" (click)="btn_Complete9()"><div class="filling"></div></label>
+                <label for="radio_10" class="manual-btn" (click)="btn_Complete10()"><div class="filling"></div></label>
+                <label for="radio_11" class="manual-btn" (click)="btn_Complete11()"><div class="filling"></div></label>
+                
+                <div class="btn_Pause"(click)="Pause()">
+                
+                    <svg width="12" height="24" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconPause" aria-hidden="true"><path class="path"  fill-rule="evenodd" clip-rule="evenodd" d="M7.23072 11.4998V0.499756H10.3881V11.4998H7.23072ZM0.610352 11.4998V0.499756H3.76776V11.4998H0.610352Z" fill="#FF6500"></path></svg>
+                    
+                </div>
+            
             </div>
 
     </div>
