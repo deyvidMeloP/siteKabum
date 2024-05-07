@@ -1,31 +1,114 @@
+.banner_Pair{
+   width: 92vw;
+   background-color: #fafafb;
+
+}
+
 .images_Banner{
     display: flex;
     gap: 30px;
 }
 
-img{
+.images_Banner img{
     width: 45vw;
     cursor: pointer;
 }
 
-.teste{
-   width: 200px;
-   height: 40px;
-   margin-bottom: 100px;
-   margin-left: 500px;
-   border: solid 1px red;
+.pair_Brands{
    display: flex;
-   align-items: center;
-}
-.under{
-    width: 0px; 
-    height: 40px;
-    background-color: red;
-
-
+   flex-direction: column;
+   gap: 17px;
+   margin-top: 50px;
 }
 
-.teste:hover .under{
-    width: 200px;
-    transition:width 5s;
+.pair_Title{
+    position: relative;
+    margin-left: 75px;
 }
+.pair_Title h1{
+    color: rgb(66, 70, 77);
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 14px;
+    
+}
+
+.IconThumbsUpFilled{
+    position: absolute;
+    left: -25px;
+    bottom: -1px;
+}
+
+.pair_Brand h2{
+    position: absolute;
+    right: 0;
+    top: -40px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #ff6500;
+    cursor: pointer;
+}
+
+.pair_Brand h2 span{
+    font-size: 16px;
+}
+
+.pair_Title span{
+    font-size: 16px;
+}
+
+.pair_Brand{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    position: relative;
+}
+
+.brands_Box{
+    width: calc(23% + 5px);
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    box-shadow: rgba(40, 41, 61, 0.04) 0px 1px 2px, rgba(96, 97, 112, 0.16) 0px 2px 4px;
+    border-radius: 4px; 
+    cursor: pointer;
+}
+
+.brands_Box img{
+    width: 89%;
+    height: 90%;
+    height: 170px;
+    border-radius: 5px;
+}
+
+.brands_Box h1{
+    font-weight: 700;
+    font-size: 20px;
+    color: rgb(66, 70, 77);
+    line-height: 30px;
+    text-transform: uppercase;
+    margin-top: 3px;
+    margin-bottom: 5px;
+}
+
+.all_Products{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    color: #ff6500;
+    display: flex;
+    align-items: center;
+}
+
+.all_Products span{
+    font-size: 16px;
+    margin-left: 3px;
+}
+

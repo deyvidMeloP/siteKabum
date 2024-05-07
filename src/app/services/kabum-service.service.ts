@@ -10,6 +10,7 @@ export class KabumServiceService {
 
   private apiUrl = 'http://localhost:8080/api/products';
   private apiUrlImages = 'http://localhost:8080/api/images';
+  private apiUrlBrands = 'http://localhost:8080/api/brands';
 
   
   constructor(private http: HttpClient) { }
@@ -22,6 +23,12 @@ export class KabumServiceService {
   
   getDadosImages(): Observable<any[]>{
     return this.http.get<any[]>(this.apiUrlImages).pipe(
+      tap(data => console.log('Dados recebidos:', data))
+    );
+  }
+
+  getDadosBrands(): Observable<any[]>{
+    return this.http.get<any[]>(this.apiUrlBrands).pipe(
       tap(data => console.log('Dados recebidos:', data))
     );
   }

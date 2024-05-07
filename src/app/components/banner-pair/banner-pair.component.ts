@@ -1,5 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { OnInit} from '@angular/core';
+import { KabumServiceService } from '../../services/kabum-service.service';
 
 
 @Component({
@@ -9,12 +10,28 @@ import { OnInit} from '@angular/core';
 })
 export class BannerPairComponent implements OnInit {
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  dadosDoServiceBrands: any[] = [];
+
+  constructor(private cdr: ChangeDetectorRef, private dadosServiceBrands: KabumServiceService) {}
 
   testando: string = '';
   ngOnInit(): void {
+    this.getDadosBrands()
     this.contador()
   }
+
+  getDadosBrands() {
+    this.dadosServiceBrands.getDadosBrands().subscribe(
+      (data: any[]) => {
+        this.dadosDoServiceBrands = data;
+        console.log('Dados no componente:', this.dadosDoServiceBrands);
+      },
+      (error: any) => {
+        console.error('Erro ao obter dados do serviço:', error);
+      }
+    );
+
+  }   
 
   contador() {
     // Defina a data-alvo para o temporizador
