@@ -12,7 +12,6 @@ export class KabumServiceService {
   private apiUrlImages = 'http://localhost:8080/api/images';
   private apiUrlBrands = 'http://localhost:8080/api/brands';
 
-  
   constructor(private http: HttpClient) { }
 
   getDados(): Observable<any[]> {

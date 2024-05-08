@@ -6,13 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'site_venda';
-  backgroundColor: string = '#FFFFFF'; // Cor padrão
+  title = 'site_venda'; 
   ngOnInit(): void {
     
   }
-  onStyleChange(event: string) {
-
-    this.backgroundColor = event;
-  }
+  
 }

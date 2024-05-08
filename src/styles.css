@@ -7,11 +7,3 @@
     font-family: "Poppins", sans-serif;
    
 }
-.navbar_Navigation{
-    background-color: #a32106;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-

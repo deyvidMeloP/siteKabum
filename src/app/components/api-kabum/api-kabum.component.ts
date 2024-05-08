@@ -1,8 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
-import { ActivatedRoute } from '@angular/router';
-import { AfterViewInit } from '@angular/core';
-import { ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 declare function TesteHello(): any;
 
@@ -21,7 +19,7 @@ export class ApiKabumComponent implements OnInit{
   offer_Time2: string = '';
   offer_Time3: string = '';
 
-  constructor(private dadosService: KabumServiceService, private dadosServiceImages: KabumServiceService) { }
+  constructor(private dadosService: KabumServiceService, private dadosServiceImages: KabumServiceService, private router: Router) { }
   
   ngOnInit(): void {
     this.getDadosDoServico();
@@ -141,7 +139,7 @@ export class ApiKabumComponent implements OnInit{
 
   accountant_Time2() {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-05-07T15:30:20');
+    const targetDate = new Date('2024-05-30T15:30:20');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
@@ -220,6 +218,11 @@ export class ApiKabumComponent implements OnInit{
 
     // Atualiza o temporizador pela primeira vez para evitar um atraso inicial
     updateTimer();
+   
+  }
+
+  navegarParaProductMain(produto: any) {
+    this.router.navigateByUrl('/Product', { state: { produto: produto } })
    
   }
 

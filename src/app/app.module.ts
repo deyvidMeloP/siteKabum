@@ -10,6 +10,8 @@ import { BannerComponent } from './components/banner/banner.component';
 import { ProductsSaleComponent } from './components/products-sale/products-sale.component';
 import { register } from 'swiper/element/bundle';
 import { BannerPairComponent } from './components/banner-pair/banner-pair.component';
+import { ProductMainComponent } from './components/product_Page/product-main/product-main.component';
+import { HomeComponent } from './components/home/home.component';
 // register Swiper custom elements
 register();
 
@@ -24,6 +26,8 @@ register();
     BannerComponent,
     ProductsSaleComponent,
     BannerPairComponent,
+    ProductMainComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

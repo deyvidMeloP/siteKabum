@@ -1,5 +1,6 @@
 
 <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+
 <div class="api_Sale">
   <div class="title_Sale">
 
@@ -25,7 +26,7 @@
       
       <div class="swiper-wrapper">
           
-        <div class="swiper-slide product_Item" (mouseenter) = "enterProductItem($event)" (mouseleave) = "leaveProductItem($event)" *ngFor="let produto of dadosDoServico; let index = index">
+        <div class="swiper-slide product_Item" (mouseenter) = "enterProductItem($event)" (mouseleave) = "leaveProductItem($event)" (click) = "navegarParaProductMain(produto)" *ngFor="let produto of dadosDoServico; let index = index">
 
           <div class="product_Discount_Stock">
           
