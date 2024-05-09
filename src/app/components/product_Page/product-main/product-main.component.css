@@ -1,0 +1,123 @@
+.product_Box{
+    margin-top: 50px;
+   width: 95.9vw;
+   margin-left: 30px;
+   border-top: 1px #dee0e4 solid ;
+}
+
+.name_Product{
+    width: max-content;
+    font-size: 24px;
+    line-height: 34px;
+    font-weight: 700;
+    color: #42464d;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.box_Show{
+    display: flex;
+    flex-direction: column;
+}
+
+.show_Subtitle{
+    display: flex;
+    width: 49%;
+    height: 55px; 
+}
+
+.subtitle_Brand{
+    width: 33.33%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+
+}
+
+.subtitle_Brand img{
+    width: 70px;
+    height: 28px;
+}
+
+.subtitle_Brand::after, .subtitle_Avaliation::after{
+    content: "";
+    border-right: #dee0e4 2px solid;
+    height: 30px;
+    position: absolute;
+    right: 0;
+}
+
+
+.subtitle_Avaliation{
+    width: 33.33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.subtitle_Share_Like{
+    width: 33.33%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.share, .like{
+    display: flex;
+}
+
+.show_Item{
+    display: flex;
+}
+.item_Selection{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* manda pra eles apenas as imagens sem do mesmo productId*/
+.focus_Selection{
+    width: 50px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px #dee0e4;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.focus_Selection img{
+    width: 40px;
+    height: 44px;
+    object-fit: cover;
+
+}
+
+.item_Focus{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 43vw;
+    height: 416px;
+    cursor: pointer;
+    overflow: hidden;
+    cursor: zoom-in;
+}
+.item_Focus img{
+    width: 53%;
+    height: 90%;
+    transition: opacity 0.4s ease;
+}
+
+ng-magnizoom{
+    cursor: zoom-out;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    transition: opacity 0.6s ease;
+}
