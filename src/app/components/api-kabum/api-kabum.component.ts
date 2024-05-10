@@ -1,4 +1,5 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,  OnDestroy} from '@angular/core';
+import { Subscription } from 'rxjs';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { Router } from '@angular/router';
 
@@ -18,16 +19,46 @@ export class ApiKabumComponent implements OnInit{
   offer_Time1: string = '';
   offer_Time2: string = '';
   offer_Time3: string = '';
+  tempoRestante1Subscription: Subscription | undefined;
+  tempoRestante2Subscription: Subscription | undefined;
+  tempoRestante3Subscription: Subscription | undefined;
 
-  constructor(private dadosService: KabumServiceService, private dadosServiceImages: KabumServiceService, private router: Router) { }
+  constructor(private dadosService: KabumServiceService, private dadosServiceImages: KabumServiceService, private router: Router, private timerService: KabumServiceService) { }
   
   ngOnInit(): void {
     this.getDadosDoServico();
     this.getDadosServiceImages();
-    this.accountant_Time1();
-    this.accountant_Time2();
-    this.accountant_Time3();
+    this.tempoRestante1Subscription = this.timerService.offerTime1$.subscribe(
+      tempo => this.offer_Time1= tempo
+    );
+    this.timerService.accountant_Time1(); 
+
+    this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
+      tempo => this.offer_Time2= tempo
+    );
+    this.timerService.accountant_Time2(); 
+
+    this.tempoRestante3Subscription = this.timerService.offerTime3$.subscribe(
+      tempo => this.offer_Time3 = tempo
+    );
+    this.timerService.accountant_Time3(); 
+
+
   }
+
+  ngOnDestroy(): void {
+    if (this.tempoRestante1Subscription) {
+      this.tempoRestante1Subscription.unsubscribe();
+    }
+
+    if (this.tempoRestante2Subscription) {
+      this.tempoRestante2Subscription.unsubscribe();
+    }
+    if (this.tempoRestante3Subscription) {
+      this.tempoRestante3Subscription.unsubscribe();
+    }
+  }
+  
 
 
   getDadosDoServico() {
@@ -94,137 +125,14 @@ export class ApiKabumComponent implements OnInit{
 
   }
 
-
-  accountant_Time1() {
-    // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-06-03T09:59:47');
-
-    // Função para atualizar o temporizador
-    const updateTimer = () => {
-      // Obtém a data e hora atual
-      const currentDate = new Date();
-
-      // Calcula a diferença entre a data atual e a data-alvo em milissegundos
-      const difference = targetDate.getTime() - currentDate.getTime();
-
-      // Verifica se a data-alvo já foi atingida
-      if (difference <= 0) {
-        clearInterval(timerInterval);
-        console.log('Tempo esgotado!');
-        return;
-      }
-
-      // Calcula os componentes do tempo restante
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      const formattedDays = days.toString().padStart(2, '0')
-      const formattedHours = hours.toString().padStart(2, '0');
-      const formattedMinutes = minutes.toString().padStart(2, '0');
-      const formattedSeconds = seconds.toString().padStart(2, '0');
-
-     // Exibe o tempo restante
-      this.offer_Time1 = `${formattedDays}D ${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
-
-    };
-
-    // Atualiza o temporizador a cada segundo
-    const timerInterval = setInterval(updateTimer, 1000);
-
-    // Atualiza o temporizador pela primeira vez para evitar um atraso inicial
-    updateTimer();
-   
-  }
-
-  accountant_Time2() {
-    // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-05-30T15:30:20');
-
-    // Função para atualizar o temporizador
-    const updateTimer = () => {
-      // Obtém a data e hora atual
-      const currentDate = new Date();
-
-      // Calcula a diferença entre a data atual e a data-alvo em milissegundos
-      const difference = targetDate.getTime() - currentDate.getTime();
-
-      // Verifica se a data-alvo já foi atingida
-      if (difference <= 0) {
-        clearInterval(timerInterval);
-        console.log('Tempo esgotado!');
-        return;
-      }
-
-      // Calcula os componentes do tempo restante
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      const formattedDays = days.toString().padStart(2, '0')
-      const formattedHours = hours.toString().padStart(2, '0');
-      const formattedMinutes = minutes.toString().padStart(2, '0');
-      const formattedSeconds = seconds.toString().padStart(2, '0');
-
-     // Exibe o tempo restante
-      this.offer_Time2 = `${formattedDays}D ${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
-
-    };
-
-    // Atualiza o temporizador a cada segundo
-    const timerInterval = setInterval(updateTimer, 1000);
-
-    // Atualiza o temporizador pela primeira vez para evitar um atraso inicial
-    updateTimer();
-   
-  }
-
-  accountant_Time3() {
-    // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-05-10T20:00:00');
-
-    // Função para atualizar o temporizador
-    const updateTimer = () => {
-      // Obtém a data e hora atual
-      const currentDate = new Date();
-
-      // Calcula a diferença entre a data atual e a data-alvo em milissegundos
-      const difference = targetDate.getTime() - currentDate.getTime();
-
-      // Verifica se a data-alvo já foi atingida
-      if (difference <= 0) {
-        clearInterval(timerInterval);
-        console.log('Tempo esgotado!');
-        return;
-      }
-
-      // Calcula os componentes do tempo restante
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      const formattedDays = days.toString().padStart(2, '0')
-      const formattedHours = hours.toString().padStart(2, '0');
-      const formattedMinutes = minutes.toString().padStart(2, '0');
-      const formattedSeconds = seconds.toString().padStart(2, '0');
-
-     // Exibe o tempo restante
-      this.offer_Time3 = `${formattedDays}D ${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
-
-    };
-
-    // Atualiza o temporizador a cada segundo
-    const timerInterval = setInterval(updateTimer, 1000);
-
-    // Atualiza o temporizador pela primeira vez para evitar um atraso inicial
-    updateTimer();
-   
-  }
-
   navegarParaProductMain(produto: any) {
-    this.router.navigateByUrl('/Product', { state: { produto: produto } })
-   
+
+      this.router.navigateByUrl('/Product', { state: { produto: produto } })
+      /* para enviar mais de uma variavel: this.router.navigateByUrl('/Product', { state: { produto: produto, outraVariavel: outraVariavel } });*/
+      
   }
+
+  
 
     
 

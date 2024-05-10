@@ -1,5 +1,6 @@
-import { Component, OnInit, ElementRef   } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy} from '@angular/core';
 import { KabumServiceService } from '../../../services/kabum-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-main',
@@ -11,12 +12,37 @@ export class ProductMainComponent implements OnInit{
   images_Product: any[] = [];
   zoom: boolean = true
   actual_Url: string = ''
+  offer_Time2: string = '';
+  offer_Time3: string = '';
+  tempoRestante2Subscription: Subscription | undefined;
+  tempoRestante3Subscription: Subscription | undefined;
 
-  constructor(private imagesService: KabumServiceService, private elementRef: ElementRef) { }
+  constructor(private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService) { }
 
   ngOnInit(): void {
     this.produto = history.state.produto;
     this.getDadosServiceImages()
+    this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
+      tempo => this.offer_Time2= tempo
+    );
+    this.timerService.accountant_Time2(); 
+
+    this.tempoRestante3Subscription = this.timerService.offerTime3$.subscribe(
+      tempo => this.offer_Time3 = tempo
+    );
+    this.timerService.accountant_Time3(); 
+  }
+
+  
+  ngOnDestroy(): void {
+
+    if (this.tempoRestante2Subscription) {
+      this.tempoRestante2Subscription.unsubscribe();
+    }
+    
+    if (this.tempoRestante3Subscription) {
+      this.tempoRestante3Subscription.unsubscribe();
+    }
   }
 
   getDadosServiceImages(){
