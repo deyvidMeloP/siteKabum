@@ -82,17 +82,17 @@ export class ApiKabumComponent implements OnInit{
         this.dadosDoServicoImages = data.filter(image =>{
           if(!uniqueProducts.has(image.productId)){
             uniqueProducts.add(image.productId);
-            TesteHello()
             return true;
           }
-          TesteHello()
+     
           return false;
           
         })
-      },
+        TesteHello()},
       (error: any)=>{
         console.error('Erro ao receber dados do serviço', error)
       }
+      
     )
   }
   

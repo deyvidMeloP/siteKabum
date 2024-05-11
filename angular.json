@@ -98,7 +98,8 @@
             ],
             "scripts": [
               
-             "src/assets/teste.js"
+             "src/assets/teste.js",
+             "src/assets/swiper_ProductMain.js"
               
             ]
           }

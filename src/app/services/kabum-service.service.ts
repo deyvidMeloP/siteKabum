@@ -134,7 +134,7 @@ export class KabumServiceService {
 
   accountant_Time3(): string {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-05-10T20:00:00');
+    const targetDate = new Date('2024-05-20T20:00:00');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {

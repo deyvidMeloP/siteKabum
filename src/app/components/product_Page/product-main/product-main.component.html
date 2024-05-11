@@ -1,5 +1,6 @@
+<link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 
-<div class="product_Box" >
+<div class="product_Box">
 
     <div class="box_Show_All">
         <h1 class="name_Product">{{produto.name_Product}}</h1>
@@ -38,17 +39,31 @@
              
 
             <div class="show_Item">
-           
-            <div class="item_Selection">
+               
+                <div class="all_Item">
 
-                <div class="focus_Selection" *ngFor="let images of images_Product">
-                  
-                    <img [src]="images.imageUrl"  (click)="change_Focus(images.imageUrl)"  alt="Product">
-            
+                    <div class="arrow_Top">
+          
+                        <svg width="24" height="15" viewBox="0 0 24 15" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-prev" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 12.8182L21.8182 15L12 5.18182L2.18182 15L2.60179e-08 12.8182L12 0.818182L24 12.8182Z" fill="#565C69"></path></svg>
+              
+                    </div>
+                 <div class="item_Selection">
+                                  
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide focus_Selection" *ngFor="let images of images_Product">
+                    
+                        <img [src]="images.imageUrl"  (click)="change_Focus(images.imageUrl)"  alt="Product">
+                
+                    </div>
                 </div>
                 
+                </div>
+                <div class="arrow_Back">
+          
+                    <svg width="24" height="15" viewBox="0 0 13 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-next" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M-5.37986e-08 1.23077L1.18182 -5.16589e-07L6.5 5.53846L11.8182 -5.16589e-08L13 1.23077L6.5 8L-5.37986e-08 1.23077Z" fill="#42464D"></path></svg>
+              
+                </div>
             </div>
-
             <div class="item_Focus" (click)="zoom_Focus()" (mouseenter)="zoom_Focus_Enter()" (mouseleave)="zoom_Focus_Leave()">
 
                 <ng-magnizoom imageSrc= '{{this.actual_Url}}' [imageStyle]="{'width': '101%', 'height': '101%'}" [zoomFactor]="2">
@@ -127,3 +142,9 @@
     <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br>
 
 </div>
+
+
+
+
+  <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br>
+  

@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, OnDestroy} from '@angular/core';
 import { KabumServiceService } from '../../../services/kabum-service.service';
 import { Subscription } from 'rxjs';
+declare function swiperProductMain(): any;
 
 @Component({
   selector: 'app-product-main',
@@ -50,11 +51,13 @@ export class ProductMainComponent implements OnInit{
       (data: any[])=> {
         this.images_Product= data.filter(image =>{
           if(this.produto.idProduct == image.productId){
+              
               return true;
           }
           
           return false;
         });
+        
 
         this.start(this.images_Product[0].imageUrl)
       
@@ -64,7 +67,6 @@ export class ProductMainComponent implements OnInit{
         console.error('Erro ao receber dados do serviço', error)
       }
     )
- 
     
   }
 
@@ -96,6 +98,7 @@ export class ProductMainComponent implements OnInit{
 
   start(actual_Url: string){
    this.actual_Url = actual_Url
+   swiperProductMain()
   }
 
   zoom_Focus_Enter(){

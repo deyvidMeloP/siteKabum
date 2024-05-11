@@ -44,6 +44,7 @@
     background-color: #fafafb;
     flex-direction: column;
     align-items: end;
+    user-select:none; 
 }
 .box_Product{
     position: relative;
