@@ -94,6 +94,7 @@ export class ApiKabumComponent implements OnInit{
       }
       
     )
+
   }
   
   enterProductItem(event: MouseEvent){

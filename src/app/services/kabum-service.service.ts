@@ -11,6 +11,7 @@ export class KabumServiceService {
   private apiUrl = 'http://localhost:8080/api/products';
   private apiUrlImages = 'http://localhost:8080/api/images';
   private apiUrlBrands = 'http://localhost:8080/api/brands';
+  private apiUrlDepartments = 'http://localhost:8080/api/departments';
   offer_Time1: string = '';
   offer_Time2: string = '';
   offer_Time3: string = '';
@@ -40,6 +41,12 @@ export class KabumServiceService {
 
   getDadosBrands(): Observable<any[]>{
     return this.http.get<any[]>(this.apiUrlBrands).pipe(
+      tap(data => console.log('Dados recebidos:', data))
+    );
+  }
+
+  getDadosDepartments(): Observable<any[]>{
+    return this.http.get<any[]>(this.apiUrlDepartments).pipe(
       tap(data => console.log('Dados recebidos:', data))
     );
   }

@@ -9,6 +9,8 @@ declare function swiperProductMain(): any;
   styleUrl: './product-main.component.css'
 })
 export class ProductMainComponent implements OnInit{
+
+  dadosProductAll: any[] = [];
   produto: any;
   images_Product: any[] = [];
   zoom: boolean = true
@@ -17,12 +19,16 @@ export class ProductMainComponent implements OnInit{
   offer_Time3: string = '';
   tempoRestante2Subscription: Subscription | undefined;
   tempoRestante3Subscription: Subscription | undefined;
+  departments: any[] = [];
+  siblingsList: any[] = []
+  imageSinbling: any[] = [];
 
-  constructor(private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService) { }
+  constructor(private productAll: KabumServiceService,  private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService, private departService: KabumServiceService) { }
 
   ngOnInit(): void {
     this.produto = history.state.produto;
-    this.getDadosServiceImages()
+    this.getDadosProductAll();
+    this.getDadosServiceImages();
     this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
       tempo => this.offer_Time2= tempo
     );
@@ -46,6 +52,19 @@ export class ProductMainComponent implements OnInit{
     }
   }
 
+  getDadosProductAll(){
+    this.productAll.getDados().subscribe(
+      (data: any[]) => {
+        this.dadosProductAll = data;
+        console.log('Dados no componente:', this.dadosProductAll);
+      },
+      (error: any) => {
+        console.error('Erro ao obter dados do serviço:', error);
+      }
+    );
+
+  }
+
   getDadosServiceImages(){
     this.imagesService.getDadosImages().subscribe(  
       (data: any[])=> {
@@ -60,7 +79,7 @@ export class ProductMainComponent implements OnInit{
         
 
         this.start(this.images_Product[0].imageUrl)
-      
+        this.getDadosDepartments()
         
       },
       (error: any)=>{
@@ -68,6 +87,65 @@ export class ProductMainComponent implements OnInit{
       }
     )
     
+  }
+
+  getDadosDepartments() {
+    this.departService.getDadosDepartments().subscribe(
+      (data: any[]) => {
+        this.departments = data;
+        this.siblingsProduct(this.departments)
+        console.log('Dados no componente:', this.departments);
+      },
+      (error: any) => {
+        console.error('Erro ao obter dados do serviço:', error);
+      }
+
+      
+    );
+
+    
+  }
+
+
+  siblingsProduct(department: any[]){
+
+   let Break = 0
+   let idSiblings: any[] = []
+   
+    for(let dtu of department){
+
+      if(this.produto.idProduct == dtu.productId){
+
+        for(let dt of department){
+          
+          if( (dtu.productId != dt.productId) && (dtu.dtName == dt.dtName)&& (dtu.dtCategory2 == dt.dtCategory2)){
+
+                idSiblings.push(dt.productId)
+
+          }
+
+        }
+
+      }
+      
+    }
+
+    for(let pt of this.dadosProductAll){
+
+      for(let iS  of idSiblings){
+
+        if((iS == pt.idProduct) && (this.produto.maker == pt.maker) ){
+          
+          this.siblingsList.push(pt)
+          
+        }
+
+      }
+
+    }
+   
+     
+
   }
 
   zoom_Focus(){
