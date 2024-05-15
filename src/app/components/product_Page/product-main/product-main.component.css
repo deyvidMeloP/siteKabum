@@ -405,3 +405,89 @@ ng-magnizoom{
     color: #565c69;
     text-decoration: underline;
 }
+
+.siblings_Title{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.siblings_Title h1{
+    font-size: 16px;
+    line-height: 28px;
+    color: #42464d;    
+}
+
+.siblings_Title span{
+    margin-top: 4px;
+   
+}
+.siblings_Maker h1{
+    font-size: 10px;
+    line-height: 16px;
+    font-weight: 400;
+    color: #565c69;
+}
+
+.siblings_Maker strong{
+    font-weight: 600;
+    color: #42464d;
+}
+
+.siblings_Swiper{
+    height: 150px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 20px;
+    
+
+}
+
+.swiper_All{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.siblings_Wrapper{
+    width: 100%;
+    height: 100%;
+    padding-left: 15px;
+    display: flex;
+    gap: 40px;
+}
+
+.siblings_Slide{
+    display: flex;
+    flex-direction: column;
+    max-width: max-content;
+    align-items: center;
+    justify-content: center;
+   
+}
+.siblings_Slide img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.siblings_Slide h1{
+    font-size: 16px;
+    line-height: 28px;
+    color: #ff6500;
+}
+
+.siblings_Back, .siblings_Next{
+    cursor: pointer;
+    position: absolute;
+}
+
+.siblings_Back{
+    left: -35px;
+}
+
+.siblings_Next{
+    right: -32px;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, OnDestroy} from '@angular/core';
 import { KabumServiceService } from '../../../services/kabum-service.service';
 import { Subscription } from 'rxjs';
 declare function swiperProductMain(): any;
+declare function siblings_Swiper(): any;
 
 @Component({
   selector: 'app-product-main',
@@ -143,9 +144,8 @@ export class ProductMainComponent implements OnInit{
       }
 
     }
-   
+   siblings_Swiper()
      
-
   }
 
   zoom_Focus(){
