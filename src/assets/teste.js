@@ -5,7 +5,6 @@ function TesteHello() {
     // Optional parameters
     
     slidesPerView: 'auto',/*product_item bugado*/
-    spaceBetween: 6,
     loop: true,
   
     // If we need pagination
@@ -20,4 +19,27 @@ function TesteHello() {
 
   });
   }
+
+
+  function swiper_Departments() {
+
+    const swiper = new Swiper('.marker_Swiper', {
+      // Optional parameters
+      
+      slidesPerView: 9.5,
+      spaceBetween: 2,
+      loop: true,
+    
+      // If we need pagination
+   
+    
+      // Navigation arrows
+      navigation: {
+        nextEl: '.marker_Next',
+        prevEl: '.marker_Back',
+      },
+    
+  
+    });
+    }
   

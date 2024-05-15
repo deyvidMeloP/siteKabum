@@ -112,3 +112,350 @@
     margin-left: 3px;
 }
 
+.pair_Marker{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.marker_All{
+    display: flex;
+    flex-direction: column;
+    width: 93%;
+}
+
+.marker_Title{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    
+
+}
+
+.marker_Title h1{
+    font-size:  20px;
+    line-height: 14px;
+    color: #42464d;
+}
+
+.title_Text{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title_Button{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #ff6500;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.title_Button span{
+    display: flex;
+    align-items: center;
+}
+
+
+.products_All{
+    width: 100%;
+}
+.marker_Departments{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+
+}
+
+.marker_Swiper{
+    width: 100%;
+    overflow: hidden;
+   
+}
+.marker_Wrapper{
+    display: flex;
+    gap: 10px;
+}
+
+.marker_swiper_Button{
+    width: max-content !important;
+    padding: 8px 15px 8px 15px;
+    border-radius: 4px;
+    border: solid 1px #ff6500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+     cursor: pointer;
+
+}
+
+.marker_Next, .marker_Back{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+} 
+
+.marker_Back{
+    margin-right: 2px;
+}
+
+.marker_swiper_Button h1{
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    color: #ff6500;
+}
+
+.marker_Products{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+    margin-right: 50px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+
+.IconBackward, .IconForward{
+    cursor: pointer;
+}
+
+.IconBackward{
+    margin-right: 20px;
+}
+.IconForward{
+    margin-left: 20px;
+}
+
+.swiper{
+    
+    display: flex;
+    width: 100%;
+    align-items: center;
+    text-decoration: none;
+    list-style: none;
+    margin-top: 30px;
+    overflow: hidden;
+    position: relative;
+}
+
+.wrapper_Products{
+    display: flex;
+    background-color: #fafafb;
+    gap: 7px;
+}
+
+
+.prices{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+}
+
+.product_Discount{
+    font-size: 13px;
+    width: 40px;
+    height: 40px;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #f17a28;
+    border-radius: 4px;
+}
+
+.product_Discount_Stock{
+    position: absolute;
+    display: flex;
+    gap: 8px;
+}
+
+.product_Stock{
+    border: 1px #f17b2a solid;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 9.7px;
+    color: #f17b2a;
+    line-height: 10px;
+}
+
+
+.stockFull{
+    font-weight: 800;
+    font-size: 8px;
+}
+
+.product_Item{
+   width: 269px;
+   height: 436px;
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   justify-content:space-between;
+   transition: 0.3s all ease;
+   position: relative;
+   border-radius: 5px;
+   cursor: pointer;
+   background-color: #ffffff;
+   z-index: 3;
+}
+
+
+
+.product_Item:not(:first-child){
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.product_Item:hover{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.product_Description{
+    padding-left: 15px;
+    position: relative;
+    top: -30px;
+}
+
+.product_Description span{
+    font-size: 12px;
+    color: #565c69;
+    line-height: 16px;
+    font-weight: 400;
+}
+.product_Name{
+    display: -webkit-box;
+  -webkit-line-clamp: 3; /* Número de linhas antes de cortar */
+  -webkit-box-orient: vertical;
+    width: 225px;
+    height: 53px;
+    white-space: normal;
+    color: #42464d;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    margin-bottom: 20px;
+
+ }
+
+.product_Image{
+    display: flex;
+    justify-content: center;
+    width: 268px;
+    height: 162px;
+    margin-top: 50px;
+    align-items: center;
+
+}
+
+.product_Image img{
+    width: 140px;
+    height: 140px;
+}
+
+.total_Price{
+    text-decoration: line-through;
+    font-size: 12px;
+    color: #565c69;
+    
+}
+
+.discount_Price{
+    font-size: 20px;
+    color: #ff6500;
+    font-weight: 700;
+    height: 22px;
+    display: flex;
+    align-items: center;
+}
+
+.free_Shipping{
+    display: flex;
+    align-items: center;
+    width: max-content;
+    font-size: 10px;
+    color: #565c69;
+    gap: 4px;
+    position: absolute;
+}
+
+
+.IconTruck path{
+    fill: rgb(0, 96, 177);
+}
+
+.product_Buy{
+    display: flex;
+   
+}
+
+.product_Buy, .product_Buy_Enter{
+    width: calc(94% + 3px);
+    height: 38px;
+    border-radius: 4px;
+    margin-left: 6px;
+    border: 2px solid #ff6500;
+}
+
+.product_Buy_Enter{  
+    display: none;
+    background-color: #ff6500;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 3px;
+}
+
+.buy_Svg{
+    background-color: #ff6500;
+    width:  56px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.buy_Discount_Timer{
+  color: #ff6500;
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 400;
+}
+
+.buy_Discount_Timer strong{
+    font-size: 14px;
+    font-weight: 700;
+    
+}
+
+.buy_Enter_Buy{
+    color: white;
+    font-size: 12px;
+}
+
+.buy_Svg_Enter{
+    margin-top: 4px;
+}

@@ -65,8 +65,9 @@ export class ApiKabumComponent implements OnInit{
     this.dadosService.getDados().subscribe(
       (data: any[]) => {
         this.dadosDoServico = data;
+        console.log(this.dadosDoServico[0].imageUrl)
         console.log('Dados no componente:', this.dadosDoServico);
-      },
+        TesteHello()},
       (error: any) => {
         console.error('Erro ao obter dados do serviço:', error);
       }
@@ -88,7 +89,7 @@ export class ApiKabumComponent implements OnInit{
           return false;
           
         })
-        TesteHello()},
+        },
       (error: any)=>{
         console.error('Erro ao receber dados do serviço', error)
       }
@@ -129,8 +130,7 @@ export class ApiKabumComponent implements OnInit{
   navegarParaProductMain(produto: any) {
 
       this.router.navigateByUrl('/Product', { state: { produto: produto } })
-      /* para enviar mais de uma variavel: this.router.navigateByUrl('/Product', { state: { produto: produto, outraVariavel: outraVariavel } });*/
-      
+     
   }
 
   
