@@ -13,6 +13,7 @@ import { BannerPairComponent } from './components/banner-pair/banner-pair.compon
 import { ProductMainComponent } from './components/product_Page/product-main/product-main.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgMagnizoomModule } from 'ng-magnizoom';
+import { ProductFilterComponent } from './components/product-filter/product-filter.component';
 // register Swiper custom elements
 register();
 
@@ -29,6 +30,7 @@ register();
     BannerPairComponent,
     ProductMainComponent,
     HomeComponent,
+    ProductFilterComponent,
   ],
   imports: [
     BrowserModule,

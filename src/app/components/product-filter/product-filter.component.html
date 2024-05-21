@@ -1,0 +1,23 @@
+<p>product-filter works!</p>
+
+<h1 *ngIf="idSearch">{{ idSearch.name }}</h1> <!-- Adicionado *ngIf para garantir que idSearch não é nulo -->
+
+<div class="box">
+
+    <div class="categorias_Relacionadas" *ngFor="let ctRel of categoriesRelacionadas">
+    {{ctRel.name}}
+    </div>
+
+    <div *ngFor="let categories of  categoriesSearch">
+
+        <div class="categories_Box">
+    
+            <h1 *ngIf="categories.parentId == 0">{{categories.name}}</h1>
+    
+            <p *ngIf="(categories.parentId)">{{categories.name}}</p>
+    
+        </div>
+        
+    </div>
+
+</div>

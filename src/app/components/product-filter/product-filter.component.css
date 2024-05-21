@@ -1,0 +1,15 @@
+.box{
+   
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.box h1{
+    background-color: green;
+}
+
+.box p{
+    background-color: yellow;
+}

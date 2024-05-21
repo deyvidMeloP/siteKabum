@@ -294,4 +294,13 @@ export class BannerPairComponent implements OnInit {
     TesteHello()
   }
 
+
+  NavigationPage(name: string){
+
+    
+        this.router.navigateByUrl('/Filter', { state: { name: name } })
+     
+
+  }
+
 }

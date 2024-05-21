@@ -114,6 +114,7 @@
 
 .pair_Marker{
     display: flex;
+    margin-top: 70px;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -166,6 +167,7 @@
 }
 .marker_Departments{
     display: flex;
+    margin-top: 30px;
     align-items: center;
     gap: 5px;
     width: 100%;
@@ -218,7 +220,7 @@
     align-items: center;
     gap: 10px;
     margin-right: 50px;
-    margin-top: 15px;
+    margin-top: 20px;
     cursor: pointer;
 }
 
@@ -235,13 +237,11 @@
 }
 
 .swiper{
-    
     display: flex;
     width: 100%;
     align-items: center;
     text-decoration: none;
     list-style: none;
-    margin-top: 30px;
     overflow: hidden;
     position: relative;
 }
