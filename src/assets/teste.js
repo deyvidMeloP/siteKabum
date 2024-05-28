@@ -43,7 +43,31 @@ function TesteHello() {
     });
     }
 
+    function swiper_Filter() {
+
+      const swiper = new Swiper('.marker_Swiper', {
+        // Optional parameters
+        
+        slidesPerView: 'auto',
+        loop: false,
+        spaceBetween: 10,
+        navigation: false,
+        simulateTouch: false,
+        pagination: true,
+        
+        
+        scrollbar: {
+          el: '.swiper-scrollbar',
+          draggable: true,
+         
+          dragClass: 'swiper-scrollbar-drag'
+        },
     
+      });
+      }
+  
+    
+
   function swiper_Submenu() {
 
 

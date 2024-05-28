@@ -1,23 +1,438 @@
-<p>product-filter works!</p>
-
-<h1 *ngIf="idSearch">{{ idSearch.name }}</h1> <!-- Adicionado *ngIf para garantir que idSearch não é nulo -->
-
+<div class="teste">
 <div class="box">
 
-    <div class="categorias_Relacionadas" *ngFor="let ctRel of categoriesRelacionadas">
-    {{ctRel.name}}
-    </div>
 
-    <div *ngFor="let categories of  categoriesSearch">
+    <div class="box_Title">
 
-        <div class="categories_Box">
-    
-            <h1 *ngIf="categories.parentId == 0">{{categories.name}}</h1>
-    
-            <p *ngIf="(categories.parentId)">{{categories.name}}</p>
-    
-        </div>
+        <img src="https://www.kabum.com.br/_next/image?url=https%3A%2F%2Fthemes.kabum.com.br%2Fconteudo%2Flayout%2F4678%2Fbanner_img.jpg&w=1920&q=100" alt="">
         
+        <h1 *ngIf="idSearch">{{ idSearch.name }}</h1> 
+
     </div>
 
+
+    <div class="box_All">
+   
+        <div class="categories_Filter">
+
+            <div class="categories_Related">
+      
+                <h1 class="related_Title">Categorias Relacionadas</h1>
+              
+                <div class="related_Items">
+              
+                    <h1 *ngIf="idSearch" class="related_Second">{{idSearch.name}}</h1>
+                
+                    <a class="related_Item" *ngFor="let ctRel of categoriesRelacionadas">
+                
+                        {{ctRel.name}}
+                
+                    </a>
+                
+                </div>
+
+                <h1 class="seeLess" (click)="seeLess($event)" style="font-size: 14px; line-height: 24px;">Ver menos</h1>
+
+                <h1 class="seeMore" (click)="seeMore($event)" style="font-size: 14px; line-height: 24px;">Ver mais</h1>
+        
+            </div>
+
+            <div class="categories_Items">
+
+                <div class="categories_Kabum_Sold">
+
+                    <div class="categories_box_Title"><h1 style="min-width: max-content;">Vendido por</h1> <span class="teste" (click)="teste($event)"></span></div>
+                    
+                    <div class="box_Checkbox">
+                       
+                        <input type="checkbox" id="sold_Kabum">
+                      
+                        <label for="sold_Kabum>KaBuM!">KaBuM!</label>
+                    
+                    </div>
+
+                </div>
+
+                <div class="categories_Switch categories_Box">
+
+                    <div class="switch_Item">
+
+                        <h1>Ninja indica</h1>
+                    
+                        <label class="switch"> <input type="checkbox"> <span class="slider round"></span> </label>
+
+                    </div>
+
+                    <div class="switch_Item">
+
+                        <h1>Mega Maio</h1>
+                    
+                        <label class="switch"> <input type="checkbox"> <span class="slider round"></span> </label>
+
+                    </div>
+
+                    <div class="switch_Item">
+
+                        <h1><span><svg width="1rem" height="1rem" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconTruck"><path d="M20.1818 7.5H17.4545V5.25C17.4545 4.0125 16.4727 3 15.2727 3H2.18182C0.981818 3 0 4.0125 0 5.25V15.375C0 16.6125 0.981818 17.625 2.18182 17.625C2.18182 19.4925 3.64364 21 5.45455 21C7.26545 21 8.72727 19.4925 8.72727 17.625H15.2727C15.2727 19.4925 16.7345 21 18.5455 21C20.3564 21 21.8182 19.4925 21.8182 17.625H22.9091C23.5091 17.625 24 17.1187 24 16.5V12.7537C24 12.27 23.8473 11.7975 23.5636 11.4038L21.0545 7.95C20.8473 7.66875 20.52 7.5 20.1818 7.5ZM5.45455 18.75C4.85455 18.75 4.36364 18.2437 4.36364 17.625C4.36364 17.0063 4.85455 16.5 5.45455 16.5C6.05455 16.5 6.54545 17.0063 6.54545 17.625C6.54545 18.2437 6.05455 18.75 5.45455 18.75ZM20.1818 9.1875L22.32 12H17.4545V9.1875H20.1818ZM18.5455 18.75C17.9455 18.75 17.4545 18.2437 17.4545 17.625C17.4545 17.0063 17.9455 16.5 18.5455 16.5C19.1455 16.5 19.6364 17.0063 19.6364 17.625C19.6364 18.2437 19.1455 18.75 18.5455 18.75Z" fill="#ff6500ff"></path></svg></span>          
+                            Frete grátis
+                        </h1>
+                    
+                        <label class="switch"> <input type="checkbox"> <span class="slider round"></span> </label>
+
+                    </div>
+
+
+                    <div class="switch_Item">
+
+                        <h1><span><svg width="1rem" height="1rem" viewBox="0 0 18 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconJustArrived"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8768 0.102663C14.0236 0.18777 14.1372 0.320148 14.1991 0.478169C14.2609 0.63619 14.2673 0.810514 14.2173 0.972663L11.5158 9.75066H16.5003C16.6468 9.7506 16.7901 9.79344 16.9125 9.87389C17.0349 9.95434 17.1311 10.0689 17.1892 10.2034C17.2472 10.3378 17.2646 10.4864 17.2393 10.6306C17.2139 10.7749 17.1468 10.9086 17.0463 11.0152L5.0463 23.7652C4.93019 23.8886 4.77568 23.9691 4.60796 23.9935C4.44024 24.018 4.26919 23.9848 4.1227 23.8996C3.97622 23.8143 3.86292 23.682 3.80129 23.5241C3.73965 23.3662 3.73331 23.1921 3.7833 23.0302L6.4848 14.2507H1.5003C1.35382 14.2507 1.21052 14.2079 1.08811 14.1274C0.965693 14.047 0.869515 13.9325 0.811447 13.798C0.753379 13.6635 0.735963 13.5149 0.761349 13.3707C0.786735 13.2264 0.853812 13.0927 0.954299 12.9862L12.9543 0.236163C13.0703 0.112861 13.2245 0.0324155 13.392 0.00790543C13.5595 -0.0166046 13.7304 0.0162624 13.8768 0.101163V0.102663Z" fill="#ff6500ff"></path></svg></span>                            
+                            Entrega Flash
+                        </h1>
+                    
+                        <label class="switch"> <input type="checkbox"> <span class="slider round"></span> </label>
+
+                    </div>
+
+
+                    <div class="switch_Item">
+
+                        <h1><span><svg width="1rem" height="1rem" viewBox="0 0 12 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconOpenBox"><path d="M7.81699 4.00055C7.52653 4.00055 7.25327 3.83984 7.10547 3.58271L6.00038 1.67919L4.89701 3.58271C4.74749 3.84163 4.47423 4.00234 4.18378 4.00234C4.10644 4.00234 4.0291 3.99162 3.9552 3.96841L1.60066 3.26843V6.44692C1.60066 6.70941 1.77252 6.93797 2.01657 7.00047L5.73227 7.96652C5.90757 8.01116 6.09147 8.01116 6.26505 7.96652L9.98419 7.00047C10.2282 6.93619 10.4001 6.70762 10.4001 6.44692V3.26843L8.04556 3.96663C7.97166 3.98984 7.89432 4.00055 7.81699 4.00055ZM11.4708 1.99704L10.5857 0.16137C10.5324 0.0506587 10.4173 -0.0136253 10.2987 0.0024457L6.00038 0.572073L7.57638 3.28807C7.64168 3.40057 7.7723 3.45414 7.89432 3.41843L11.2955 2.40952C11.4657 2.35774 11.5482 2.16132 11.4708 1.99704ZM1.41504 0.16137L0.529944 1.99704C0.450887 2.16132 0.5351 2.35774 0.703527 2.40774L4.10472 3.41664C4.22674 3.45235 4.35736 3.39878 4.42267 3.28629L6.00038 0.572073L1.70034 0.0024457C1.58175 -0.0118396 1.46832 0.0506587 1.41504 0.16137Z" fill="#ff6500ff"></path></svg></span>
+                            OpenBox
+                        </h1>
+                    
+                        <label class="switch"> <input type="checkbox"> <span class="slider round"></span> </label>
+
+                    </div>
+
+                    <div class="switch_Item">
+
+                        <h1><span><svg width="1rem" height="1rem" viewBox="0 0 12 12" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconPrimeShuriken"><path d="M9.77702 0.577887C9.43068 1.65273 9.12924 2.55751 8.85088 3.46879C8.77264 3.72582 8.59177 3.83486 8.38525 3.95428C8.00171 4.17756 7.69642 4.41511 7.876 4.97071C8.05559 5.5237 8.4186 5.75737 8.92785 5.6626C9.36526 5.58082 9.65003 5.72491 9.95403 5.98843C10.5749 6.52715 11.2175 7.0438 12 7.69285C10.8173 7.69285 9.82704 7.69156 8.83677 7.69285C8.56098 7.69285 8.45323 7.45011 8.27622 7.30731C7.94399 7.0399 7.631 6.95812 7.23976 7.24111C6.85751 7.51761 6.66253 7.82656 6.88958 8.26662C7.15126 8.77419 7.0666 9.23112 6.8434 9.727C6.53426 10.415 6.28541 11.129 5.9442 11.9987C5.58119 10.8797 5.2759 9.9347 4.96676 8.99097C4.87953 8.72616 5.08092 8.55221 5.15404 8.33802C5.27974 7.97325 5.31181 7.65002 4.95265 7.36443C4.59605 7.08144 4.18172 6.9049 3.86745 7.25279C3.32998 7.84993 2.68477 7.72401 2.03955 7.69415C1.42769 7.66689 0.814538 7.60718 0 7.54747C0.965901 6.85297 1.79711 6.25325 2.63218 5.65871C2.77071 5.56005 2.91951 5.66001 3.06446 5.67039C3.47365 5.70025 3.86489 5.7314 4.06243 5.21995C4.26253 4.702 4.20866 4.24636 3.71609 4.0114C3.19017 3.76086 3.07472 3.33379 2.95927 2.85218C2.78482 2.11486 2.58343 1.38531 2.35382 0.5C3.27098 1.16853 4.05858 1.74619 4.84874 2.31866C5.06296 2.47443 5.08605 2.7029 5.13479 2.93526C5.21176 3.29874 5.31694 3.63754 5.7954 3.66221C6.28541 3.68687 6.76644 3.60769 6.83827 3.06378C6.93319 2.33813 7.43089 2.04735 7.96066 1.72931C8.52378 1.38921 9.0728 1.02574 9.77702 0.577887ZM6.03399 5.10052C5.65943 5.1122 5.44137 5.3173 5.43111 5.64703C5.41956 6.01439 5.65045 6.24026 6.03271 6.22728C6.38161 6.2156 6.583 6.00401 6.58044 5.65741C6.57659 5.30562 6.35468 5.13167 6.03399 5.10052Z" fill="#ff6500ff"></path></svg></span>
+                            Prime Ninja
+                        </h1>
+                    
+                        <label class="switch"> <input type="checkbox"> <span class="slider round"></span> </label>
+
+                    </div>
+
+                </div>
+
+                <div class="categories_Box">
+
+                    <div class="categories_box_Title"><h1>Preço</h1> <span class="teste" (click)="teste($event)"></span></div>
+                    
+                    <h2>Intervalo de preço</h2>
+                    <div class="box_Checkbox"> 
+                      
+                        <input type="range" id="sold_Kabum">
+                      
+                        <label for="sold_Kabum>KaBuM!">KaBuM!</label>
+                    
+                    </div>
+
+                </div>
+           
+                <div *ngFor="let group of categoriesGrouped | keyvalue">
+           
+                    <div class="categories_Box">
+           
+                        <div class="categories_box_Title"> <h1 style="min-width: 120px">{{ group.value.name }}</h1> <span class="teste" (click)="teste($event)"></span></div>
+           
+                        <div class="categories_Box_Items">
+                        
+                            <div *ngFor="let subcategory of group.value.children" class="box_Checkbox">
+           
+                            <input type="checkbox" [id]="'category-' + subcategory.id" [(ngModel)]="subcategory.selected" (change)="onCheckboxChange(subcategory)">
+           
+                            <label [for]="'category-' + subcategory.id">{{ subcategory.name }}</label>
+          
+                            </div>
+                     
+                        </div>
+                        
+                        <h1 class="seeLess" (click)="seeLess($event)">Ver menos</h1>
+
+                        <h1 class="seeMore" (click)="seeMore($event)">Ver mais</h1>
+           
+                    </div>
+           
+                </div>
+           
+            </div>
+              
+
+        </div>
+
+        <div class="product_All">
+            
+            <div class="product_Filter">
+            
+                <div class="product_Filter_Title">
+
+                    <div class="filter_Title_Sort">
+
+                        <span><svg width="16" height="13" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconSort"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.88883 3.77821L4.33328 0.222656L0.777723 3.77821L3.44439 3.77821L3.44439 10.0004L5.22217 10.0004L5.22217 3.77821L7.88883 3.77821ZM9.66661 16.2227L13.2222 12.6671L10.5555 12.6671L10.5555 6.44488L8.77772 6.44488L8.77772 12.6671L6.11106 12.6671L9.66661 16.2227Z" fill="#FF6500"></path></svg></span>
+                        
+                        <label for="sort_Products">Ordenar: </label>
+                    
+                        <select id="sort_Products">
+                           
+                            <option>
+                                Escolha
+                            </option>
+
+                            <option>
+                                Preço crescente
+                            </option>
+
+                            <option>
+                                Preço decrescente
+                            </option>
+
+                            <option>
+                               Mais avaliados
+                            </option>
+
+                            <option>
+                               Mais recentes
+                            </option>
+
+                            <option selected>
+                                Mais procurados
+                            </option>
+
+                            <option>
+                                Fabricante
+                            </option>
+
+                            <option>
+                                Promoções
+                            </option>
+                       
+                        </select>
+
+                        <label for="show_Products">Exibir: </label>
+                    
+                        <select id="show_Products">
+                           
+                            <option>
+                                20 por página
+                            </option>
+
+                            <option>
+                                40 por página
+                            </option>
+
+                            <option>
+                                60 por página
+                            </option>
+
+                            <option>
+                                80 por página
+                            </option>
+
+                            <option>
+                                100 por página
+                            </option>
+                       
+                        </select>
+
+                    </div>
+                    
+                </div>
+               
+                <div class="product_Sort">
+               
+                    <span><svg width="16" height="18" viewBox="0 0 22 18" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCategories"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.86816 0.232422H0V5.10058H4.86816V0.232422ZM22.0002 0.232422H6.41501V5.10058H22.0002V0.232422ZM0 6.5493H4.86816V11.4175H0V6.5493ZM22.0002 6.5493H6.41501V11.4175H22.0002V6.5493ZM0 12.866H4.86816V17.7343H0V12.866ZM22.0002 12.866H6.41501V17.7343H22.0002V12.866Z" fill="#ff6500"></path></svg></span>
+                    
+                    <h1>CATEGORIAS</h1>
+               
+                </div>
+
+                <div class="product_Category">
+
+                    <div class="marker_Departments">
+                               
+                        <div class="marker_Swiper">
+            
+                            <div class="swiper-wrapper marker_Wrapper">
+            
+                                <div class="swiper-slide  marker_swiper_Button button_Todos" >
+                                    
+                                    <h1>TODOS</h1>
+                                
+                                </div>
+            
+                               <div class="swiper-slide marker_swiper_Button button_Todos" *ngFor="let ctRel of categoriesRelacionadas" (click) = "filter_Section(ctRel.name)">
+              
+                                  <h1> {{ctRel.name}}</h1>
+                                
+                               </div>
+
+            
+                            </div>
+                            
+                            <div class="swiper-scrollbar"></div>
+                        </div>
+
+                    </div>
+                
+                
+                </div>
+            
+            </div>
+
+            <div class="product_Items" style="display: none;">
+
+                <div>
+
+                    <label for="productId">ID do Produto:</label>
+                    
+                    <label for="visits">Novo Valor de Visitas:</label>
+                    <input type="number" id="visits" [(ngModel)]="newVisits">
+
+                    <button (click)="updateVisits(2)">CLICA</button>
+                    
+                    <button (click)="updateVisits(4)">Atualizar</button>
+                </div>
+            
+            </div>
+  
+            <div class="product_Items"> 
+                
+                <div class="products_All">
+
+                    <div class="swiper">  
+              
+                        <div class="swiper-wrapper wrapper_Products">
+                  
+                            <div class="swiper-slide product_Item" *ngFor="let produto of filterProduct">
+        
+                                <div class="product_Discount_Stock">
+                  
+                      <div class="product_Discount">
+                      
+                        {{ produto.discount }}%
+                        <svg width="16" viewBox="0 0 16 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowDownChevron"><path d="M0 -3.65575e-06L16 0L8 8L0 -3.65575e-06Z" fill="#fff"></path></svg>
+                      
+                      </div>
+                  
+                  
+                      
+                      <div *ngIf="produto.stock_Quantity >= 100" class="product_Stock stockFull">
+                      
+                        <strong>EM<br>ESTOQUE</strong>
+                      
+                      </div>
+                      
+                      <div *ngIf="produto.stock_Quantity < 100" class="product_Stock">
+                      
+                        <small>APENAS<br><strong>{{produto.stock_Quantity}}</strong><br>UNID.</small>
+                      
+                      </div>
+                  
+                                </div>
+                    
+                                <div class="product_Image">
+                    
+                      <img [src]="produto.imageUrl" alt="Product">
+                    
+                                </div>
+                  
+                                <div class="product_Description">
+        
+                      <div class="product_Name">{{ produto.name_Product }}</div> 
+                    
+                      <div class="prices">
+                        <div class="total_Price">
+                        
+                          {{ produto.price | currency:'BRL' }}
+                        
+                        </div> 
+                
+                        <div class="discount_Price">
+                        
+                          {{ produto.price - ((produto.price * produto.discount) / 100) | currency:'BRL' }}
+                        
+                        </div> 
+          
+                        <span>À vista no PIX</span>
+          
+                       
+                        
+        
+                      </div>
+                       <div *ngIf="(produto.idProduct)%2 == 0" class="free_Shipping">
+                        
+                          <svg width="12" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconTruck"><path d="M20.1818 7.5H17.4545V5.25C17.4545 4.0125 16.4727 3 15.2727 3H2.18182C0.981818 3 0 4.0125 0 5.25V15.375C0 16.6125 0.981818 17.625 2.18182 17.625C2.18182 19.4925 3.64364 21 5.45455 21C7.26545 21 8.72727 19.4925 8.72727 17.625H15.2727C15.2727 19.4925 16.7345 21 18.5455 21C20.3564 21 21.8182 19.4925 21.8182 17.625H22.9091C23.5091 17.625 24 17.1187 24 16.5V12.7537C24 12.27 23.8473 11.7975 23.5636 11.4038L21.0545 7.95C20.8473 7.66875 20.52 7.5 20.1818 7.5ZM5.45455 18.75C4.85455 18.75 4.36364 18.2437 4.36364 17.625C4.36364 17.0063 4.85455 16.5 5.45455 16.5C6.05455 16.5 6.54545 17.0063 6.54545 17.625C6.54545 18.2437 6.05455 18.75 5.45455 18.75ZM20.1818 9.1875L22.32 12H17.4545V9.1875H20.1818ZM18.5455 18.75C17.9455 18.75 17.4545 18.2437 17.4545 17.625C17.4545 17.0063 17.9455 16.5 18.5455 16.5C19.1455 16.5 19.6364 17.0063 19.6364 17.625C19.6364 18.2437 19.1455 18.75 18.5455 18.75Z" fill="#ff6500"></path></svg>
+                          <span>frete grátis</span>
+                        
+                        </div>
+        
+                      
+                                </div>
+        
+                                <div class="product_Buy">
+                      
+                      <div class="buy_Svg">
+                      
+                        <svg width="24" height="24" viewBox="0 0 18 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconJustArrived"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8768 0.102663C14.0236 0.18777 14.1372 0.320148 14.1991 0.478169C14.2609 0.63619 14.2673 0.810514 14.2173 0.972663L11.5158 9.75066H16.5003C16.6468 9.7506 16.7901 9.79344 16.9125 9.87389C17.0349 9.95434 17.1311 10.0689 17.1892 10.2034C17.2472 10.3378 17.2646 10.4864 17.2393 10.6306C17.2139 10.7749 17.1468 10.9086 17.0463 11.0152L5.0463 23.7652C4.93019 23.8886 4.77568 23.9691 4.60796 23.9935C4.44024 24.018 4.26919 23.9848 4.1227 23.8996C3.97622 23.8143 3.86292 23.682 3.80129 23.5241C3.73965 23.3662 3.73331 23.1921 3.7833 23.0302L6.4848 14.2507H1.5003C1.35382 14.2507 1.21052 14.2079 1.08811 14.1274C0.965693 14.047 0.869515 13.9325 0.811447 13.798C0.753379 13.6635 0.735963 13.5149 0.761349 13.3707C0.786735 13.2264 0.853812 13.0927 0.954299 12.9862L12.9543 0.236163C13.0703 0.112861 13.2245 0.0324155 13.392 0.00790543C13.5595 -0.0166046 13.7304 0.0162624 13.8768 0.101163V0.102663Z" fill="white"></path></svg>
+                    
+                      </div>
+                      
+                      <div *ngIf="produto.discount <= 10"  class="buy_Discount_Timer">
+        
+                          TERMINA EM:<strong></strong>
+              
+                      </div>
+        
+                      <div *ngIf="produto.discount > 10"  class="buy_Discount_Timer">
+        
+                        TERMINA EM:<strong></strong>
+            
+                    </div>
+        
+                                </div>
+        
+                                <div class="product_Buy_Enter">
+                                    
+                                    <div class="buy_Svg_Enter">
+                                    
+                                        <svg width="20" height="20" viewBox="0 0 23 22" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCart"><path d="M7.09977 17.6C5.88981 17.6 4.91085 18.59 4.91085 19.8C4.91085 21.01 5.88981 22 7.09977 22C8.30973 22 9.2997 21.01 9.2997 19.8C9.2997 18.59 8.30973 17.6 7.09977 17.6ZM0.5 0V2.2H2.69992L6.65979 10.549L5.17484 13.244C4.99885 13.552 4.89985 13.915 4.89985 14.3C4.89985 15.51 5.88981 16.5 7.09977 16.5H20.2993V14.3H7.56176C7.40776 14.3 7.28677 14.179 7.28677 14.025L7.31977 13.893L8.30973 12.1H16.5044C17.3294 12.1 18.0554 11.649 18.4294 10.967L22.3672 3.828C22.458 3.66013 22.5037 3.47158 22.4998 3.28078C22.4959 3.08998 22.4426 2.90346 22.345 2.73943C22.2475 2.5754 22.1091 2.43947 21.9433 2.34492C21.7776 2.25037 21.5901 2.20044 21.3993 2.2H5.13084L4.09688 0H0.5ZM18.0994 17.6C16.8894 17.6 15.9105 18.59 15.9105 19.8C15.9105 21.01 16.8894 22 18.0994 22C19.3094 22 20.2993 21.01 20.2993 19.8C20.2993 18.59 19.3094 17.6 18.0994 17.6Z" fill="white"></path></svg>
+                                
+                                    </div>
+                                    
+                                    <div class="buy_Enter_Buy">
+                        
+                                        <strong>COMPRAR</strong>
+                        
+                                    </div>
+                        
+                                </div> 
+                  
+                            </div>
+                        
+                        </div>
+                    
+                    </div>
+                
+                </div>
+
+            </div>
+           
+            <ngx-slider [(value)]="value" [(highValue)]="highValue" [options]="options" (userChangeEnd)="onValueChange($event)" ></ngx-slider>
+            <p class="input-container">
+                Min value: <input type="text" [value]="(value | currency:'BRL')" (input)="onMinInputChange($event)" class="custom-input">
+            </p>
+            <p class="input-container">
+                Max value: <input type="text" [value]="(highValue | currency:'BRL')" (input)="onMaxInputChange($event)" class="custom-input">
+            </p>
+            
+
+        </div>
+    
+    </div>
+   
+
+    
+
+</div>
 </div>

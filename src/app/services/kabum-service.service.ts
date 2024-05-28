@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable,  Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,12 +29,32 @@ export class KabumServiceService {
 
   private offerTime3Subject: Subject<string> = new Subject<string>();
   offerTime3$: Observable<string> = this.offerTime3Subject.asObservable();
-
-  constructor(private http: HttpClient) { }
+  
+  private filterNameSource: BehaviorSubject<string>;
+  
+  constructor(private http: HttpClient) {const savedName = localStorage.getItem('filterName') || '';
+  this.filterNameSource = new BehaviorSubject<string>(savedName);
+}
 
   getDados(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       tap(data => console.log('Dados recebidos:', data))
+    );
+  }
+  get currentFilterName() {
+    return this.filterNameSource.asObservable();
+  }
+
+  changeFilterName(name: string) {
+    localStorage.setItem('filterName', name);
+    this.filterNameSource.next(name);
+  }
+
+  updateProductVisits(id: number, visits: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}/visits`;
+    return this.http.put(url, { visits }).pipe(
+      tap(() => console.log('Visitas do produto atualizadas com sucesso!')),
+      // Trate quaisquer erros aqui, se necessário
     );
   }
   

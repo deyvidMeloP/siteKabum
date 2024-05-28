@@ -25,7 +25,10 @@ export class BannerPairComponent implements OnInit {
   tempoRestante2Subscription: Subscription | undefined;
   tempoRestante3Subscription: Subscription | undefined;
 
-  constructor(private departService: KabumServiceService, private dadosServiceBrands: KabumServiceService,  private router: Router, private dadosProdutos: KabumServiceService, private timerService: KabumServiceService) {}
+  constructor(private departService: KabumServiceService, private dadosServiceBrands: KabumServiceService,  private router: Router, private dadosProdutos: KabumServiceService, private timerService: KabumServiceService,  private stateService: KabumServiceService) {
+ 
+   
+  }
 
   testando: string = '';
   ngOnInit(): void {
@@ -298,7 +301,8 @@ export class BannerPairComponent implements OnInit {
   NavigationPage(name: string){
 
     
-        this.router.navigateByUrl('/Filter', { state: { name: name } })
+    this.stateService.changeFilterName(name);
+    this.router.navigateByUrl('/Filter');
      
 
   }

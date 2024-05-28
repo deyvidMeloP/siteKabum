@@ -22,6 +22,7 @@ export class ApiKabumComponent implements OnInit{
   tempoRestante1Subscription: Subscription | undefined;
   tempoRestante2Subscription: Subscription | undefined;
   tempoRestante3Subscription: Subscription | undefined;
+  newVisits: any;
 
   constructor(private dadosService: KabumServiceService, private dadosServiceImages: KabumServiceService, private router: Router, private timerService: KabumServiceService) { }
   
@@ -128,6 +129,22 @@ export class ApiKabumComponent implements OnInit{
   }
 
   navegarParaProductMain(produto: any) {
+
+     this.newVisits = produto.visits + 1
+       
+    this.dadosService.updateProductVisits(produto.idProduct, this.newVisits)
+      .subscribe(
+        () => {
+        
+          this.dadosService.getDados().subscribe(data => {
+            
+          });
+        },
+        error => {
+          console.error('Erro ao atualizar valor de visitas:', error);
+         
+        }
+      );
 
       this.router.navigateByUrl('/Product', { state: { produto: produto } })
      

@@ -14,6 +14,12 @@ import { ProductMainComponent } from './components/product_Page/product-main/pro
 import { HomeComponent } from './components/home/home.component';
 import { NgMagnizoomModule } from 'ng-magnizoom';
 import { ProductFilterComponent } from './components/product-filter/product-filter.component';
+import { FormsModule } from '@angular/forms';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 // register Swiper custom elements
 register();
 
@@ -37,8 +43,15 @@ register();
     HttpClientModule,
     AppRoutingModule,
     NgMagnizoomModule,
+    FormsModule,
+    MatSliderModule,
+    MatInputModule,
+    MatFormFieldModule,
+    NgxSliderModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
