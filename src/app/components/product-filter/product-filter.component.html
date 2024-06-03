@@ -2,7 +2,7 @@
 <div class="box">
 
 
-    <div class="box_Title">
+    <div class="box_Title" style="background-color: #ff6500;">
 
         <img src="https://www.kabum.com.br/_next/image?url=https%3A%2F%2Fthemes.kabum.com.br%2Fconteudo%2Flayout%2F4678%2Fbanner_img.jpg&w=1920&q=100" alt="">
         
@@ -47,7 +47,7 @@
                        
                         <input type="checkbox" id="sold_Kabum">
                       
-                        <label for="sold_Kabum>KaBuM!">KaBuM!</label>
+                        <label for="sold_Kabum">KaBuM!</label>
                     
                     </div>
 
@@ -120,19 +120,59 @@
                     <div class="categories_box_Title"><h1>Preço</h1> <span class="teste" (click)="teste($event)"></span></div>
                     
                     <h2>Intervalo de preço</h2>
-                    <div class="box_Checkbox"> 
+                    
+                    <div class="box_Range"> 
                       
-                        <input type="range" id="sold_Kabum">
-                      
-                        <label for="sold_Kabum>KaBuM!">KaBuM!</label>
+                        <ngx-slider [(value)]="value" [(highValue)]="highValue" [options]="options" (userChangeEnd)="filterAll(1, 0, $event)" ></ngx-slider>
+                        
+                       
+                       <div class="range_Container">
+
+                            <div class="input_container">
+                            
+                                <input type="text" [value]="(value | currency:'BRL')" (input)="onMinInputChange($event)" class="custom_Input">
+                            
+                                <p>
+                                    Mínimo
+                                </p>
+                                    
+                            </div>
+                            
+                            <div class="input_container">
+           
+                                
+                                <input type="text" [value]="(highValue | currency:'BRL')" (input)="onMaxInputChange($event)" class="custom_Input">
+                            
+                                <p>
+                                    Máximo
+                                </p>
+                              
+                            </div>
+
+                       </div>
+                        
                     
                     </div>
 
                 </div>
            
+                <div class="categories_Box">
+
+                    <div class="categories_box_Title"><h1 style="min-width: max-content;">Ofertas</h1> <span class="teste" (click)="teste($event)"></span></div>
+                    
+                    <div class="box_Checkbox">
+                       
+                        <input type="checkbox" id="sold_Oferta">
+                      
+                        <label for="sold_Oferta">Oferta</label>
+                    
+                    </div>
+
+                </div>
+
                 <div *ngFor="let group of categoriesGrouped | keyvalue">
            
-                    <div class="categories_Box">
+                    <div class="categories_Box" >
            
                         <div class="categories_box_Title"> <h1 style="min-width: 120px">{{ group.value.name }}</h1> <span class="teste" (click)="teste($event)"></span></div>
            
@@ -140,7 +180,7 @@
                         
                             <div *ngFor="let subcategory of group.value.children" class="box_Checkbox">
            
-                            <input type="checkbox" [id]="'category-' + subcategory.id" [(ngModel)]="subcategory.selected" (change)="onCheckboxChange(subcategory)">
+                            <input type="checkbox" [id]="'category-' + subcategory.id" [(ngModel)]="subcategory.selected" (change)="filterAll(2, subcategory, group.value.name)">
            
                             <label [for]="'category-' + subcategory.id">{{ subcategory.name }}</label>
           
@@ -154,7 +194,7 @@
            
                     </div>
            
-                </div>
+                </div>           
            
             </div>
               
@@ -173,7 +213,7 @@
                         
                         <label for="sort_Products">Ordenar: </label>
                     
-                        <select id="sort_Products">
+                        <select id="sort_Products" class="sort_Products">
                            
                             <option>
                                 Escolha
@@ -211,7 +251,7 @@
 
                         <label for="show_Products">Exibir: </label>
                     
-                        <select id="show_Products">
+                        <select id="show_Products" class="show_Products">
                            
                             <option>
                                 20 por página
@@ -235,8 +275,20 @@
                        
                         </select>
 
+
+
                     </div>
-                    
+
+                    <h1 class="filter_Leght"><strong>{{filterProduct.length}} </strong>produtos</h1>
+                   
+                    <div class="filter_Title_Button" style="display: flex; gap: 30px;">
+
+                        <button  title="Visualizar em Lista"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconListing"><path d="M8 6H21" stroke="#565c69ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 12H21" stroke="#565c69ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 18H21" stroke="#565c69ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 6H3.01" stroke="#565c69ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 12H3.01" stroke="#565c69ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 18H3.01" stroke="#565c69ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                
+                        <button title="Visualizar em Grid"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconGrid"><path d="M14 7H7V14H14V7Z" stroke="#ff6500ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M25 7H18V14H25V7Z" stroke="#ff6500ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M25 18H18V25H25V18Z" stroke="#ff6500ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14 18H7V25H14V18Z" stroke="#ff6500ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                
+                    </div>
+            
                 </div>
                
                 <div class="product_Sort">
@@ -418,13 +470,7 @@
 
             </div>
            
-            <ngx-slider [(value)]="value" [(highValue)]="highValue" [options]="options" (userChangeEnd)="onValueChange($event)" ></ngx-slider>
-            <p class="input-container">
-                Min value: <input type="text" [value]="(value | currency:'BRL')" (input)="onMinInputChange($event)" class="custom-input">
-            </p>
-            <p class="input-container">
-                Max value: <input type="text" [value]="(highValue | currency:'BRL')" (input)="onMaxInputChange($event)" class="custom-input">
-            </p>
+           
             
 
         </div>

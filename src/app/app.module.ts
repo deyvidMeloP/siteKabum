@@ -20,6 +20,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { ReactiveFormsModule } from '@angular/forms';
 // register Swiper custom elements
 register();
 
@@ -47,7 +48,8 @@ register();
     MatSliderModule,
     MatInputModule,
     MatFormFieldModule,
-    NgxSliderModule
+    NgxSliderModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideAnimationsAsync()

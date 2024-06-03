@@ -16,6 +16,7 @@ export class KabumServiceService {
   private apiUrlSection = 'http://localhost:8080/api/section';
   private apiUrlSubsection = 'http://localhost:8080/api/subsection';
   private apiUrlCategories = 'http://localhost:8080/api/categories';
+  private apiUrlProductCategory = 'http://localhost:8080/api/productCategory'
 
   offer_Time1: string = '';
   offer_Time2: string = '';
@@ -41,6 +42,14 @@ export class KabumServiceService {
       tap(data => console.log('Dados recebidos:', data))
     );
   }
+
+  getProductCategory(): Observable<any[]> {
+    
+    return this.http.get<any[]>(this.apiUrlProductCategory).pipe(
+      tap(data => console.log('Dados recebidos:', data))
+    );
+  }
+  
   get currentFilterName() {
     return this.filterNameSource.asObservable();
   }

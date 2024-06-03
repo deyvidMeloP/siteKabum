@@ -4,7 +4,7 @@
 
 }
 .box{
-    width: 92vw;
+    width: 94vw;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -25,25 +25,24 @@
     display: flex;
     justify-content: center;
     padding: 20px 0px 20px 0px;
-    background-color: #ff6500;
 }
 
 .box_All{
     display: flex;
     width: 100%;
-
+    gap: 35px;
 }
 
 .categories_Filter{
     display: flex;
-    width: 20%;
+    width: 15%;
     overflow: hidden;
     flex-direction: column;
 }
 
 .categories_Related{
     display: flex;
-    width: max-content;
+    width: 100%;
     flex-direction: column;
     margin-bottom: 25px;
 }
@@ -84,7 +83,7 @@
 }
 
 .categories_Items{
-    width: 77%;
+    width: 100%;
     max-width: 220px;
     display: flex;
     flex-direction: column;
@@ -104,11 +103,19 @@
     line-height: 24px;
     font-weight: 400;
     color: #565c69;
+    margin-bottom: 22px;
 }
 
+.box_Range{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+}
 ngx-slider {
-    width: 200px;
-    margin: 100px 0;
+    width: 100%;
+    margin: 0!important;
+    position: relative;
   }
 :host ::ng-deep .ngx-slider .ngx-slider-bar {
     background: #dee0e4 !important;
@@ -120,7 +127,6 @@ ngx-slider {
 
   :host ::ng-deep .ngx-slider-span .ngx-slider-bubble .ngx-slider-model-high{
     position: fixed!important;
-    left: 0!important;
   }
   :host ::ng-deep .ngx-slider .ngx-slider-pointer {
     width: 14px !important;
@@ -141,9 +147,13 @@ ngx-slider {
 }
 
 :host ::ng-deep .ngx-slider .ngx-slider-model-high{
-   left: 80%!important;
-  
+    left: auto!important;
+   right: -105px!important;
    opacity: 1!important;
+   font-size: 12px!important;
+   line-height: 16px!important;
+   margin-right: 100px!important;
+   color: #565c69!important;
 
 }
   :host ::ng-deep .ngx-slider .ngx-slider-limit {
@@ -162,25 +172,56 @@ ngx-slider {
 
   :host ::ng-deep .ngx-slider .ngx-slider-model-value{
     opacity: 1!important;
+    font-size: 12px!important;
+    line-height: 16px!important;
+    left: -3px!important;
+    color: #565c69!important;
   }
 
 /*estiliza ela aqui*/
-  .input-container {
-    margin-bottom: 10px; /* Adicione margem inferior para espaçamento entre os campos */
+
+.range_Container{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    margin-top: 50px;
+    align-items: center;
+    background-color: transparent;
+}
+  .input_container {
+    display: flex;
+    position: relative;
+    width: 50%;/* Adicione margem inferior para espaçamento entre os campos */
+  
 }
 
-.custom-input {
-    padding: 8px; /* Adicione preenchimento interno para melhorar a aparência */
-    border: 1px solid #ccc; /* Adicione uma borda para destacar o campo */
+.input_container p{
+    position: absolute;
+    padding: 2px 5px 2px 5px;
+    top: -11px;
+    background-color: white;
+    left: 21%;
+    color: #828c97;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.custom_Input {
+    text-align: center;
+    padding: 12px 4px 12px 4px;/* Adicione preenchimento interno para melhorar a aparência */
+    border: 1px solid #b4b8bc; /* Adicione uma borda para destacar o campo */
     border-radius: 4px; /* Adicione uma borda arredondada */
-    width: 200px; /* Defina a largura do campo */
+    width: 100%; /* Defina a largura do campo */
 }
 
-.custom-input:focus {
+.custom_Input:focus {
     outline: none; /* Remova o contorno ao focar */
-    border-color: #007bff; /* Mude a cor da borda quando o campo está focado */
+    border-color: #ff6500; /* Mude a cor da borda quando o campo está focado */
 }
 
+.custom_Input:focus ~ p{
+    color: #ff6500;
+}
 
 .categories_Kabum_Sold h1{
     font-size: 14px;
@@ -208,9 +249,11 @@ ngx-slider {
     align-items: center;
     position: relative;
    
+
+
 }
 
-.categories_box_Title span::after, .categories_Kabum_Sold::after{
+.categories_box_Title span::after{
     content: "";
     width: 14px;
     height: 14px;
@@ -368,10 +411,80 @@ ngx-slider {
     width: 80%;
 }
 
+.product_Filter_Title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .product_Filter{
     width: 100%;
-    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
 }
+
+.filter_Title_Sort{
+    display: flex;
+    align-items: center;
+    width: 60%
+}
+
+.filter_Title_Sort label{
+    font-size: 14px;
+    line-height: 18px;
+    color: #42464d;
+    font-weight: 700;
+    margin-right: 8px;
+}
+
+.filter_Title_Sort span{
+    margin-right: 5px;
+}
+
+.sort_Products, .show_Products{
+    width: 39%;
+    max-width: 270px;
+    padding: 12px 10px 12px 10px;
+    border: none;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    background-position:95%;
+    font-size: 14px;
+    line-height: 18px;
+    color: #42464d;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAKCAYAAABrGwT5AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC2SURBVHgBpc8xCsIwFAbg/6Xo7OjWdtDBySNEUXGokCPoSexRvIKDk2DxBK4ioj1CRgfbZ1tRUjWl4D9kCPn+vAdkkVK1UDPmWyHHs7loJgc5VV4dSI17JCdBWGDB7ALsiTSJqgpekAj9pwGc6+W09/0uQFDErNxObx2fj9oGwbzabTeLAudHVYEN5iHzh+EoWEIgzK7jVDgD3KBt8At/FjCztsH32GZKKxDaNvgTlwrAsQ3+nQeY02Y0uvQN4QAAAABJRU5ErkJggg==");
+}
+
+.sort_Products{
+    margin-right: 2%;
+}
+
+.filter_Leght{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    color:rgb(86, 92, 105);
+    margin-right: 6%;
+}
+
+.product_Filter_Title button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: flex;
+    align-items: center;
+    border:none;
+    
+}
+
+.sort_Products:hover{
+    text-decoration: none;
+}
+
 
 .product_Category{
     width: 100%;
@@ -393,7 +506,6 @@ ngx-slider {
 }
 .marker_Departments{
     display: flex;
-    margin-top: 30px;
     align-items: center;
     gap: 5px;
     width: 100%;
@@ -445,10 +557,19 @@ ngx-slider {
 }
 
 .product_Sort{
+    margin-top: 30px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 .product_Sort span{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+.product_Sort svg{
     display: flex;
     align-items: center;
 }
@@ -483,7 +604,7 @@ ngx-slider {
 
 .wrapper_Products{
     display: flex;
-    background-color: #fafafb;
+    background-color: transparent;
     gap: 7px;
     flex-wrap: wrap;
 }

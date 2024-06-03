@@ -50,7 +50,7 @@ function TesteHello() {
         
         slidesPerView: 'auto',
         loop: false,
-        spaceBetween: 10,
+        spaceBetween: 13,
         navigation: false,
         simulateTouch: false,
         pagination: true,
