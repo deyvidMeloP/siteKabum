@@ -1,22 +1,27 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { Router } from '@angular/router';
+import { map } from 'lodash';
 
 declare function TesteHello(): any;
 declare function swiper_Departments(): any;
+declare function swiper_Section(): any;
+
 
 @Component({
   selector: 'app-banner-pair',
   templateUrl: './banner-pair.component.html',
   styleUrl: './banner-pair.component.css'
 })
-export class BannerPairComponent implements OnInit {
-
+export class BannerPairComponent implements OnInit, AfterViewInit {
+  cont: any = 0
+  nameSub: any[] = []
   dadosDoServiceBrands: any[] = [];
   produtoAll: any[] = [];
   produto: any[] = [];
+  section: any[] = [];
   departments: any[] = [];
   offer_Time1: string = '';
   offer_Time2: string = '';
@@ -24,8 +29,11 @@ export class BannerPairComponent implements OnInit {
   tempoRestante1Subscription: Subscription | undefined;
   tempoRestante2Subscription: Subscription | undefined;
   tempoRestante3Subscription: Subscription | undefined;
-
-  constructor(private departService: KabumServiceService, private dadosServiceBrands: KabumServiceService,  private router: Router, private dadosProdutos: KabumServiceService, private timerService: KabumServiceService,  private stateService: KabumServiceService) {
+  swiper: any;
+  subSection: any = []
+  constructor(private departService: KabumServiceService, private dadosServiceBrands: KabumServiceService,  private router: Router, private dadosProdutos: KabumServiceService, private timerService: KabumServiceService, 
+    private stateService: KabumServiceService, private sectionService: KabumServiceService,
+    private subSectionService: KabumServiceService,) {
  
    
   }
@@ -35,6 +43,8 @@ export class BannerPairComponent implements OnInit {
     this.getDadosDoServico();
     this.getDadosBrands()
     this.getDadosDepartments()
+    this.getDadosSection()
+    this.getDadosSubsection()
     this.tempoRestante1Subscription = this.timerService.offerTime1$.subscribe(
       tempo => this.offer_Time1= tempo
     );
@@ -53,6 +63,41 @@ export class BannerPairComponent implements OnInit {
     swiper_Departments()
   }
 
+  ngAfterViewInit(): void {
+   
+    const swiperContainer = document.querySelector('swiper-container');
+  
+      this.swiper = (swiperContainer as any).swiper;
+      const backButton = document.querySelector('.Volta');
+     
+      if (backButton) {
+        backButton.addEventListener('click', this.swipeBack.bind(this));
+      }
+    
+  }
+  swipeBack(): void {
+    if (this.swiper) {
+      this.swiper.slidePrev();
+    }
+  }
+
+  getDadosSubsection(){
+
+    this.subSectionService.getDadosSubsection().subscribe(
+  
+      (data: any[]) =>{
+  
+        this.subSection = data       
+  
+      },
+  
+      (error: any)=>{
+        console.error('Erro ao obter dados do serviço:', error);
+      }
+  
+  
+    )
+  }
   getDadosDoServico() {
     this.dadosProdutos.getDados().subscribe(
       (data: any[]) => {
@@ -65,8 +110,95 @@ export class BannerPairComponent implements OnInit {
       }
     );
 
+  }
+
+  teste(){
+
+    this.cont +=1
+    this.submenu_Click(this.cont)
+  
+  
+
+  }
+
+  submenu_Click(scId: number){
+    const submenu_Opt = document.querySelector(".submenu_Opt") as HTMLElement
+  this.nameSub = []
+   submenu_Opt.style.display = "none"
+  for(let subsection of this.subSection){
+  
+    if(subsection.scId == scId){
+  
+      this.nameSub.push(subsection.name)
+      console.log(subsection.name)
+  
+    }
+  
+  
+  
+    submenu_Opt.style.display = "flex"
+   
+  }
+  
+  
+   
     
   }
+
+  getDadosSection(){
+   
+    this.sectionService.getDadosSection().subscribe(
+      (data: any[]) => {
+        this.section = data;
+        swiper_Section()
+        setTimeout(()=>{
+          this.adjusts()
+        },0)
+        console.log('Dados no componente:', this.section);
+      },
+      (error: any) => {
+        console.error('Erro ao obter dados do serviço:', error);
+      }
+    );
+
+  }
+  
+
+  adjusts(){
+
+    const departmentsSection = document.querySelectorAll(".departments_Item") as NodeListOf<HTMLElement>
+
+
+    departmentsSection.forEach((el)=>{
+
+     const h1 = (el.querySelector("h1") as HTMLElement).innerText
+     let te = el.querySelector("img") as HTMLElement
+     
+     if(h1 == "CASA INTELIGENTE"){
+
+        
+        te.style.width = "90%"
+        el.style.width = "10vw"
+       
+     }
+
+     else if(h1 == "CELULAR & SMARTPHONE"){
+   
+      
+      te.style.width = "75%"
+      el.style.width = "12vw"
+   
+    }
+
+    else if(h1 == "TABLETS, IPADS E E-READERS"){
+
+      te.style.width = "64.6%"
+      el.style.width = "14vw"
+
+    }
+    })
+  }
+  
 
   getDadosBrands() {
     this.dadosServiceBrands.getDadosBrands().subscribe(

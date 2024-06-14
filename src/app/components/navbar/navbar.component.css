@@ -186,11 +186,11 @@
     transition: transform 0.34s ease;
 }
 
-.arrow_Up, .arrow_Up_2{
+.arrow_Up, .arrow_Up_2, .arrow_Up_3{
     display: none;
     position: absolute;
     width: calc(270px);
-    height: calc(31px);
+    height: 33px;
     top: -2px;
     padding: 6px 0px 6px 0px;
     align-items: center;
@@ -200,9 +200,9 @@
     background-color: #f0f0f5;
 }
 
- .arrow_Down, .arrow_Down_2{
+ .arrow_Down, .arrow_Down_2, .arrow_Down_3{
     display: flex;
-    height: calc(31px);
+    height: 5%;
     margin-top: 2px;
     padding: 6px 0px 6px 0px;
     align-items: center;
@@ -211,12 +211,12 @@
     background-color: #f0f0f5;
   }
 
-  .arrow_Down svg, .arrow_Down_2 svg{
+  .arrow_Down svg, .arrow_Down_2 svg, .arrow_Down_3 svg{
      transform: rotate(180deg);
   }
   
  .departments_Submenu{
-    height: 500px;
+    height: 510px;
     background-color: white;
     position: absolute;
     overflow: hidden;
@@ -231,10 +231,10 @@
     flex-direction: column;
     width: 270px;
     height: 100%;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px;
 }
 
-.submenu_Opt{
+.submenu_Opt, .submenu_Parent{
     display: none;
 }
 
@@ -246,6 +246,16 @@
     height: 100%;
     overflow: hidden;
 }
+
+swiper-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.swiper_Section, .swiper_Subsection, .swiper_Parent{
+    height: 95%;
+}
 .submenu_Wrapper{
     display: flex;
     flex-direction: column;
@@ -254,12 +264,20 @@
 
 .item{
     display: flex;
+    height: auto;
     justify-content: space-between;
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
     color: #565c69;
     padding: 4px 12px 4px 12px;
+}
+
+.item_Subsection{
+    font-weight: 600;
+    text-decoration: underline;
+    color: #ff6500;
+
 }
 
 .submenu_Item_Title{

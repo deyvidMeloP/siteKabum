@@ -1,7 +1,6 @@
 .banner_Pair{
    width: 92vw;
    background-color: #fafafb;
-
 }
 
 .images_Banner{
@@ -225,7 +224,7 @@
 }
 
 
-.IconBackward, .IconForward{
+.IconBackward, .IconForward, .departments_Back, .departments_Next{
     cursor: pointer;
 }
 
@@ -458,4 +457,74 @@
 
 .buy_Svg_Enter{
     margin-top: 4px;
+}
+
+.departments{
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+    gap: 12px;
+    align-items: center;
+}
+
+.departments_All{
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    width: 93%;
+}
+.departments_Title{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.departments_Items{
+    
+    overflow: hidden;
+}
+
+.departments_Wrapper{
+   padding-top: 5px;
+   padding-bottom: 5px;
+}
+.departments_Title span{
+    display: flex;
+    align-items: center;
+}
+.departments_Title h1{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 14px;
+    color: #42464d;
+}
+
+.departments_Item{
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    width: 9.5vw;
+    align-items: center;
+ 
+}
+
+.departments_Item img{
+    width: 95%;
+    object-fit: cover;
+}
+
+.departments_Item h1{
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+    padding: 8px 0px 8px 0px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    min-width: max-content;
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 700;
+    color: #ff6500;
 }

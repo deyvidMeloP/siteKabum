@@ -5,9 +5,9 @@
 
 
 
-<div class="navbar" (mouseleave)="departments_Leave()">
+<div class="navbar" (mouseleave)="departments_Leave()" (mouseleave)="leave()">
 
-    <div class="navbar_Menu">
+    <div class="navbar_Menu" (mouseenter)="departments_Leave()" (mouseenter)="leave()">
         
        
         <div class="svg_Logo">
@@ -107,227 +107,77 @@
 
     <div class="navbar_downMenu">
         <ul>
-            <li class="downMenu_List downMenu_Sublist" (mouseenter)="departments_Enter()"><a href="#">DEPARTAMENTOS <i class="fa-solid fa-chevron-down"></i></a>
+            <li class="downMenu_List downMenu_Sublist" (mouseenter)="departments_Enter()"><a >DEPARTAMENTOS <i class="fa-solid fa-chevron-down"></i></a>
                
                 <div class="departments_Submenu">
                   
                     <div class="submenu_Items">
 
-                        <button class="arrow_Up">
+                        <button class="arrow_Up" (mouseleave)="leaveButton()">
                            
                             <svg width="1rem" height="1rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg>
                         
                         </button>
 
-                        <div class="submenu_Swiper">
-                            
-                            <div class="submenu_Wrapper swiper-wrapper">
-                                
-                                <li class="item swiper-slide" (click)="submenu_Click(1)">Hardware<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span>
+                        <swiper-container class="swiper_Section" slides-per-view="15" speed="500" loop="false" direction="vertical" >
                         
-                                </li>
-                                
-                                <li class="item swiper-slide" (click)="submenu_Click(2)">Periféricos<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Computadores<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Games<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Celular & Smartphone<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">TV<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Áudio<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Projetores<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Espaço Gamer<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Escritório<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Casa Inteligente<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Tablets, Ipads e E-readers<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Câmeras e Drones<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Energia<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Conectividade<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Geek<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Eletrodomésticos<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Eletroportáteis<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Ar e Ventilação<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Segurança<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Automação<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                            
-                            </div>
-                        
-                        </div>
+                            <swiper-slide style="height: auto;" class="item" *ngFor="let section of Section"(click)="submenu_Click(section)">{{section.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+                          
+                          </swiper-container>
                       
-                        <button class="arrow_Down">
+                        <button class="arrow_Down" (mouseleave)="leaveButton()" style="position: relative;">
                            
                             <svg width="1rem" height="1rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg>
                         
                         </button>
-                    </div>
-
-                    <div class="submenu_Items submenu_Opt" (click)="submenu_SubOpt(1)">
-
-                        <button class="arrow_Up_2">
-                           
-                            <svg width="1rem" height="1rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg>
-                        
-                        </button>
-
-                        <div class="submenu_Swiper_2">
-                            
-                            <div class="submenu_Wrapper swiper-wrapper">
-                                
-                                <li class="submenu_Item_Title swiper-slide">Ver tudo de Hardware
-                        
-                                </li>
-                                
-                                <li class="item swiper-slide">Coolers<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Disco Rígido (HD)<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Drives<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Fontes<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Kit Hardware<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Memória RAM<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Placa de vídeo (VGA)<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Placas Interfaces<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Placas-mãe<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Processadores<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">SSD<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                            </div>
-                        
-                        </div>
-                      
-                        <button class="arrow_Down_2">
-                           
-                            <svg width="1rem" height="1rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg>
-                        
-                        </button>
+                    
                     </div>
 
                     <div class="submenu_Items submenu_Opt">
 
-                        <button class="arrow_Up_2">
+                        <button class="arrow_Up_2" (mouseleave)="leaveButton()">
                            
                             <svg width="1rem" height="1rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg>
                         
                         </button>
-
-                        <div class="submenu_Swiper_2">
-                            
-                            <div class="submenu_Wrapper swiper-wrapper">
-                                
-                                <li class="submenu_Item_Title swiper-slide">Ver tudo de Periféricos
                         
-                                </li>
-                                
-                                <li class="item swiper-slide">Cabos e Adaptadores<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Caixa de Som<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Carteira de Criptomoedas<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Fone de Ouvido Gamer<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Gabinetes<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Headset Gamer<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Headseats<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Kit Gamer<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Mesa Digitalizadora<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Mouse Gamer<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Mouse Pad<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Óculos<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Pen Drive<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Streamer<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Suportes<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Suprimentos<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Teclado e Mouse<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                                
-                                <li class="item swiper-slide">Teclado Gamer<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span></li>
-                            
-                            </div>
-                        
-                        </div>
+                        <swiper-container class="swiper_Subsection" slides-per-view="auto" speed="500" loop="false" direction="vertical" [allowTouchMove]="false">
+                           
+                            <swiper-slide style="height: auto;" class="item item_Subsection" (click)="NavigationPage(nameSection[0])">Ver tudo de {{nameSection[0]}}</swiper-slide>
+                            <swiper-slide style="height: auto;" class="item" *ngFor="let subsection of nameSub" (click)="submenu_SubOpt(subsection)">{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+                         
+                          </swiper-container>
                       
-                        <button class="arrow_Down_2">
+                        <button class="arrow_Down_2" (mouseleave)="leaveButton()">
                            
                             <svg width="1rem" height="1rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg>
                         
                         </button>
                     </div>
 
-                    <div class="submenu_Items submenu_Opt_2">
+                    <div class="submenu_Items submenu_Parent">
 
-                        <button class="arrow_Up_2">
+                        <button class="arrow_Up_3" (mouseleave)="leaveButton()">
                            
                             <svg width="1rem" height="1rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg>
                         
                         </button>
-
-                        <div class="submenu_Swiper_2">
-                            
-                            <div class="submenu_Wrapper swiper-wrapper">
-                                
-                                <li class="submenu_Item_Title swiper-slide">Ver tudo de Coolers</li>
-                                
-                                <li class="item swiper-slide">Acessórios para Cooler</li>
-                                
-                                <li class="item swiper-slide">Air Cooler</li>
-                                
-                                <li class="item swiper-slide">Almofada Térmica</li>
-                                
-                                <li class="item swiper-slide">FAN</li>
-                                
-                                <li class="item swiper-slide">Pasta Térmica</li>
-                                
-                                <li class="item swiper-slide">Áudio2</li>
-                                
-                                <li class="item swiper-slide">Water Cooler</li>
-                                
-                            </div>
                         
-                        </div>
+                        <swiper-container class="swiper_Parent" slides-per-view="auto" speed="500" loop="false" direction="vertical" [allowTouchMove]="false">
+                         
+                            <swiper-slide style="height: auto;" class="item item_Subsection" (click)="NavigationPage(nameSection[1])">Ver tudo de {{nameSection[1]}}</swiper-slide>
+                            <swiper-slide style="height: auto;" class="item" *ngFor="let subsection of parent" (click)="NavigationPage(subsection.name)" >{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+                          
+                          </swiper-container>
                       
-                        <button class="arrow_Down_2">
+                        <button class="arrow_Down_3" (mouseleave)="leaveButton()">
                            
                             <svg width="1rem" height="1rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg>
                         
                         </button>
                     </div>
+
+        
                    
                     <div class="submenu_Image">
                         <img src="https://themes.kabum.com.br/banners/11715719582.jpeg" alt="">
@@ -336,7 +186,7 @@
                 </div>
                 
             </li>
-            <li class="downMenu_List"><a href="#">MONTE SEU PC</a></li>
+            <li class="downMenu_List"><a (click)="teste()">MONTE SEU PC</a></li>
             <li class="downMenu_List"><a href="#">OFERTA O DIA</a></li>
             <li class="downMenu_List"><a href="#">CUPONS</a></li>
             <li class="downMenu_List"><a href="#">ENTREGA FLASH</a></li>

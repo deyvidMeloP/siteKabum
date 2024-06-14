@@ -41,6 +41,30 @@ function TesteHello() {
     
   
     });
+
+    }
+
+    function swiper_Section(){
+
+      const swiper = new Swiper('.departments_Swiper', {
+        // Optional parameters
+        
+        slidesPerView: 'auto',
+        spaceBetween: 8,
+        loop: true,
+      
+        // If we need pagination
+     
+      
+        // Navigation arrows
+        navigation: {
+          nextEl: '.departments_Next',
+          prevEl: '.departments_Back',
+        },
+      
+    
+      });
+
     }
 
     function swiper_Filter() {
