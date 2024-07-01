@@ -45,7 +45,7 @@
 
 <div class="pair_Marker">
    
-  <svg width="32" height="32" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconBackward"><g filter="url(#:Rbincc6:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":Rbincc6:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
+  <svg width="32" height="32" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconBackwardPair"><g filter="url(#:Rbincc6:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":Rbincc6:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
             
     <div class="marker_All">
        
@@ -71,53 +71,62 @@
 
             </div>
             
-            <div class="marker_Swiper">
-
-                <div class="swiper-wrapper marker_Wrapper">
-
-                    <div class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(1)">
+            <swiper-container #swiperContainer class="marker_Swiper"  [allowTouchMove]="false" slides-per-view="auto" space-between="9"  loop="true" speed="350" style="display: flex;">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(1)">
                         <h1>TODOS</h1>
-                    </div>
+                    </swiper-slide>
 
-                    <div class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(2)">
-                        <h1>ÁUDIO</h1>
-                    </div>
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(2)">
+                      <h1>CELULAR & SMARTPHONE</h1>
+                  </swiper-slide>
 
-                    <div class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(3)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(3)">
                         <h1>COMPUTADORES</h1>
-                    </div>
+                    </swiper-slide>
 
-                    <div class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(4)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(4)">
                         <h1>CONECTIVIDADE</h1>
-                    </div>
+                    </swiper-slide>
 
-                    <div class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(5)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(5)">
                         <h1>ELETROPORTÁTEIS</h1>
-                    </div>
+                    </swiper-slide>
 
-                    <div class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(6)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(6)">
                         <h1>ESPAÇO GAMER</h1>
-                    </div>
+                    </swiper-slide>
 
-                    <div class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(7)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(7)">
                         <h1>GAMES</h1>
-                    </div>
+                    </swiper-slide>
 
-                    <div class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(8)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(8)">
                         <h1>HARDWARE</h1>
-                    </div>
+                    </swiper-slide>
 
-                    <div class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(9)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(9)">
                         <h1>PERIFÉRICOS</h1>
-                    </div>
+                    </swiper-slide>
 
-                    <div class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
                         <h1>PROJETORES</h1>
-                    </div>
+                    </swiper-slide>
 
-                </div>
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+                      <h1>ENERGIA</h1>
+                  </swiper-slide>
+                  
+                  <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(2)">
+                    <h1>ÁUDIO</h1>
+                  </swiper-slide>
+                 
 
-            </div>
+                <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+                  <h1>CELULAR & SMARTPHONE</h1>
+              </swiper-slide>
+
+
+            </swiper-container>
 
             <div class="marker_Next">
        
@@ -131,119 +140,116 @@
 
               <div class="products_All">
 
-                <div class="swiper">  
+                <swiper-container class="swiper_Product" slides-per-view="4.8" space-between="8"  loop="true" speed="500" init="false">
                 
-                  <div class="swiper-wrapper wrapper_Products">
+                  <swiper-slide class="product_Item" (mouseenter) = "enterProductItem($event)" (mouseleave) = "leaveProductItem($event)" (click) = "navegarParaProductMain(produto)" *ngFor="let produto of produto">
+                   
+                    <div class="product_Discount_Stock">
                             
-                          <div class="swiper-slide product_Item" (mouseenter) = "enterProductItem($event)" (mouseleave) = "leaveProductItem($event)" (click) = "navegarParaProductMain(produto)" *ngFor="let produto of produto   ">
-                  
-                            <div class="product_Discount_Stock">
-                            
-                                <div class="product_Discount">
-                                
-                                  {{ produto.discount }}%
-                                  <svg width="16" viewBox="0 0 16 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowDownChevron"><path d="M0 -3.65575e-06L16 0L8 8L0 -3.65575e-06Z" fill="#fff"></path></svg>
-                                
-                                </div>
-                            
-                            
-                                
-                                <div *ngIf="produto.stock_Quantity >= 100" class="product_Stock stockFull">
-                                
-                                  <strong>EM<br>ESTOQUE</strong>
-                                
-                                </div>
-                                
-                                <div *ngIf="produto.stock_Quantity < 100" class="product_Stock">
-                                
-                                  <small>APENAS<br><strong>{{produto.stock_Quantity}}</strong><br>UNID.</small>
-                                
-                                </div>
-                            
-                            </div>
-                              
-                            <div class="product_Image">
-                              
-                                <img [src]="produto.imageUrl" alt="Product">
-                              
-                            </div>
-                            
-                            <div class="product_Description">
-                  
-                                <div class="product_Name">{{ produto.name_Product }}</div> 
-                              
-                                <div class="prices">
-                                  <div class="total_Price">
-                                  
-                                    {{ produto.price | currency:'BRL' }}
-                                  
-                                  </div> 
-                          
-                                  <div class="discount_Price">
-                                  
-                                    {{ produto.price - ((produto.price * produto.discount) / 100) | currency:'BRL' }}
-                                  
-                                  </div> 
-                    
-                                  <span>À vista no PIX</span>
-                    
-                                
-                                  
-                  
-                                </div>
-                                <div *ngIf="(produto.idProduct)%2 == 0" class="free_Shipping">
-                                  
-                                    <svg width="12" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconTruck"><path d="M20.1818 7.5H17.4545V5.25C17.4545 4.0125 16.4727 3 15.2727 3H2.18182C0.981818 3 0 4.0125 0 5.25V15.375C0 16.6125 0.981818 17.625 2.18182 17.625C2.18182 19.4925 3.64364 21 5.45455 21C7.26545 21 8.72727 19.4925 8.72727 17.625H15.2727C15.2727 19.4925 16.7345 21 18.5455 21C20.3564 21 21.8182 19.4925 21.8182 17.625H22.9091C23.5091 17.625 24 17.1187 24 16.5V12.7537C24 12.27 23.8473 11.7975 23.5636 11.4038L21.0545 7.95C20.8473 7.66875 20.52 7.5 20.1818 7.5ZM5.45455 18.75C4.85455 18.75 4.36364 18.2437 4.36364 17.625C4.36364 17.0063 4.85455 16.5 5.45455 16.5C6.05455 16.5 6.54545 17.0063 6.54545 17.625C6.54545 18.2437 6.05455 18.75 5.45455 18.75ZM20.1818 9.1875L22.32 12H17.4545V9.1875H20.1818ZM18.5455 18.75C17.9455 18.75 17.4545 18.2437 17.4545 17.625C17.4545 17.0063 17.9455 16.5 18.5455 16.5C19.1455 16.5 19.6364 17.0063 19.6364 17.625C19.6364 18.2437 19.1455 18.75 18.5455 18.75Z" fill="#ff6500"></path></svg>
-                                    <span>frete grátis</span>
-                                  
-                                  </div>
-                  
-                                
-                            </div>
-                  
-                            <div class="product_Buy">
-                                
-                                <div class="buy_Svg">
-                                
-                                  <svg width="24" height="24" viewBox="0 0 18 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconJustArrived"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8768 0.102663C14.0236 0.18777 14.1372 0.320148 14.1991 0.478169C14.2609 0.63619 14.2673 0.810514 14.2173 0.972663L11.5158 9.75066H16.5003C16.6468 9.7506 16.7901 9.79344 16.9125 9.87389C17.0349 9.95434 17.1311 10.0689 17.1892 10.2034C17.2472 10.3378 17.2646 10.4864 17.2393 10.6306C17.2139 10.7749 17.1468 10.9086 17.0463 11.0152L5.0463 23.7652C4.93019 23.8886 4.77568 23.9691 4.60796 23.9935C4.44024 24.018 4.26919 23.9848 4.1227 23.8996C3.97622 23.8143 3.86292 23.682 3.80129 23.5241C3.73965 23.3662 3.73331 23.1921 3.7833 23.0302L6.4848 14.2507H1.5003C1.35382 14.2507 1.21052 14.2079 1.08811 14.1274C0.965693 14.047 0.869515 13.9325 0.811447 13.798C0.753379 13.6635 0.735963 13.5149 0.761349 13.3707C0.786735 13.2264 0.853812 13.0927 0.954299 12.9862L12.9543 0.236163C13.0703 0.112861 13.2245 0.0324155 13.392 0.00790543C13.5595 -0.0166046 13.7304 0.0162624 13.8768 0.101163V0.102663Z" fill="white"></path></svg>
-                              
-                                </div>
-                                
-                                <div *ngIf="produto.discount <= 10"  class="buy_Discount_Timer">
-                  
-                                    TERMINA EM:<strong>{{offer_Time3}}</strong>
-                        
-                                </div>
-                  
-                                <div *ngIf="produto.discount > 10"  class="buy_Discount_Timer">
-                  
-                                  TERMINA EM:<strong>{{offer_Time2}}</strong>
+                      <div class="product_Discount">
                       
-                              </div>
+                        {{ produto.discount }}%
+                        <svg width="16" viewBox="0 0 16 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowDownChevron"><path d="M0 -3.65575e-06L16 0L8 8L0 -3.65575e-06Z" fill="#fff"></path></svg>
+                      
+                      </div>
                   
-                            </div>
                   
-                            <div class="product_Buy_Enter">
-                                
-                              <div class="buy_Svg_Enter">
-                              
-                                <svg width="20" height="20" viewBox="0 0 23 22" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCart"><path d="M7.09977 17.6C5.88981 17.6 4.91085 18.59 4.91085 19.8C4.91085 21.01 5.88981 22 7.09977 22C8.30973 22 9.2997 21.01 9.2997 19.8C9.2997 18.59 8.30973 17.6 7.09977 17.6ZM0.5 0V2.2H2.69992L6.65979 10.549L5.17484 13.244C4.99885 13.552 4.89985 13.915 4.89985 14.3C4.89985 15.51 5.88981 16.5 7.09977 16.5H20.2993V14.3H7.56176C7.40776 14.3 7.28677 14.179 7.28677 14.025L7.31977 13.893L8.30973 12.1H16.5044C17.3294 12.1 18.0554 11.649 18.4294 10.967L22.3672 3.828C22.458 3.66013 22.5037 3.47158 22.4998 3.28078C22.4959 3.08998 22.4426 2.90346 22.345 2.73943C22.2475 2.5754 22.1091 2.43947 21.9433 2.34492C21.7776 2.25037 21.5901 2.20044 21.3993 2.2H5.13084L4.09688 0H0.5ZM18.0994 17.6C16.8894 17.6 15.9105 18.59 15.9105 19.8C15.9105 21.01 16.8894 22 18.0994 22C19.3094 22 20.2993 21.01 20.2993 19.8C20.2993 18.59 19.3094 17.6 18.0994 17.6Z" fill="white"></path></svg>
-                            
-                              </div>
-                              
-                              <div class="buy_Enter_Buy">
+                      
+                      <div *ngIf="produto.stock_Quantity >= 100" class="product_Stock stockFull">
+                      
+                        <strong>EM<br>ESTOQUE</strong>
+                      
+                      </div>
+                      
+                      <div *ngIf="produto.stock_Quantity < 100" class="product_Stock">
+                      
+                        <small>APENAS<br><strong>{{produto.stock_Quantity}}</strong><br>UNID.</small>
+                      
+                      </div>
                   
-                                  <strong>COMPRAR</strong>
-                  
-                              </div>
-                  
-                            </div> 
-                            
-                          </div>
                   </div>
-                                
-                </div>
+                    
+                  <div class="product_Image">
+                    
+                      <img [src]="produto.imageUrl" alt="Product">
+                    
+                  </div>
                   
+                  <div class="product_Description">
+        
+                      <div class="product_Name">{{ produto.name_Product }}</div> 
+                    
+                      <div class="prices">
+                        <div class="total_Price">
+                        
+                          {{ produto.price | currency:'BRL' }}
+                        
+                        </div> 
+                
+                        <div class="discount_Price">
+                        
+                          {{ produto.price - ((produto.price * produto.discount) / 100) | currency:'BRL' }}
+                        
+                        </div> 
+          
+                        <span>À vista no PIX</span>
+          
+                      
+                        
+        
+                      </div>
+                      <div *ngIf="(produto.idProduct)%2 == 0" class="free_Shipping">
+                        
+                          <svg width="12" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconTruck"><path d="M20.1818 7.5H17.4545V5.25C17.4545 4.0125 16.4727 3 15.2727 3H2.18182C0.981818 3 0 4.0125 0 5.25V15.375C0 16.6125 0.981818 17.625 2.18182 17.625C2.18182 19.4925 3.64364 21 5.45455 21C7.26545 21 8.72727 19.4925 8.72727 17.625H15.2727C15.2727 19.4925 16.7345 21 18.5455 21C20.3564 21 21.8182 19.4925 21.8182 17.625H22.9091C23.5091 17.625 24 17.1187 24 16.5V12.7537C24 12.27 23.8473 11.7975 23.5636 11.4038L21.0545 7.95C20.8473 7.66875 20.52 7.5 20.1818 7.5ZM5.45455 18.75C4.85455 18.75 4.36364 18.2437 4.36364 17.625C4.36364 17.0063 4.85455 16.5 5.45455 16.5C6.05455 16.5 6.54545 17.0063 6.54545 17.625C6.54545 18.2437 6.05455 18.75 5.45455 18.75ZM20.1818 9.1875L22.32 12H17.4545V9.1875H20.1818ZM18.5455 18.75C17.9455 18.75 17.4545 18.2437 17.4545 17.625C17.4545 17.0063 17.9455 16.5 18.5455 16.5C19.1455 16.5 19.6364 17.0063 19.6364 17.625C19.6364 18.2437 19.1455 18.75 18.5455 18.75Z" fill="#ff6500"></path></svg>
+                          <span>frete grátis</span>
+                        
+                        </div>
+        
+                      
+                  </div>
+        
+                  <div class="product_Buy">
+                      
+                      <div class="buy_Svg">
+                      
+                        <svg width="24" height="24" viewBox="0 0 18 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconJustArrived"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8768 0.102663C14.0236 0.18777 14.1372 0.320148 14.1991 0.478169C14.2609 0.63619 14.2673 0.810514 14.2173 0.972663L11.5158 9.75066H16.5003C16.6468 9.7506 16.7901 9.79344 16.9125 9.87389C17.0349 9.95434 17.1311 10.0689 17.1892 10.2034C17.2472 10.3378 17.2646 10.4864 17.2393 10.6306C17.2139 10.7749 17.1468 10.9086 17.0463 11.0152L5.0463 23.7652C4.93019 23.8886 4.77568 23.9691 4.60796 23.9935C4.44024 24.018 4.26919 23.9848 4.1227 23.8996C3.97622 23.8143 3.86292 23.682 3.80129 23.5241C3.73965 23.3662 3.73331 23.1921 3.7833 23.0302L6.4848 14.2507H1.5003C1.35382 14.2507 1.21052 14.2079 1.08811 14.1274C0.965693 14.047 0.869515 13.9325 0.811447 13.798C0.753379 13.6635 0.735963 13.5149 0.761349 13.3707C0.786735 13.2264 0.853812 13.0927 0.954299 12.9862L12.9543 0.236163C13.0703 0.112861 13.2245 0.0324155 13.392 0.00790543C13.5595 -0.0166046 13.7304 0.0162624 13.8768 0.101163V0.102663Z" fill="white"></path></svg>
+                    
+                      </div>
+                      
+                      <div *ngIf="produto.discount <= 10"  class="buy_Discount_Timer">
+        
+                          TERMINA EM:<strong>{{offer_Time3}}</strong>
+              
+                      </div>
+        
+                      <div *ngIf="produto.discount > 10"  class="buy_Discount_Timer">
+        
+                        TERMINA EM:<strong>{{offer_Time2}}</strong>
+            
+                    </div>
+        
+                  </div>
+        
+                  <div class="product_Buy_Enter">
+                      
+                    <div class="buy_Svg_Enter">
+                    
+                      <svg width="20" height="20" viewBox="0 0 23 22" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCart"><path d="M7.09977 17.6C5.88981 17.6 4.91085 18.59 4.91085 19.8C4.91085 21.01 5.88981 22 7.09977 22C8.30973 22 9.2997 21.01 9.2997 19.8C9.2997 18.59 8.30973 17.6 7.09977 17.6ZM0.5 0V2.2H2.69992L6.65979 10.549L5.17484 13.244C4.99885 13.552 4.89985 13.915 4.89985 14.3C4.89985 15.51 5.88981 16.5 7.09977 16.5H20.2993V14.3H7.56176C7.40776 14.3 7.28677 14.179 7.28677 14.025L7.31977 13.893L8.30973 12.1H16.5044C17.3294 12.1 18.0554 11.649 18.4294 10.967L22.3672 3.828C22.458 3.66013 22.5037 3.47158 22.4998 3.28078C22.4959 3.08998 22.4426 2.90346 22.345 2.73943C22.2475 2.5754 22.1091 2.43947 21.9433 2.34492C21.7776 2.25037 21.5901 2.20044 21.3993 2.2H5.13084L4.09688 0H0.5ZM18.0994 17.6C16.8894 17.6 15.9105 18.59 15.9105 19.8C15.9105 21.01 16.8894 22 18.0994 22C19.3094 22 20.2993 21.01 20.2993 19.8C20.2993 18.59 19.3094 17.6 18.0994 17.6Z" fill="white"></path></svg>
+                  
+                    </div>
+                    
+                    <div class="buy_Enter_Buy">
+        
+                        <strong>COMPRAR</strong>
+        
+                    </div>
+        
+                  </div> 
+                  
+                  </swiper-slide>
+                
+                </swiper-container>
+             
               </div>
 
           <div *ngIf="produto.length === 0">
@@ -255,7 +261,7 @@
                    
     </div>
 
-    <svg width="32" height="32" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconForward"><g filter="url(#:Rrincc6:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M14.7878 26L13.3333 24.5455L19.8787 18L13.3333 11.4545L14.7878 10L22.7878 18L14.7878 26Z" fill="#7F858D"></path></g><defs><filter id=":Rrincc6:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9369"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9369" result="effect2_dropShadow_8335_9369"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9369" result="shape"></feBlend></filter></defs></svg>
+    <svg width="32" height="32" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconForwardPair"><g filter="url(#:Rrincc6:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M14.7878 26L13.3333 24.5455L19.8787 18L13.3333 11.4545L14.7878 10L22.7878 18L14.7878 26Z" fill="#7F858D"></path></g><defs><filter id=":Rrincc6:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9369"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9369" result="effect2_dropShadow_8335_9369"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9369" result="shape"></feBlend></filter></defs></svg>
            
        
 </div>
@@ -305,21 +311,294 @@
   <img src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/ads/splashline/1673.jpg&w=1920&h=248&q=100" style="width: 100%; object-fit: cover;" alt="">
 </div>
 
+<div class="last_Departments">
+
+  <div class="most_Search">
+
+    <div class="search_Title">
+      <h1><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" aria-hidden="true"><path d="M23.3697 11.3692H21.454C21.1429 6.63343 17.3615 2.84743 12.6302 2.536V0.618325C12.6269 0.453206 12.559 0.295965 12.4412 0.180359C12.3234 0.0647535 12.165 0 12 0C11.835 0 11.6766 0.0647535 11.5588 0.180359C11.441 0.295965 11.3731 0.453206 11.3698 0.618325V2.536C6.63821 2.84743 2.85711 6.63318 2.546 11.3692H0.630309C0.46314 11.3692 0.302819 11.4356 0.184613 11.554C0.0664073 11.6723 0 11.8328 0 12.0001C0 12.1675 0.0664073 12.328 0.184613 12.4463C0.302819 12.5646 0.46314 12.6311 0.630309 12.6311H2.54575C2.85635 17.3676 6.6377 21.1528 11.3698 21.464V23.3817C11.3731 23.5468 11.441 23.704 11.5588 23.8196C11.6766 23.9352 11.835 24 12 24C12.165 24 12.3234 23.9352 12.4412 23.8196C12.559 23.704 12.6269 23.5468 12.6302 23.3817V21.464C17.362 21.1528 21.1434 17.3673 21.4543 12.6311H23.3697C23.5369 12.6311 23.6972 12.5646 23.8154 12.4463C23.9336 12.328 24 12.1675 24 12.0001C24 11.8328 23.9336 11.6723 23.8154 11.554C23.6972 11.4356 23.5369 11.3692 23.3697 11.3692ZM11.3696 18.943C8.0305 18.6416 5.36495 15.9731 5.0642 12.6311H6.32533C6.61647 15.2834 8.71994 17.3891 11.3696 17.6805V18.943ZM11.3696 6.31973C8.71994 6.61117 6.61647 8.71681 6.32533 11.3692H5.0642C5.36546 8.02767 8.03075 5.35887 11.3693 5.0573V6.31973H11.3696ZM12.6302 5.05755C15.9687 5.35887 18.634 8.02767 18.9353 11.3692H17.6744C17.3833 8.71656 15.2798 6.61092 12.6302 6.31973V5.05755ZM12.6302 18.943V17.6808C15.2798 17.3893 17.3833 15.2837 17.6744 12.6313H18.9353C18.6345 15.9731 15.969 18.6414 12.6302 18.943Z" fill="#FF6500"></path></svg></span>
+        MAIS PROCURADOS
+      </h1>
+  
+      <a class="title_Button">VER TODOS <span><svg width="8px" height="14" viewBox="0 0 10 14" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowOrangeRight"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.18972 14L0.916992 12.7273L6.64427 7L0.916992 1.27273L2.18972 0L9.18972 7L2.18972 14Z" fill="#ff6500"></path></svg></span> </a>
+           
+    </div>
+
+    <div class="marker_Departments">
+            
+      <div class="marker_Back">
+        
+          <svg width="20" height="20" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation"><g filter="url(#:r4:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":r4:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
+
+      </div>
+      
+      <swiper-container #swiperContainer class="marker_Swiper" simulate-touch="false" [allowTouchMove]="false" slides-per-view="auto" space-between="9"  loop="true" speed="350" style="display: flex; padding: 5px;">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(1)">
+                  <h1>TODOS</h1>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(2)">
+                <h1>CELULAR & SMARTPHONE</h1>
+            </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(3)">
+                  <h1>COMPUTADORES</h1>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(4)">
+                  <h1>CONECTIVIDADE</h1>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(5)">
+                  <h1>ELETROPORTÁTEIS</h1>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(6)">
+                  <h1>ESPAÇO GAMER</h1>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(7)">
+                  <h1>GAMES</h1>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(8)">
+                  <h1>HARDWARE</h1>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(9)">
+                  <h1>PERIFÉRICOS</h1>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+                  <h1>PROJETORES</h1>
+              </swiper-slide>
+
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+                <h1>ENERGIA</h1>
+            </swiper-slide>
+            
+            <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(2)">
+              <h1>ÁUDIO</h1>
+            </swiper-slide>
+           
+
+          <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+            <h1>CELULAR & SMARTPHONE</h1>
+        </swiper-slide>
+
+
+      </swiper-container>
+
+      <div class="marker_Next">
+ 
+          <svg width="20" height="20" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation"><g filter="url(#:r5:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M14.7878 26L13.3333 24.5455L19.8787 18L13.3333 11.4545L14.7878 10L22.7878 18L14.7878 26Z" fill="#7F858D"></path></g><defs><filter id=":r5:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9369"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9369" result="effect2_dropShadow_8335_9369"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9369" result="shape"></feBlend></filter></defs></svg>
+ 
+      </div>
+     
+  </div>
+  <div class="marker_Products">  
+
+    <div class="products_All" style="position: relative;">
+
+      <svg width="32" height="32" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; z-index: 3; top: 40%" class="IconBackwardPair"><g filter="url(#:Rbincc6:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":Rbincc6:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
+            
+      <swiper-container class="swiper_Product" slides-per-view="3.7" space-between="8"  loop="true" speed="500" init="false">
+                
+        <swiper-slide class="product_Item" (mouseenter) = "enterProductItem($event)" (mouseleave) = "leaveProductItem($event)" (click) = "navegarParaProductMain(produto)" *ngFor="let produto of mostSearch">
+         
+          <div class="product_Discount_Stock">
+                  
+            <div class="product_Discount">
+            
+              {{ produto.discount }}%
+              <svg width="16" viewBox="0 0 16 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowDownChevron"><path d="M0 -3.65575e-06L16 0L8 8L0 -3.65575e-06Z" fill="#fff"></path></svg>
+            
+            </div>
+        
+        
+            
+            <div *ngIf="produto.stock_Quantity >= 100" class="product_Stock stockFull">
+            
+              <strong>EM<br>ESTOQUE</strong>
+            
+            </div>
+            
+            <div *ngIf="produto.stock_Quantity < 100" class="product_Stock">
+            
+              <small>APENAS<br><strong>{{produto.stock_Quantity}}</strong><br>UNID.</small>
+            
+            </div>
+        
+        </div>
+          
+        <div class="product_Image">
+          
+            <img [src]="produto.imageUrl" alt="Product">
+          
+        </div>
+        
+        <div class="product_Description">
+
+            <div class="product_Name">{{ produto.name_Product }}</div> 
+          
+            <div class="prices">
+              <div class="total_Price">
+              
+                {{ produto.price | currency:'BRL' }}
+              
+              </div> 
+      
+              <div class="discount_Price">
+              
+                {{ produto.price - ((produto.price * produto.discount) / 100) | currency:'BRL' }}
+              
+              </div> 
+
+              <span>À vista no PIX</span>
+
+            
+              
+
+            </div>
+            <div *ngIf="(produto.idProduct)%2 == 0" class="free_Shipping">
+              
+                <svg width="12" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconTruck"><path d="M20.1818 7.5H17.4545V5.25C17.4545 4.0125 16.4727 3 15.2727 3H2.18182C0.981818 3 0 4.0125 0 5.25V15.375C0 16.6125 0.981818 17.625 2.18182 17.625C2.18182 19.4925 3.64364 21 5.45455 21C7.26545 21 8.72727 19.4925 8.72727 17.625H15.2727C15.2727 19.4925 16.7345 21 18.5455 21C20.3564 21 21.8182 19.4925 21.8182 17.625H22.9091C23.5091 17.625 24 17.1187 24 16.5V12.7537C24 12.27 23.8473 11.7975 23.5636 11.4038L21.0545 7.95C20.8473 7.66875 20.52 7.5 20.1818 7.5ZM5.45455 18.75C4.85455 18.75 4.36364 18.2437 4.36364 17.625C4.36364 17.0063 4.85455 16.5 5.45455 16.5C6.05455 16.5 6.54545 17.0063 6.54545 17.625C6.54545 18.2437 6.05455 18.75 5.45455 18.75ZM20.1818 9.1875L22.32 12H17.4545V9.1875H20.1818ZM18.5455 18.75C17.9455 18.75 17.4545 18.2437 17.4545 17.625C17.4545 17.0063 17.9455 16.5 18.5455 16.5C19.1455 16.5 19.6364 17.0063 19.6364 17.625C19.6364 18.2437 19.1455 18.75 18.5455 18.75Z" fill="#ff6500"></path></svg>
+                <span>frete grátis</span>
+              
+              </div>
+
+            
+        </div>
+
+        <div class="product_Buy">
+            
+            <div class="buy_Svg">
+            
+              <svg width="24" height="24" viewBox="0 0 18 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconJustArrived"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8768 0.102663C14.0236 0.18777 14.1372 0.320148 14.1991 0.478169C14.2609 0.63619 14.2673 0.810514 14.2173 0.972663L11.5158 9.75066H16.5003C16.6468 9.7506 16.7901 9.79344 16.9125 9.87389C17.0349 9.95434 17.1311 10.0689 17.1892 10.2034C17.2472 10.3378 17.2646 10.4864 17.2393 10.6306C17.2139 10.7749 17.1468 10.9086 17.0463 11.0152L5.0463 23.7652C4.93019 23.8886 4.77568 23.9691 4.60796 23.9935C4.44024 24.018 4.26919 23.9848 4.1227 23.8996C3.97622 23.8143 3.86292 23.682 3.80129 23.5241C3.73965 23.3662 3.73331 23.1921 3.7833 23.0302L6.4848 14.2507H1.5003C1.35382 14.2507 1.21052 14.2079 1.08811 14.1274C0.965693 14.047 0.869515 13.9325 0.811447 13.798C0.753379 13.6635 0.735963 13.5149 0.761349 13.3707C0.786735 13.2264 0.853812 13.0927 0.954299 12.9862L12.9543 0.236163C13.0703 0.112861 13.2245 0.0324155 13.392 0.00790543C13.5595 -0.0166046 13.7304 0.0162624 13.8768 0.101163V0.102663Z" fill="white"></path></svg>
+          
+            </div>
+            
+            <div *ngIf="produto.discount <= 10"  class="buy_Discount_Timer">
+
+                TERMINA EM:<strong>{{offer_Time3}}</strong>
+    
+            </div>
+
+            <div *ngIf="produto.discount > 10"  class="buy_Discount_Timer">
+
+              TERMINA EM:<strong>{{offer_Time2}}</strong>
+  
+          </div>
+
+        </div>
+
+        <div class="product_Buy_Enter">
+            
+          <div class="buy_Svg_Enter">
+          
+            <svg width="20" height="20" viewBox="0 0 23 22" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCart"><path d="M7.09977 17.6C5.88981 17.6 4.91085 18.59 4.91085 19.8C4.91085 21.01 5.88981 22 7.09977 22C8.30973 22 9.2997 21.01 9.2997 19.8C9.2997 18.59 8.30973 17.6 7.09977 17.6ZM0.5 0V2.2H2.69992L6.65979 10.549L5.17484 13.244C4.99885 13.552 4.89985 13.915 4.89985 14.3C4.89985 15.51 5.88981 16.5 7.09977 16.5H20.2993V14.3H7.56176C7.40776 14.3 7.28677 14.179 7.28677 14.025L7.31977 13.893L8.30973 12.1H16.5044C17.3294 12.1 18.0554 11.649 18.4294 10.967L22.3672 3.828C22.458 3.66013 22.5037 3.47158 22.4998 3.28078C22.4959 3.08998 22.4426 2.90346 22.345 2.73943C22.2475 2.5754 22.1091 2.43947 21.9433 2.34492C21.7776 2.25037 21.5901 2.20044 21.3993 2.2H5.13084L4.09688 0H0.5ZM18.0994 17.6C16.8894 17.6 15.9105 18.59 15.9105 19.8C15.9105 21.01 16.8894 22 18.0994 22C19.3094 22 20.2993 21.01 20.2993 19.8C20.2993 18.59 19.3094 17.6 18.0994 17.6Z" fill="white"></path></svg>
+        
+          </div>
+          
+          <div class="buy_Enter_Buy">
+
+              <strong>COMPRAR</strong>
+
+          </div>
+
+        </div> 
+        
+        </swiper-slide>
+      
+      </swiper-container>
+      
+      <svg width="32" height="32" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconForwardPair" style="position: absolute;  z-index: 3; right: 0px; top: 40%"><g filter="url(#:Rrincc6:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M14.7878 26L13.3333 24.5455L19.8787 18L13.3333 11.4545L14.7878 10L22.7878 18L14.7878 26Z" fill="#7F858D"></path></g><defs><filter id=":Rrincc6:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9369"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9369" result="effect2_dropShadow_8335_9369"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9369" result="shape"></feBlend></filter></defs></svg>
+             
+    </div>
+
+<div *ngIf="produto.length === 0">
+  <p>Nenhum dado encontrado.</p>
+</div>
+
+
+</div>
+        
+    
+  </div>
+  
+  <div class="banner_Departments" style="width: 25%;">
+  
+    <img src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/imagens/kbar/1719006732.png&w=384&h=298&q=100" alt="">
+    
+    <img src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/imagens/kbar/1712239228.jpg&w=384&h=298&q=100" alt="">
+    
+    <img src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/imagens/kbar/1718999668.png&w=384&h=298&q=100" alt="">
+  </div>
+
+</div>
+
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <button (click)="teste()">aaa</button>
 
 <svg width="32" height="32" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="Volta"><g filter="url(#:Rbincc6:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":Rbincc6:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
    
-  <swiper-container slides-per-view="auto" speed="500" loop="false" style="display: flex; width: 400px; background-color: red;">
+  <swiper-container class="nameSub" slides-per-view="auto" speed="500" space-between="20" loop="false" style="display: flex; width: 400px; background-color: red;">
                            
     <swiper-slide style="width: auto;" class="item" *ngFor="let name of nameSub">{{name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
     
   </swiper-container>
 
+  <div class="marker_Back">
+              
+    <svg width="20" height="20" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation"><g filter="url(#:r4:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":r4:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
 
+</div>
 
+<swiper-container  class="teste" slides-per-view="auto" space-between="8" simulate-touch="false" loop="true" style="width: 400px; background-color: red;">
+  <swiper-slide style="background-color: yellow; width: 10%;">
+    casa
+  </swiper-slide >
 
+  <swiper-slide  style="background-color: yellow; width: 12%;">
+    a
+  </swiper-slide>
+
+  <swiper-slide  style="background-color: yellow; width: 20%;">
+    lalalalala
+  </swiper-slide>
+  <swiper-slide  style="background-color: yellow; width: 7%;"> 
+    de
+  </swiper-slide>
+  <swiper-slide  style="background-color: yellow; width: 14%;">
+    papapapt
+  </swiper-slide>
+
+  <swiper-slide  style="background-color: yellow; width: 11%;">
+    testando
+  </swiper-slide>
+  <swiper-slide  style="background-color: yellow; width: 6%;">
+    acrize
+  </swiper-slide>
+  <swiper-slide  style="background-color: yellow; width: 17%;">
+    ddadada
+  </swiper-slide>
+  <swiper-slide  style="background-color: yellow; width: 18%;">  
+    a
+  </swiper-slide>
+  <swiper-slide  style="background-color: yellow; width: 20%;">
+  dad
+  </swiper-slide>
+  <swiper-slide  style="background-color: yellow; width: 3%;">
+    a
+  </swiper-slide>
+</swiper-container>
+
+<div class="marker_Next">
+       
+  <svg width="20" height="20" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation"><g filter="url(#:r5:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M14.7878 26L13.3333 24.5455L19.8787 18L13.3333 11.4545L14.7878 10L22.7878 18L14.7878 26Z" fill="#7F858D"></path></g><defs><filter id=":r5:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9369"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9369" result="effect2_dropShadow_8335_9369"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9369" result="shape"></feBlend></filter></defs></svg>
+
+</div>
 
 ><br><br><br><br><br>
 <button (click)="NavigationPage('Hardware')">HARDWARE</button>

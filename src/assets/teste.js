@@ -6,6 +6,7 @@ function TesteHello() {
     
     slidesPerView: 'auto',/*product_item bugado*/
     loop: true,
+    /*para tirar o bug do destaque ninja adiciona o space beteween e adiciona um gap*/
   
     // If we need pagination
  
@@ -26,9 +27,7 @@ function TesteHello() {
     const swiper = new Swiper('.marker_Swiper', {
       // Optional parameters
       
-      slidesPerView: 9.5,
-      spaceBetween: 2,
-      loop: true,
+      allowTouchMove: false,
     
       // If we need pagination
    
@@ -74,7 +73,7 @@ function TesteHello() {
         
         slidesPerView: 'auto',
         loop: false,
-        spaceBetween: 13,
+        spaceBetween: 20,
         navigation: false,
         simulateTouch: false,
         pagination: true,

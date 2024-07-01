@@ -117,6 +117,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   }
 
   updateVisits(a:any) {
+    alert("teste")
     const productId = a; 
 
     this.productService.updateProductVisits(productId, this.newVisits)

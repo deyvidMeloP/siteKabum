@@ -3,10 +3,7 @@ import { OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { Router } from '@angular/router';
-import { map } from 'lodash';
 
-declare function TesteHello(): any;
-declare function swiper_Departments(): any;
 declare function swiper_Section(): any;
 
 
@@ -30,8 +27,14 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   tempoRestante2Subscription: Subscription | undefined;
   tempoRestante3Subscription: Subscription | undefined;
   swiper: any;
-  subSection: any = []
-  constructor(private departService: KabumServiceService, private dadosServiceBrands: KabumServiceService,  private router: Router, private dadosProdutos: KabumServiceService, private timerService: KabumServiceService, 
+  subSection: any = [];
+  marker_Swiper: any = [];
+  product_Swiper: any = [];
+  mostSearch:any = [];
+  newVisits: any;
+  constructor(
+    private dadosService: KabumServiceService,
+    private departService: KabumServiceService, private dadosServiceBrands: KabumServiceService,  private router: Router, private dadosProdutos: KabumServiceService, private timerService: KabumServiceService, 
     private stateService: KabumServiceService, private sectionService: KabumServiceService,
     private subSectionService: KabumServiceService,) {
  
@@ -60,24 +63,79 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     );
     this.timerService.accountant_Time3(); 
 
-    swiper_Departments()
+    
   }
 
   ngAfterViewInit(): void {
-   
-    const swiperContainer = document.querySelector('swiper-container');
+  
+   /*
+
+    const swiperContainer = document.querySelector('a');
   
       this.swiper = (swiperContainer as any).swiper;
-      const backButton = document.querySelector('.Volta');
+      const backButto = document.querySelector('.Volta');
      
-      if (backButton) {
-        backButton.addEventListener('click', this.swipeBack.bind(this));
+      if (backButto) {
+        backButto.addEventListener('click', this.swipeBack.bind(this));
       }
-    
+
+      const swiper_Marker = document.querySelector('')
+      
+    */
   }
-  swipeBack(): void {
-    if (this.swiper) {
-      this.swiper.slidePrev();
+
+
+  swipeMove(className: string, index: any){
+    
+    switch(className){
+
+      case "IconBackwardPair":
+        
+        if(this.product_Swiper[index]){
+        
+          this.product_Swiper[index].slidePrev();
+
+        }
+      break;
+
+      case "IconForwardPair":
+       
+        if(this.product_Swiper[index]){
+          
+          this.product_Swiper[index].slideNext();
+
+        }
+      break;
+
+      case "marker_Back":
+
+      if(this.marker_Swiper[index]){
+          
+        this.marker_Swiper[index].slidePrev();
+
+      }
+
+      break;
+
+      case "marker_Next":
+
+      if(this.marker_Swiper[index]){
+          
+        this.marker_Swiper[index].slideNext();
+
+      }
+
+      break;
+    }
+
+  }
+
+  swipeNext(index: any): void {
+   
+    if (this.marker_Swiper[index]) {
+     
+      this.marker_Swiper[index].slideNext();
+
     }
   }
 
@@ -103,8 +161,9 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
       (data: any[]) => {
         this.produtoAll = data;
         this.produto = this.produtoAll
+        this.MostSearch()
         console.log('Dados no componente:', this.produtoAll);
-        TesteHello()},
+        },
       (error: any) => {
         console.error('Erro ao obter dados do serviço:', error);
       }
@@ -117,10 +176,112 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     this.cont +=1
     this.submenu_Click(this.cont)
   
-  
 
   }
 
+  MostSearch(){
+    const visits: number[] = []
+
+    for(let product of this.produtoAll){
+
+      if (product && typeof product.visits === 'number') {
+        visits.push(product.visits);
+      } else {
+        console.warn('Produto sem a propriedade visits ou visits não é um número:', product);
+      }
+     
+
+      
+    }
+console.log("rim")
+    const value = visits.length
+    for(let i = 0; i < value; i++){
+
+      const max = Math.max(...visits)
+
+      const index = visits.indexOf(max)
+      
+      this.mostSearch.push(this.produtoAll[index])
+     
+      visits[index] = - 1
+      
+    }
+
+    setTimeout(()=>{
+
+      const marker_Swiper = document.querySelectorAll(".marker_Swiper")
+           
+      const product_Swiper = document.querySelectorAll(".swiper_Product")
+
+      marker_Swiper.forEach((el)=>{
+
+        this.marker_Swiper.push((el as any).swiper)
+       
+      })
+
+      const swiperParams = {
+        updateOnWindowResize: true,
+        
+        on: {
+          init() {/*trava a inicilização e inicia por aqui */
+            // ...
+          },
+        },
+      };
+
+      product_Swiper.forEach((el: any, index) => {
+        Object.assign(el, swiperParams);
+        el.initialize();
+        this.product_Swiper.push(el.swiper);
+      });
+
+      const backButton = document.querySelectorAll(".marker_Back")
+      const nextButton = document.querySelectorAll(".marker_Next")
+
+      const IconBackwardPair = document.querySelectorAll(".IconBackwardPair")
+      const IconForwardPair = document.querySelectorAll(".IconForwardPair")
+
+  
+      if(backButton){
+
+        backButton.forEach((el, index)=>{
+       
+          el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+       
+        })
+        
+      }
+  
+      if(nextButton){
+       
+        nextButton.forEach((el, index)=>{
+       
+          el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+       
+        })
+      
+      }
+
+      if(IconBackwardPair){
+      
+        IconBackwardPair.forEach((el, index)=>{
+      
+          el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+      
+        })
+     
+      }
+
+      if(IconForwardPair){
+     
+        IconForwardPair.forEach((el, index)=>{
+     
+          el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+        })
+      }
+
+    }, 0)
+  }
   submenu_Click(scId: number){
     const submenu_Opt = document.querySelector(".submenu_Opt") as HTMLElement
   this.nameSub = []
@@ -260,10 +421,25 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
 
   navegarParaProductMain(produto: any) {
 
-      this.router.navigateByUrl('/Product', { state: { produto: produto } })
-      /* para enviar mais de uma variavel: this.router.navigateByUrl('/Product', { state: { produto: produto, outraVariavel: outraVariavel } });*/
+    this.newVisits = produto.visits + 1
       
-  }
+   this.dadosService.updateProductVisits(produto.idProduct, this.newVisits)
+     .subscribe(
+       () => {
+       
+         this.dadosService.getDados().subscribe(data => {
+           
+         });
+       },
+       error => {
+         console.error('Erro ao atualizar valor de visitas:', error);
+        
+       }
+     );
+
+     this.router.navigateByUrl('/Product', { state: { produto: produto } })
+    
+ }
 
   change_Marker(pos: number){
     let deptType: any[] = []
@@ -426,7 +602,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     }
 
 
-    TesteHello()
+  
   }
 
 

@@ -60,6 +60,7 @@ export class KabumServiceService {
   }
 
   updateProductVisits(id: number, visits: number): Observable<any> {
+
     const url = `${this.apiUrl}/${id}/visits`;
     return this.http.put(url, { visits }).pipe(
       tap(() => console.log('Visitas do produto atualizadas com sucesso!')),
