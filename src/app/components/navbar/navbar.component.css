@@ -72,6 +72,37 @@
     outline: none;
     border: none;
 }
+
+.tips_Search{
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+}
+
+.tips{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid rgb(220, 215, 215);
+    cursor: pointer;
+    padding: 2px 0px 2px 10px;
+    height: max-content;
+}
+
+.tips h1{
+    font-size: 14px;
+    font-weight: 400;
+    color: #565c69;
+
+}
+
+.tips img{
+    width: 5.5%;
+    
+}
+.tips:hover{
+    background-color: rgb(249, 249, 249);
+}
 .menu_Cadastro{
    display: flex;
    font-weight: 400;

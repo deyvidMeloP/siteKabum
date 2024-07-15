@@ -3,6 +3,8 @@ import { OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { Router } from '@angular/router';
+import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
 
 declare function swiper_Section(): any;
 
@@ -32,6 +34,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   product_Swiper: any = [];
   mostSearch:any = [];
   newVisits: any;
+  
   constructor(
     private dadosService: KabumServiceService,
     private departService: KabumServiceService, private dadosServiceBrands: KabumServiceService,  private router: Router, private dadosProdutos: KabumServiceService, private timerService: KabumServiceService, 
@@ -161,7 +164,81 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
       (data: any[]) => {
         this.produtoAll = data;
         this.produto = this.produtoAll
-        this.MostSearch()
+        this.MostSearch('TODOS')
+        setTimeout(()=>{
+
+          const marker_Swiper = document.querySelectorAll(".marker_Swiper")
+               
+          const product_Swiper = document.querySelectorAll(".swiper_Product")
+    
+          marker_Swiper.forEach((el)=>{
+    
+            this.marker_Swiper.push((el as any).swiper)
+           
+          })
+    
+          const swiperParams = {
+            updateOnWindowResize: true,
+            
+            on: {
+              init() {/*trava a inicilização e inicia por aqui */
+                // ...
+              },
+            },
+          };
+    
+          product_Swiper.forEach((el: any, index) => {
+            Object.assign(el, swiperParams);
+            el.initialize();
+            this.product_Swiper.push(el.swiper);
+          });
+    
+          const backButton = document.querySelectorAll(".marker_Back")
+          const nextButton = document.querySelectorAll(".marker_Next")
+    
+          const IconBackwardPair = document.querySelectorAll(".IconBackwardPair")
+          const IconForwardPair = document.querySelectorAll(".IconForwardPair")
+    
+      
+          if(backButton){
+    
+            backButton.forEach((el, index)=>{
+           
+              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+           
+            })
+            
+          }
+      
+          if(nextButton){
+           
+            nextButton.forEach((el, index)=>{
+           
+              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+           
+            })
+          
+          }
+    
+          if(IconBackwardPair){
+          
+            IconBackwardPair.forEach((el, index)=>{
+          
+              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+          
+            })
+         
+          }
+    
+          if(IconForwardPair){
+         
+            IconForwardPair.forEach((el, index)=>{
+         
+              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+            })
+          }
+    
+        }, 0)
         console.log('Dados no componente:', this.produtoAll);
         },
       (error: any) => {
@@ -179,108 +256,73 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
 
   }
 
-  MostSearch(){
-    const visits: number[] = []
+  MostSearch(filter: string){
+    const visits: any = []
+    this.mostSearch = []
+   
+    if(filter == 'TODOS'){
+      
+      for(let product of this.produtoAll){
 
-    for(let product of this.produtoAll){
-
-      if (product && typeof product.visits === 'number') {
-        visits.push(product.visits);
-      } else {
-        console.warn('Produto sem a propriedade visits ou visits não é um número:', product);
+        if (product && typeof product.visits === 'number') {
+          visits.push(product.visits);
+        }
+             
       }
-     
-
-      
-    }
-console.log("rim")
-    const value = visits.length
-    for(let i = 0; i < value; i++){
-
-      const max = Math.max(...visits)
-
-      const index = visits.indexOf(max)
-      
-      this.mostSearch.push(this.produtoAll[index])
-     
-      visits[index] = - 1
-      
-    }
-
-    setTimeout(()=>{
-
-      const marker_Swiper = document.querySelectorAll(".marker_Swiper")
-           
-      const product_Swiper = document.querySelectorAll(".swiper_Product")
-
-      marker_Swiper.forEach((el)=>{
-
-        this.marker_Swiper.push((el as any).swiper)
-       
-      })
-
-      const swiperParams = {
-        updateOnWindowResize: true,
-        
-        on: {
-          init() {/*trava a inicilização e inicia por aqui */
-            // ...
-          },
-        },
-      };
-
-      product_Swiper.forEach((el: any, index) => {
-        Object.assign(el, swiperParams);
-        el.initialize();
-        this.product_Swiper.push(el.swiper);
-      });
-
-      const backButton = document.querySelectorAll(".marker_Back")
-      const nextButton = document.querySelectorAll(".marker_Next")
-
-      const IconBackwardPair = document.querySelectorAll(".IconBackwardPair")
-      const IconForwardPair = document.querySelectorAll(".IconForwardPair")
-
+      const value = visits.length
+      for(let i = 0; i < value; i++){
   
-      if(backButton){
-
-        backButton.forEach((el, index)=>{
+        const max = Math.max(...visits)
+  
+        const index = visits.indexOf(max)
+      
+        this.mostSearch.push(cloneDeep(this.produtoAll[index]))
        
-          el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-       
-        })
+        visits[index] = - 1
         
       }
+    }
+
+    else{
+
+      let name: string = '' 
+      let aux: any = []
+      for(let dtp of this.departments){
+
+        name = dtp.dtName.toLocaleUpperCase()
+        if(name == filter){
+          aux.push(dtp.productId)
+        }
+        
+      }
+
+      
+
+      for(let product of this.produtoAll){
+
+        if (product && typeof product.visits === 'number' && aux.includes(product.idProduct)) {
+         
+          visits.push(cloneDeep(product));
+
+        }
+             
+      }
+
+      const value = visits.length
+    
+      for(let i = 0; i < value; i++){
   
-      if(nextButton){
-       
-        nextButton.forEach((el, index)=>{
-       
-          el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-       
-        })
-      
-      }
+        let maxIndex = visits.reduce((maxIdx: any, item: any, idx: any, arr: any) => 
+          item.visits > arr[maxIdx].visits ? idx : maxIdx, 0);
 
-      if(IconBackwardPair){
-      
-        IconBackwardPair.forEach((el, index)=>{
-      
-          el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-      
-        })
+        this.mostSearch.push(visits[maxIndex])
+  
+        visits[maxIndex].visits = -1
      
       }
 
-      if(IconForwardPair){
-     
-        IconForwardPair.forEach((el, index)=>{
-     
-          el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-        })
-      }
-
-    }, 0)
+    }
+    
   }
   submenu_Click(scId: number){
     const submenu_Opt = document.querySelector(".submenu_Opt") as HTMLElement
@@ -437,10 +479,97 @@ console.log("rim")
        }
      );
 
-     this.router.navigateByUrl('/Product', { state: { produto: produto } })
+     this.stateService.changeProductMainName(produto)
+      window.scrollTo(0, 0);
+      this.router.navigateByUrl('/Product').then(() => {
+      });
     
  }
 
+ filter_Marker(category: string ,event: any){
+
+  const filter = event.target.innerText
+  
+
+  switch(category){
+    case 'highlight':
+    
+    this.produto = []
+
+    if(filter == 'TODOS'){
+
+      this.produto = this.produtoAll
+    }
+
+    else{
+
+      let name: string = '' 
+      let aux = []
+      
+      for(let dtp of this.departments){
+
+        name = dtp.dtName
+        
+        name =  name.toLocaleUpperCase()
+
+        if(filter == name){
+
+          aux.push(dtp.productId)
+      
+        }
+      }
+
+      for(let pd of this.produtoAll){
+
+        for(let idProduct of aux){
+
+          if(pd.idProduct == idProduct){
+  
+           this.produto.push(pd)
+           
+          }
+  
+        }
+
+      }
+
+    }
+    
+    if(this.produto.length <= 5){
+      this.product_Swiper[0].slideTo(0, 0)
+      this.product_Swiper[0].disable()
+
+    }
+    else{
+      this.product_Swiper[0].enable()
+      this.product_Swiper[0].slideTo(0, 0)
+    }
+
+    break;
+
+    case 'search':
+  
+    this.MostSearch(filter)
+
+    if(this.mostSearch.length <= 4){
+      this.product_Swiper[1].slideTo(0, 0)
+      this.product_Swiper[1].disable()
+
+    }
+    else{
+      
+      this.product_Swiper[1].enable()
+      this.product_Swiper[1].slideTo(0, 0)
+
+    }
+
+    break;
+
+  }
+ 
+ }
+
+ /*
   change_Marker(pos: number){
     let deptType: any[] = []
     this.produto = []
@@ -605,7 +734,7 @@ console.log("rim")
   
   }
 
-
+*/
   NavigationPage(name: string){
 
     

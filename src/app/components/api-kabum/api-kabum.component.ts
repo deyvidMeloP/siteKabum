@@ -146,7 +146,10 @@ export class ApiKabumComponent implements OnInit{
         }
       );
 
-      this.router.navigateByUrl('/Product', { state: { produto: produto } })
+      this.dadosService.changeProductMainName(produto)
+      window.scrollTo(0, 0);
+      this.router.navigateByUrl('/Product').then(() => {
+      });
      
   }
 

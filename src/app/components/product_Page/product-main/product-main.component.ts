@@ -27,7 +27,10 @@ export class ProductMainComponent implements OnInit{
   constructor(private productAll: KabumServiceService,  private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService, private departService: KabumServiceService) { }
 
   ngOnInit(): void {
-    this.produto = history.state.produto;
+    this.productAll.currentProductMainName.subscribe(
+      name => {
+        this.produto= name;
+        
     this.getDadosProductAll();
     this.getDadosServiceImages();
     this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
@@ -39,6 +42,9 @@ export class ProductMainComponent implements OnInit{
       tempo => this.offer_Time3 = tempo
     );
     this.timerService.accountant_Time3(); 
+
+      }
+    );
   }
 
   

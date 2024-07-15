@@ -1,4 +1,4 @@
-<div class="banner_Pair">
+<div class="banner_Pair" style="position: relative;">
     
 <div class="images_Banner">
     <img src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/ads/splashline/1298.jpg&w=750&h=198&q=100">
@@ -71,57 +71,58 @@
 
             </div>
             
-            <swiper-container #swiperContainer class="marker_Swiper"  [allowTouchMove]="false" slides-per-view="auto" space-between="9"  loop="true" speed="350" style="display: flex;">
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(1)">
+            <swiper-container #swiperContainer class="marker_Swiper" simulate-touch="false" [allowTouchMove]="false" slides-per-view="auto" space-between="9"  loop="true" speed="350" style="display: flex;">
+                  
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                         <h1>TODOS</h1>
                     </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(2)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                       <h1>CELULAR & SMARTPHONE</h1>
                   </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(3)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="filter_Marker('highlight',$event)">
                         <h1>COMPUTADORES</h1>
                     </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(4)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="filter_Marker('highlight',$event)">
                         <h1>CONECTIVIDADE</h1>
                     </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(5)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="filter_Marker('highlight',$event)">
                         <h1>ELETROPORTÁTEIS</h1>
                     </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(6)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                         <h1>ESPAÇO GAMER</h1>
                     </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(7)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                         <h1>GAMES</h1>
                     </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(8)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                         <h1>HARDWARE</h1>
                     </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(9)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                         <h1>PERIFÉRICOS</h1>
                     </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                         <h1>PROJETORES</h1>
                     </swiper-slide>
 
-                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+                    <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                       <h1>ENERGIA</h1>
                   </swiper-slide>
                   
-                  <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(2)">
+                  <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                     <h1>ÁUDIO</h1>
                   </swiper-slide>
                  
 
-                <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+                <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('highlight',$event)">
                   <h1>CELULAR & SMARTPHONE</h1>
               </swiper-slide>
 
@@ -333,56 +334,57 @@
       </div>
       
       <swiper-container #swiperContainer class="marker_Swiper" simulate-touch="false" [allowTouchMove]="false" slides-per-view="auto" space-between="9"  loop="true" speed="350" style="display: flex; padding: 5px;">
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(1)">
+          
+        <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
                   <h1>TODOS</h1>
               </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(2)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
                 <h1>CELULAR & SMARTPHONE</h1>
             </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(3)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="filter_Marker('search', $event)">
                   <h1>COMPUTADORES</h1>
               </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(4)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="filter_Marker('search', $event)">
                   <h1>CONECTIVIDADE</h1>
               </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="change_Marker(5)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos"(click)="filter_Marker('search', $event)">
                   <h1>ELETROPORTÁTEIS</h1>
               </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(6)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
                   <h1>ESPAÇO GAMER</h1>
               </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(7)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
                   <h1>GAMES</h1>
               </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(8)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
                   <h1>HARDWARE</h1>
               </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(9)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
                   <h1>PERIFÉRICOS</h1>
               </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
                   <h1>PROJETORES</h1>
               </swiper-slide>
 
-              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+              <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
                 <h1>ENERGIA</h1>
             </swiper-slide>
             
-            <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(2)">
+            <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
               <h1>ÁUDIO</h1>
             </swiper-slide>
            
 
-          <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="change_Marker(10)">
+          <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
             <h1>CELULAR & SMARTPHONE</h1>
         </swiper-slide>
 
@@ -395,14 +397,14 @@
  
       </div>
      
-  </div>
-  <div class="marker_Products">  
+    </div>
+    <div class="marker_Products">  
 
     <div class="products_All" style="position: relative;">
 
       <svg width="32" height="32" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; z-index: 3; top: 40%" class="IconBackwardPair"><g filter="url(#:Rbincc6:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":Rbincc6:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
             
-      <swiper-container class="swiper_Product" slides-per-view="3.7" space-between="8"  loop="true" speed="500" init="false">
+      <swiper-container class="swiper_Product" slides-per-view="auto" space-between="8"  loop="true" speed="500" init="false">
                 
         <swiper-slide class="product_Item" (mouseenter) = "enterProductItem($event)" (mouseleave) = "leaveProductItem($event)" (click) = "navegarParaProductMain(produto)" *ngFor="let produto of mostSearch">
          
@@ -521,9 +523,18 @@
 </div>
 
 
-</div>
+    </div>
+
+    <div style="display: flex; height: 40vh; width: 100%; background-color: black; margin-top: 10px; align-items: center; justify-content: center;"> <h1 class="text_Blinking">SITE CLONE PARA FINS EDUCATIVOS</h1></div>
+    <div class="banner_Products">
         
-    
+        <img class="img_Products" src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/banner_footer/1714393917.png&w=640&h=210&q=100" alt="">
+        
+        <img src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/banner_footer/1706621166.png&w=640&h=210&q=100" alt="">
+      
+        <img src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/banner_footer/1705943107.png&w=640&h=210&q=100" alt="">
+    </div>
+   
   </div>
   
   <div class="banner_Departments" style="width: 25%;">
@@ -533,77 +544,137 @@
     <img src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/imagens/kbar/1712239228.jpg&w=384&h=298&q=100" alt="">
     
     <img src="https://www.kabum.com.br/core/_next/image?url=https://themes.kabum.com.br/conteudo/imagens/kbar/1718999668.png&w=384&h=298&q=100" alt="">
+ 
   </div>
 
 </div>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="pair_Links">
 
-<button (click)="teste()">aaa</button>
+    <h1 class="link_Title"><span><svg width="24" height="24" viewBox="0 0 10 12" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconOfferFire" aria-hidden="true"><path d="M9.11775 5.20436C8.86956 4.64274 8.50877 4.13865 8.05795 3.72364L7.68593 3.38045C7.6733 3.36912 7.6581 3.36108 7.64165 3.35703C7.62521 3.35298 7.60803 3.35306 7.59162 3.35725C7.57521 3.36143 7.56008 3.36961 7.54754 3.38105C7.53501 3.39249 7.52546 3.40685 7.51974 3.42287L7.35354 3.9023C7.24999 4.20307 7.05951 4.51027 6.78977 4.81233C6.77187 4.83161 6.75141 4.83675 6.73735 4.83804C6.72329 4.83932 6.70156 4.83675 6.68238 4.81876C6.66448 4.80333 6.65553 4.7802 6.65681 4.75706C6.70411 3.98328 6.474 3.11053 5.97031 2.16066C5.55355 1.37145 4.97443 0.75577 4.25085 0.326463L3.72287 0.0141236C3.65383 -0.0270076 3.56562 0.026977 3.56946 0.107954L3.59758 0.724921C3.61676 1.14652 3.56818 1.51927 3.45312 1.82904C3.3125 2.20821 3.11051 2.5604 2.85227 2.8766C2.67256 3.09634 2.46886 3.2951 2.24503 3.46914C1.70593 3.88581 1.26757 4.4197 0.962784 5.03084C0.658745 5.64731 0.500371 6.32603 0.5 7.01413C0.5 7.62082 0.618892 8.20822 0.854119 8.76221C1.08125 9.29558 1.40902 9.77966 1.81932 10.1877C2.23352 10.599 2.7142 10.9229 3.24986 11.1478C3.80468 11.3817 4.39275 11.5 5 11.5C5.60724 11.5 6.19531 11.3817 6.75014 11.1491C7.28447 10.9255 7.77036 10.5994 8.18067 10.1889C8.59488 9.77763 8.91959 9.29691 9.14587 8.76349C9.38074 8.21102 9.50123 7.61624 9.49999 7.01542C9.49999 6.38817 9.37215 5.77891 9.11775 5.20436Z" fill="#ff6500"></path></svg></span>
+      LINKS RELACIONADOS</h1>
 
-<svg width="32" height="32" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="Volta"><g filter="url(#:Rbincc6:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":Rbincc6:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
-   
-  <swiper-container class="nameSub" slides-per-view="auto" speed="500" space-between="20" loop="false" style="display: flex; width: 400px; background-color: red;">
-                           
-    <swiper-slide style="width: auto;" class="item" *ngFor="let name of nameSub">{{name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+    <div class="link_Button">
     
-  </swiper-container>
+      <div class="button">
+        ps4
+      </div>
+      <div class="button">
+        nintendo switch
+      </div>
+      <div class="button">
+        playstation 5
+      </div>
+      <div class="button">
+        xbox
+      </div>
 
-  <div class="marker_Back">
-              
-    <svg width="20" height="20" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation"><g filter="url(#:r4:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":r4:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
+      <div class="button">
+        ps4
+      </div>
+      <div class="button">
+        nintendo switch
+      </div>
+      <div class="button">
+        playstation 5
+      </div>
+      <div class="button">
+        xbox
+      </div>
 
+      <div class="button">
+        ps4
+      </div>
+      <div class="button">
+        nintendo switch
+      </div>
+      <div class="button">
+        playstation 5
+      </div>
+      <div class="button">
+        xbox
+      </div>
+
+      <div class="button">
+        ps4
+      </div>
+      <div class="button">
+        nintendo switch
+      </div>
+      <div class="button">
+        playstation 5
+      </div>
+      <div class="button">
+        xbox
+      </div>
+
+      <div class="button">
+        ps4
+      </div>
+      <div class="button">
+        nintendo switch
+      </div>
+      <div class="button">
+        playstation 5
+      </div>
+      <div class="button">
+        xbox
+      </div>
+
+      <div class="button">
+        ps4
+      </div>
+      <div class="button">
+        nintendo switch
+      </div>
+      <div class="button">
+        playstation 5
+      </div>
+      <div class="button">
+        xbox
+      </div>
+
+      <div class="button">
+        ps4
+      </div>
+      <div class="button">
+        nintendo switch
+      </div>
+      <div class="button">
+        playstation 5
+      </div>
+      <div class="button">
+        xbox
+      </div>
+
+      <div class="button">
+        ps4
+      </div>
+      <div class="button">
+        nintendo switch
+      </div>
+      <div class="button">
+        playstation 5
+      </div>
+      <div class="button">
+        xbox
+      </div>
+
+      <div class="button">
+        ps4
+      </div>
+      <div class="button">
+        nintendo switch
+      </div>
+      <div class="button">
+        playstation 5
+      </div>
+      <div class="button">
+        xbox
+      </div>
+    
+    </div>
+  
 </div>
 
-<swiper-container  class="teste" slides-per-view="auto" space-between="8" simulate-touch="false" loop="true" style="width: 400px; background-color: red;">
-  <swiper-slide style="background-color: yellow; width: 10%;">
-    casa
-  </swiper-slide >
-
-  <swiper-slide  style="background-color: yellow; width: 12%;">
-    a
-  </swiper-slide>
-
-  <swiper-slide  style="background-color: yellow; width: 20%;">
-    lalalalala
-  </swiper-slide>
-  <swiper-slide  style="background-color: yellow; width: 7%;"> 
-    de
-  </swiper-slide>
-  <swiper-slide  style="background-color: yellow; width: 14%;">
-    papapapt
-  </swiper-slide>
-
-  <swiper-slide  style="background-color: yellow; width: 11%;">
-    testando
-  </swiper-slide>
-  <swiper-slide  style="background-color: yellow; width: 6%;">
-    acrize
-  </swiper-slide>
-  <swiper-slide  style="background-color: yellow; width: 17%;">
-    ddadada
-  </swiper-slide>
-  <swiper-slide  style="background-color: yellow; width: 18%;">  
-    a
-  </swiper-slide>
-  <swiper-slide  style="background-color: yellow; width: 20%;">
-  dad
-  </swiper-slide>
-  <swiper-slide  style="background-color: yellow; width: 3%;">
-    a
-  </swiper-slide>
-</swiper-container>
-
-<div class="marker_Next">
-       
-  <svg width="20" height="20" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation"><g filter="url(#:r5:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M14.7878 26L13.3333 24.5455L19.8787 18L13.3333 11.4545L14.7878 10L22.7878 18L14.7878 26Z" fill="#7F858D"></path></g><defs><filter id=":r5:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9369"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9369" result="effect2_dropShadow_8335_9369"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9369" result="shape"></feBlend></filter></defs></svg>
-
-</div>
-
-><br><br><br><br><br>
-<button (click)="NavigationPage('Hardware')">HARDWARE</button>
-<button (click)="NavigationPage('Computadores')">Computadores</button>
-<button (click)="NavigationPage('Coolers')">Coolers</button>
-<button (click)="NavigationPage('Placas-mãe')">PLACA DE VIDEO</button>
-<button (click)="NavigationPage('Processadores')">PLACA MAE</button>
 </div>

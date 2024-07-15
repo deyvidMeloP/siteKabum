@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Renderer2 } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -21,12 +22,19 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   contSubsection: number = 0;
   parent: any[] = []
   nameSection: any[] = [] 
-constructor(
+  searchQuery: string = '';
+  products: any[] = [];
+  results: any[] = [];
+
+  constructor(
 
   private sectionService: KabumServiceService,
   private subSectionService: KabumServiceService,
   private router: Router,
-  private stateService: KabumServiceService
+  private stateService: KabumServiceService,
+  private productService: KabumServiceService,
+  private renderer: Renderer2,
+
 
 ){
  
@@ -38,6 +46,8 @@ teste(){
 }
 
   ngOnInit(): void {
+
+  this.getDadosService()
   this.getDadosSection()
   setTimeout(()=>{
     if(this.swiper){
@@ -103,6 +113,83 @@ ngAfterViewInit(): void {
 
 
 }
+
+getDadosService(){
+  this.productService.getDados().subscribe(
+    (data: any[])=>{
+      this.products = data
+    },
+
+    (error: any) => {
+      console.error('Erro ao obter dados do serviço:', error);
+    }
+  )
+}
+
+
+onSearchChange(event: any): void {
+  const searchQueryLower = this.searchQuery.toLocaleLowerCase()
+
+  if(searchQueryLower == ''){
+    this.results = []
+  }
+
+  else{
+    this.results = this.products.filter((el, index)=>{
+
+      const word = el.name_Product.toLocaleLowerCase()
+      return word.includes(searchQueryLower)
+      
+  
+    })
+  }
+
+  const tips_Search = document.querySelector(".tips_Search") as HTMLElement
+
+  const li = tips_Search.querySelectorAll(".tips") as NodeListOf <HTMLElement>
+
+  li.forEach((el)=>{
+
+    tips_Search.removeChild(el)
+  })
+
+  for(let product of this.results){
+
+    const li = this.renderer.createElement('li')
+    const img = this.renderer.createElement('img')
+    const h1 = this.renderer.createElement('h1')
+
+    this.renderer.setAttribute(img, 'src', product.imageUrl)
+   
+    this.renderer.appendChild(h1,  this.renderer.createText(product.name_Product))
+
+    this.renderer.appendChild(li, img)
+  
+    this.renderer.appendChild(li, h1)
+  
+    this.renderer.addClass(li, 'tips')
+
+    tips_Search.appendChild(li)
+
+    this.renderer.listen(li, 'click', ()=>{
+      const tips_Search = document.querySelector(".tips_Search") as HTMLElement
+
+      const li = tips_Search.querySelectorAll(".tips") as NodeListOf <HTMLElement>
+
+    li.forEach((el)=>{
+
+      tips_Search.removeChild(el)
+    })
+      this.stateService.changeProductMainName(product)
+      window.scrollTo(0, 0);
+      this.router.navigateByUrl('/Product').then(() => {
+      });
+  
+    })
+  }
+
+}
+
 
 ngOnDestroy(): void {
   console.log('ngOnDestroy foi ativado!');
@@ -402,7 +489,7 @@ submenu_Click(section: any){
 submenu_SubOpt(subsection: any){
 
   this.parent = []
-this.nameSection[1] = subsection.name
+  this.nameSection[1] = subsection.name
   const submenu_Opt = document.querySelector(".submenu_Parent") as HTMLElement
   const buttonNext = document.querySelector(".arrow_Up_3") as HTMLElement
   buttonNext.style.display = "none"

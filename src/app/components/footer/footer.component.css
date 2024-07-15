@@ -1,0 +1,141 @@
+footer{
+    background-color: #003A6A;
+    margin-top: 33px;
+    
+}
+
+
+.news_Footer{
+    display: flex;
+    padding: 20px 35px 20px 30px;
+    gap: 100px;
+}
+
+.footer_Title{
+    min-width: max-content;
+}
+
+.footer_Title h1{
+    font-size: 20px;
+    line-height: 20px;
+    color: #ffffff;
+  
+}
+
+.footer_Title h2{
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.footer_Input{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: max-content;
+}
+
+.footer_Input input{
+    width: 29vw;
+    height: 7vh;
+    border-radius: 5px;
+    padding-left: 25px;
+    
+}
+
+.footer_Input input::placeholder{
+    font-size: 16px;
+    
+}
+
+.input_Button{
+    background-color: #ff6500;
+    border-radius: 5px;
+    border-style: none;
+    color: #ffffff;
+    text-align: center;
+    width: 16vw;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.items_Footer{
+    padding: 20px 35px 20px 30px;
+    display: flex;
+    gap: 70px;
+}
+
+.departments_Items, .offers_Items, .institutional_Items, .accessibility_Items, .service_Items{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.departments_Item, .offers_Item, .institutional_Item, .accessibility_Item, .service_Item{
+    display: flex;
+    gap: 50px;
+}
+
+.title_Item{
+    font-size: 14px;
+    line-height: 20px;
+    color: #ffffff;
+}
+
+.items{
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    width: max-content;
+    gap: 10px;
+    list-style: none;
+}
+.item, h2, .secutity_Buy, .FAQ, .my_Profile, .socialMedia, .apps{
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+h2:hover{
+    color: rgb(187, 182, 182);
+}
+h2{
+    cursor: pointer;
+}
+
+.item h1:hover{
+    color: rgb(187, 182, 182);
+}
+.item h1, .secutity_Buy h1, .FAQ h1, .my_Profile h1, .socialMedia h1, .apps h1{
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    
+}
+
+.icon_Media{
+    display: flex;
+    width: 60%;
+    gap: 7px;
+    row-gap: 4px;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.item:hover{
+   color: rgb(187, 182, 182);
+}
+
+.address{
+    cursor: pointer;
+    list-style: none;
+}
+
+.address:hover{
+    color: rgb(187, 182, 182);
+}

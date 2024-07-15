@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FooterComponent } from './components/footer/footer.component';
 // register Swiper custom elements
 register();
 
@@ -39,6 +40,7 @@ register();
     ProductMainComponent,
     HomeComponent,
     ProductFilterComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

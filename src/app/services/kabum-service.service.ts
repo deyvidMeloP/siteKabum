@@ -32,9 +32,13 @@ export class KabumServiceService {
   offerTime3$: Observable<string> = this.offerTime3Subject.asObservable();
   
   private filterNameSource: BehaviorSubject<string>;
+  private productMainNameSource: BehaviorSubject<string>;
   
   constructor(private http: HttpClient) {const savedName = localStorage.getItem('filterName') || '';
   this.filterNameSource = new BehaviorSubject<string>(savedName);
+
+  const savedProductMainName = localStorage.getItem('productMainName') || '';
+  this.productMainNameSource = new BehaviorSubject<any>(savedProductMainName);
 }
 
   getDados(): Observable<any[]> {
@@ -57,6 +61,15 @@ export class KabumServiceService {
   changeFilterName(name: string) {
     localStorage.setItem('filterName', name);
     this.filterNameSource.next(name);
+  }
+
+  get currentProductMainName() {
+    return this.productMainNameSource.asObservable();
+  }
+
+  changeProductMainName(name: string) {
+    localStorage.setItem('productMainName', name);
+    this.productMainNameSource.next(name);
   }
 
   updateProductVisits(id: number, visits: number): Observable<any> {
@@ -107,7 +120,7 @@ export class KabumServiceService {
   accountant_Time1(): string {
     
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-06-03T09:59:47');
+    const targetDate = new Date('2024-09-03T09:59:47');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
@@ -151,7 +164,7 @@ export class KabumServiceService {
 
   accountant_Time2(): string {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-05-30T15:30:20');
+    const targetDate = new Date('2024-07-30T15:30:20');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
@@ -194,7 +207,7 @@ export class KabumServiceService {
 
   accountant_Time3(): string {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-05-20T20:00:00');
+    const targetDate = new Date('2024-07-14T20:00:00');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
