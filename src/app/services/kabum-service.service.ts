@@ -9,14 +9,14 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class KabumServiceService {
 
-  private apiUrl = 'http://localhost:8080/api/products';
-  private apiUrlImages = 'http://localhost:8080/api/images';
-  private apiUrlBrands = 'http://localhost:8080/api/brands';
-  private apiUrlDepartments = 'http://localhost:8080/api/departments';
-  private apiUrlSection = 'http://localhost:8080/api/section';
-  private apiUrlSubsection = 'http://localhost:8080/api/subsection';
-  private apiUrlCategories = 'http://localhost:8080/api/categories';
-  private apiUrlProductCategory = 'http://localhost:8080/api/productCategory'
+  private apiUrl = 'https://deyvidmelop.github.io/api/products';
+  private apiUrlImages = 'https://deyvidmelop.github.io/api/images';
+  private apiUrlBrands = 'https://deyvidmelop.github.io/api/brands';
+  private apiUrlDepartments = 'https://deyvidmelop.github.io/api/departments';
+  private apiUrlSection = 'https://deyvidmelop.github.io/api/section';
+  private apiUrlSubsection = 'https://deyvidmelop.github.io/api/subsection';
+  private apiUrlCategories = 'https://deyvidmelop.github.io/api/categories';
+  private apiUrlProductCategory = 'https://deyvidmelop.github.io/api/productCategory'
 
   offer_Time1: string = '';
   offer_Time2: string = '';
