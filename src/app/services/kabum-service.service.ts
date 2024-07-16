@@ -9,14 +9,14 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class KabumServiceService {
 
-  private apiUrl = 'https://deyvidmelop.github.io/api/products';
-  private apiUrlImages = 'https://deyvidmelop.github.io/api/images';
-  private apiUrlBrands = 'https://deyvidmelop.github.io/api/brands';
-  private apiUrlDepartments = 'https://deyvidmelop.github.io/api/departments';
-  private apiUrlSection = 'https://deyvidmelop.github.io/api/section';
-  private apiUrlSubsection = 'https://deyvidmelop.github.io/api/subsection';
-  private apiUrlCategories = 'https://deyvidmelop.github.io/api/categories';
-  private apiUrlProductCategory = 'https://deyvidmelop.github.io/api/productCategory'
+  private apiUrl = 'https://apikabum.onrender.com/api/products';
+  private apiUrlImages = 'https://apikabum.onrender.com/api/images';
+  private apiUrlBrands = 'https://apikabum.onrender.com/api/brands';
+  private apiUrlDepartments = 'https://apikabum.onrender.com/api/departments';
+  private apiUrlSection = 'https://apikabum.onrender.com/api/section';
+  private apiUrlSubsection = 'https://apikabum.onrender.com/api/subsection';
+  private apiUrlCategories = 'https://apikabum.onrender.com/api/categories';
+  private apiUrlProductCategory = 'https://apikabum.onrender.com/api/productCategory'
 
   offer_Time1: string = '';
   offer_Time2: string = '';
