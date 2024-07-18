@@ -13,7 +13,18 @@ play: boolean = true
 lastCall: number = -1
 ngOnInit(): void {
   this.btn_Complete1();
+  
+  setTimeout(()=>{
+this.teste()
+  },0)
 }
+
+teste(){
+  const btn_Manual = document.querySelectorAll(".manual-btn") as NodeListOf<HTMLElement>;
+
+
+}
+
 timeoutIds: any[] = [];
 
 

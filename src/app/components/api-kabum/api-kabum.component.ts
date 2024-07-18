@@ -23,6 +23,9 @@ export class ApiKabumComponent implements OnInit{
   tempoRestante2Subscription: Subscription | undefined;
   tempoRestante3Subscription: Subscription | undefined;
   newVisits: any;
+  swiper: any;
+  swiperProduct: any;
+  product_Swiper: any = [];
 
   constructor(private dadosService: KabumServiceService, private dadosServiceImages: KabumServiceService, private router: Router, private timerService: KabumServiceService) { }
   
@@ -66,15 +69,92 @@ export class ApiKabumComponent implements OnInit{
     this.dadosService.getDados().subscribe(
       (data: any[]) => {
         this.dadosDoServico = data;
+        setTimeout(()=>{
+
+          const product_Swiper = document.querySelectorAll(".swiper")
+                    
+          const swiperParams = {
+            slidesPerView: 'auto',
+            breakpoints: {
+              1024: {
+                slidesPerView: 'auto',
+                spaceBetween: 0
+              },
+            },
+            on: {
+              init() {/*trava a inicilização e inicia por aqui */
+                // ...
+              },
+
+              resize() {
+                console.log('Swiper resized');
+                const screenWidth = window.innerWidth;
+                console.log('Screen width:', screenWidth);
+              },
+            },
+          };
+
+          product_Swiper.forEach((el: any, index) => {
+            
+            Object.assign(el, swiperParams);
+            
+            el.initialize();
+            
+            this.product_Swiper.push(el.swiper);
+          });
+    
+
+          const backButton = document.querySelector(".IconBackward")
+          const nextButton = document.querySelector(".IconForward")
+    
+          if(backButton){
+    
+            backButton.addEventListener('click', (event)=> this.swipeMove(backButton.classList.value))
+        
+            
+          }
+      
+          if(nextButton){
+           
+            nextButton.addEventListener('click', (event)=> this.swipeMove(nextButton.classList.value))
+          
+          }
+    
+        }, 0)
         console.log(this.dadosDoServico[0].imageUrl)
         console.log('Dados no componente:', this.dadosDoServico);
-        TesteHello()},
+        },
       (error: any) => {
         console.error('Erro ao obter dados do serviço:', error);
       }
     );
 
     
+  }
+
+  swipeMove(className: string){
+
+    switch(className){
+
+      case "IconBackward":
+        
+        if(this.product_Swiper[0]){
+        
+          this.product_Swiper[0].slidePrev();
+
+        }
+      break;
+
+      case "IconForward":
+       
+        if(this.product_Swiper[0]){
+          
+          this.product_Swiper[0].slideNext();
+
+        }
+      break;
+      }
+
   }
 
   getDadosServiceImages(){

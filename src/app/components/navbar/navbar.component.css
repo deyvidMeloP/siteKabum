@@ -2,7 +2,7 @@
     display: flex;
     height: 136px;
     flex-direction: column;
-    width: 99vw;
+    width: 100%;
 }
 
 .navbar_Menu{
@@ -162,7 +162,7 @@
 .navbar_downMenu{
     background-color: #ff6500;
     height: 33px;
-    width: 99vw;
+    width: 100%;
 }
 
 .navbar_downMenu ul{

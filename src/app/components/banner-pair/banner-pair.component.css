@@ -5,6 +5,8 @@
 
 .images_Banner{
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 30px;
 }
 
@@ -41,7 +43,7 @@
 .pair_Brand h2{
     position: absolute;
     right: 0;
-    top: -40px;
+    top: -37px;
     display: flex;
     align-items: center;
     gap: 3px;
@@ -59,17 +61,21 @@
 .pair_Title span{
     font-size: 16px;
 }
-
-.pair_Brand{
+.brands_Box_All{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 30px;
+    position: relative;
+}
+.pair_Brand{
+    display: flex;
     position: relative;
 }
 
 .brands_Box{
-    width: calc(23% + 5px);
-    height: 270px;
+    width: 23%; 
+    height: 280px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,12 +84,12 @@
     box-shadow: rgba(40, 41, 61, 0.04) 0px 1px 2px, rgba(96, 97, 112, 0.16) 0px 2px 4px;
     border-radius: 4px; 
     cursor: pointer;
+    background-color: red;
 }
 
 .brands_Box img{
     width: 89%;
-    height: 90%;
-    height: 170px;
+    height: 180px;
     border-radius: 5px;
 }
 
@@ -627,3 +633,40 @@
         color: red; /* Cor piscando */
     }
 }
+
+@media screen and (max-width: 1440px) {
+    .brands_Box{
+        max-width: 286px;
+        height: 268px;
+    }
+
+    .brands_Box_All{
+        gap: 15px;
+    }
+}
+
+@media screen and (max-width: 1350px) {
+    .banner_Pair{
+        width:100vw;
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    .pair_Title h1{
+        font-size: 16px;
+    }
+
+    .pair_Brand h2{
+        top: -37px;
+    }
+}
+ @media screen and (max-width: 600px){
+ .images_Banner{
+    flex-wrap: wrap;
+
+ }
+
+ .images_Banner img{
+    width: 93vw;
+ }
+ }

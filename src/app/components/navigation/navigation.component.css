@@ -16,3 +16,10 @@
 app-banner-pair{
     margin-top: 50px;
 }
+
+@media screen and (max-width: 1350px) {
+    .navigation{
+        width: 100vw;
+    }
+    
+}
