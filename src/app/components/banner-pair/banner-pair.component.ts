@@ -171,11 +171,31 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
                
           const product_Swiper = document.querySelectorAll(".swiper_Product")
     
-          marker_Swiper.forEach((el)=>{
-    
-            this.marker_Swiper.push((el as any).swiper)
+          const swiperParams2 = {
+            simulateTouch: true,
+            allowTouchMove: true,
+            breakpoints:{
+              1020:{
+                simulateTouch: false,
+                allowTouchMove: false
+              }
+            },
+            on: {
+              init() {/*trava a inicilização e inicia por aqui */
+                // ...
+              }
+            }
+          }
+
+          marker_Swiper.forEach((el: any)=>{
+            Object.assign(el, swiperParams2)
+            el.initialize();
+            this.marker_Swiper.push(el.swiper);
+           
            
           })
+
+         
     
           const swiperParams = {
             updateOnWindowResize: true,
