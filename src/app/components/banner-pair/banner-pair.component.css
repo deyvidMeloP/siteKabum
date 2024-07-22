@@ -64,7 +64,7 @@
 .brands_Box_All{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     gap: 30px;
     position: relative;
 }
@@ -131,11 +131,11 @@
 
 .marker_Title{
     display: flex;
-    padding: 0px 47px 0px 47px;
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    
+    padding: 0px 52px 0px 47px;
+   
 
 }
 
@@ -158,7 +158,7 @@
     color: #ff6500;
     font-weight: 700;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 14px;
     cursor: pointer;
 }
 
@@ -175,9 +175,8 @@
 }
 .marker_Departments{
     display: flex;
-    margin-top: 30px;
+    margin: 30px 47px 0px 47px;
     align-items: center;
-    padding: 0px 47px 0px 47px;
     gap: 5px;
     user-select:none; 
 
@@ -265,25 +264,57 @@
 
 .departments_All{
     display: flex;
-    gap: 30px;
+    gap: 40px;
     flex-direction: column;
     width: 93%;
 }
 .departments_Title{
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.departments_Title a{
+    display: none;
+}
+
+.departments_Text{
+    display: flex;
+    align-items: center;
     gap: 10px;
 }
 
 
-.departments_Items{
-    
-    overflow: hidden;
-}
-
 .departments_Wrapper{
    padding-top: 5px;
    padding-bottom: 5px;
+}
+
+.departments_Swiper{
+    display: flex;
+}
+
+.departments_Items{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.departments_Item{
+    width: min-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+    gap: 30px;
+    min-width: 134px;
+}
+
+.departments_Swiper img{
+    width: 105px;
+    height: 66px;
+    object-fit: contain;
 }
 .departments_Title span{
     display: flex;
@@ -294,20 +325,6 @@
     font-weight: 700;
     line-height: 14px;
     color: #42464d;
-}
-
-.departments_Item{
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    width: 9.5vw;
-    align-items: center;
- 
-}
-
-.departments_Item img{
-    width: 95%;
-    object-fit: cover;
 }
 
 .departments_Item h1{
@@ -356,12 +373,12 @@
 .banner_Departments {
     display: flex;
     flex-direction: column;
-    gap: 15vh;
+    justify-content: space-between;
 }
 
 .banner_Departments img{
     width: 100%;
-    height: 41vh;
+    height: 298px;
 }
 
 
@@ -402,15 +419,14 @@
 .banner_Products{
     display: flex;
     width: 100%;
-    justify-content: space-between;
-    margin-top: 50px;
+    justify-content:space-between;
+    margin-top: 40px;
 }
 
 .banner_Products img{
     width: 32%;
-    height: 25vh;
-    
-
+    max-width: 480px;
+    max-height: 210px;
 }
 
 .text_Blinking{
@@ -645,23 +661,26 @@
 /*ng build --configuration production --output-path docs --base-href /siteKabum/
 */
 @media screen and (max-width: 1440px) {
+
+    .banner_Products{
+        padding-right: 15px;
+    }
+    .banner_Products img{
+        max-width: 384px;
+        max-height: 168px;
+    }
+
     .product_Item{
         max-width: 214px;
         margin-right: 16px;
     }
-       .marker_All{
-       
-       }
-    
-       .product_Image{
+    .product_Image{
         width: 214px;
-       }
+    }
     
-       .product_Name{
+    .product_Name{
         width: 182px;
-       }
-       
-
+    }
 
     .brands_Box{
         max-width: 286px;
@@ -671,31 +690,82 @@
     .brands_Box_All{
         gap: 15px;
     }
+
+    .banner_Departments img{
+        max-width: 280px;
+    }
+
+    
 }
 
 @media screen and (max-width: 1350px) {
+
+    .banner_Pair{
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .marker_Title{
+        padding-right: 73px;
+    }
+  
     .banner_Pair{
         width:100vw;
     }
 
     .IconForwardPair{
         margin-left: 10px;
-        margin-right: 30px;
+       
     }
 
     .IconBackwardPair{
         margin-right: 10px;
-        margin-left: 30px;
+        
     }
   
 }
 
 @media screen and (max-width: 1020px) {
 
-    .swiper_Product{
-        padding-left: 47px;
+    .banner_Pair{
+        padding-right: 0;
     }
+   
+    .banner_Departments{
+        flex-direction: row;
+        justify-content: space-between;
+        width: auto;
+    }
+
+    .banner_Departments img{
+        width: calc(30vw + 15px);
+        max-width: 350px;
+    }
+
+    .last_Departments{
+        flex-direction: column;
+    }
+
+    .most_Search{
+        width: 100%;
+    }
+
+    .marker_Departments{
+        margin: 30px 0px 0px 0px;
+    }
+    .marker_Title{
+        padding: 0px 2px 0px 0px;
+    }
+
     .IconBackwardPair, .IconForwardPair{
+        display: none;
+    }
+
+    .departments_All{
+        width: 100%;
+    }
+
+    .departments_Back, .departments_Next{
         display: none;
     }
     .product_Discount_Stock{
@@ -797,7 +867,7 @@
         display: none;
     }
     .pair_Title{
-        margin-left: 40px;
+        margin-left: 52px;
     }
     .pair_Title h1, .title_Text h1{
        font-size: 16px;
@@ -805,6 +875,7 @@
 
     .pair_Brand h2{
         top: -37px;
+        font-size: 12px;
     }
 
     .brands_Box{
@@ -813,21 +884,36 @@
     }
 
     .brands_Box_All{
-        gap: 10px;
-        row-gap: 15px;
+        gap: 15px;
     }
 
     .brands_Box h1, .title_Button{
         font-size: 12px;
-        line-height: 20px;
+        
     }
 
     .all_Products{
         font-size: 10px;
         line-height: 18px;
     }
+
+    .departments_Text svg{
+        width: 18px;
+        height: 14px;
+    }
+    .departments_Text h1{
+        font-size: 16px;
+    }
+    .departments_Title a{
+        display: flex;
+     }
 }
+
  @media screen and (max-width: 600px){
+
+    .brands_Box_All{
+        gap: 20px;
+    }
  .images_Banner{
     flex-wrap: wrap;    
  }  
@@ -850,7 +936,9 @@
     margin-bottom: 0;
  }
 
-
+.departments_Item{
+    gap: 20px;
+}
  }
 
 
@@ -860,6 +948,14 @@
     }
 
     .pair_Brand h2{
+        font-size: 10px;
+    }
+
+    .title_Text h1{
+        font-size: 14px;
+    }
+
+    .title_Button{
         font-size: 10px;
     }
 

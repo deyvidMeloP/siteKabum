@@ -32,6 +32,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   subSection: any = [];
   marker_Swiper: any = [];
   product_Swiper: any = [];
+  departments_Swiper: any = [];
   mostSearch:any = [];
   newVisits: any;
   
@@ -120,11 +121,21 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
 
       break;
 
-      case "marker_Next":
+      case "departments_Back":
 
-      if(this.marker_Swiper[index]){
+      if(this.departments_Swiper[index]){
           
-        this.marker_Swiper[index].slideNext();
+        this.departments_Swiper[index].slidePrev();
+
+      }
+
+      break;
+      
+      case "departments_Next":
+
+      if(this.departments_Swiper[index]){
+          
+        this.departments_Swiper[index].slideNext();
 
       }
 
@@ -170,6 +181,8 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
           const marker_Swiper = document.querySelectorAll(".marker_Swiper")
                
           const product_Swiper = document.querySelectorAll(".swiper_Product")
+
+          const departments_Swiper = document.querySelectorAll(".departments_Swiper")
     
           const swiperParams2 = {
             simulateTouch: true,
@@ -186,12 +199,31 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
               }
             }
           }
-
           marker_Swiper.forEach((el: any)=>{
             Object.assign(el, swiperParams2)
             el.initialize();
             this.marker_Swiper.push(el.swiper);
            
+           
+          })
+          const swiperParams3 = {
+            slidesPerView: 'auto',
+            breakpoints:{
+              1020:{
+                spaceBetween: 0
+              }
+            },
+            on: {
+              init() {/*trava a inicilização e inicia por aqui */
+                // ...
+              }
+            }
+          }
+
+          departments_Swiper.forEach((el: any)=>{
+            Object.assign(el, swiperParams3)
+            el.initialize();
+            this.departments_Swiper.push(el.swiper);
            
           })
 
@@ -218,6 +250,9 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     
           const IconBackwardPair = document.querySelectorAll(".IconBackwardPair")
           const IconForwardPair = document.querySelectorAll(".IconForwardPair")
+
+          const departments_Back = document.querySelectorAll(".departments_Back")
+          const departments_Next = document.querySelectorAll(".departments_Next")
     
       
           if(backButton){
@@ -253,6 +288,24 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
           if(IconForwardPair){
          
             IconForwardPair.forEach((el, index)=>{
+         
+              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+            })
+          }
+
+          if(departments_Back){
+          
+            departments_Back.forEach((el, index)=>{
+          
+              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
+          
+            })
+         
+          }
+    
+          if(departments_Next){
+         
+           departments_Next.forEach((el, index)=>{
          
               el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
             })

@@ -25,7 +25,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   searchQuery: string = '';
   products: any[] = [];
   results: any[] = [];
-
+  mobileSection: any
+  swiperMobile: any
   constructor(
 
   private sectionService: KabumServiceService,
@@ -59,10 +60,14 @@ teste(){
     if(this.swiperParent){
       this.swiperParent.update()
     }
+
+    if(this.swiperMobile){
+      this.swiperMobile.update()
+    }
     const swiperContainer = document.querySelector('.swiper_Subsection');
     const swiperContainerSection = document.querySelector('.swiper_Section');
     const swiperContainerParent= document.querySelector('.swiper_Parent')
-  
+    
     this.swiper = (swiperContainer as any).swiper;
     this.swiperSection = (swiperContainerSection as any).swiper
     this.swiperParent = (swiperContainerParent as any).swiper
@@ -104,9 +109,27 @@ teste(){
      if(nextButton_Subsection){
        nextButton_Subsection.addEventListener('mouseenter', this.swipeNextSubsection.bind(this))
      }
-  
+
+     const swiperMobile: any = document.querySelector(".hbg_Section")
+
+     const swiperParams = {
+     
+      spaceBetween: 0,
+        on: {
+          init(){}
+        }
+     
+      }
+
+     Object.assign(swiperMobile, swiperParams)
+     swiperMobile.initialize()
+     this.swiperMobile = swiperMobile
+
+
   },0)
   
+
+
 }
 
 ngAfterViewInit(): void {
@@ -128,8 +151,9 @@ getDadosService(){
 
 
 onSearchChange(event: any): void {
+  
   const searchQueryLower = this.searchQuery.toLocaleLowerCase()
-
+  
   if(searchQueryLower == ''){
     this.results = []
   }
@@ -143,8 +167,25 @@ onSearchChange(event: any): void {
   
     })
   }
+console.log(this.results[0])
 
-  const tips_Search = document.querySelector(".tips_Search") as HTMLElement
+  const navbar = document.querySelector(".navbar_Menu") as HTMLElement
+  
+  let tips_Search: any = '' ;
+
+  if(window.getComputedStyle(navbar).display == "none"){
+    
+    const navbar_Menu = document.querySelector(".navbar_menuMobile") as HTMLElement
+
+    tips_Search = navbar_Menu.querySelector(".tips_Search") as HTMLElement
+  }
+
+  else{
+    const navbar_Menu = document.querySelector(".navbar_Menu") as HTMLElement
+    tips_Search = navbar_Menu.querySelector(".tips_Search") as HTMLElement
+  }
+ 
+ /* const tips_Search = document.querySelector(".tips_Search") as HTMLElement*/
 
   const li = tips_Search.querySelectorAll(".tips") as NodeListOf <HTMLElement>
 
@@ -172,8 +213,22 @@ onSearchChange(event: any): void {
     tips_Search.appendChild(li)
 
     this.renderer.listen(li, 'click', ()=>{
-      const tips_Search = document.querySelector(".tips_Search") as HTMLElement
 
+
+      let tips_Search: any = ""
+      
+      if(window.getComputedStyle(navbar).display == "none"){
+    
+        const navbar_Menu = document.querySelector(".navbar_menuMobile") as HTMLElement
+    
+        tips_Search = navbar_Menu.querySelector(".tips_Search") as HTMLElement
+      }
+    
+      else{
+        const navbar_Menu = document.querySelector(".navbar_Menu") as HTMLElement
+        tips_Search = navbar_Menu.querySelector(".tips_Search") as HTMLElement
+      }
+     
       const li = tips_Search.querySelectorAll(".tips") as NodeListOf <HTMLElement>
 
     li.forEach((el)=>{
@@ -376,20 +431,17 @@ leave(){
 }
 
 getDadosSection(){
-
+   
   this.sectionService.getDadosSection().subscribe(
-
-    (data:any[]) =>{
-
-      this.Section = data
+    (data: any[]) => {
+      this.Section = data;
       this.getDadosSubsection()
-      
-
+      console.log('Dados no componente:', this.Section);
     },
     (error: any) => {
       console.error('Erro ao obter dados do serviço:', error);
     }
-  )
+  );
 
 }
 
@@ -398,9 +450,7 @@ getDadosSubsection(){
   this.subSectionService.getDadosSubsection().subscribe(
 
     (data: any[]) =>{
-
       this.subSection = data
-
      
     },
 
@@ -444,17 +494,41 @@ departments_Leave(){
 
 
 
-submenu_Click(section: any){
- 
+submenu_Click(section: any, op: number){
+  let submenu_Opt
+  let submenu_Parent
   this.nameSection[0] = section.name
-  const submenu_Opt = document.querySelector(".submenu_Opt") as HTMLElement
-  const submenu_Parent = document.querySelector(".submenu_Parent") as HTMLElement
+  this.nameSub = []
+ 
+  if(op == 2){
+    
+    let Section = document.querySelector(".hbg_Swiper_Section") as HTMLElement
+    submenu_Opt = document.querySelector(".hbg_Swiper_Subsection") as HTMLElement
+    
+    for(let subsection of this.subSection){
+     
+      if(subsection.scId == section.id){
+    
+        this.nameSub.push(subsection)
+       
+      }
+    
+    }
+
+      Section.style.display = "none"
+     submenu_Opt.style.display = "block"
+
+  }
+
+else if(op == 1){
+
+  submenu_Opt = document.querySelector(".submenu_Opt") as HTMLElement
+  submenu_Parent = document.querySelector(".submenu_Parent") as HTMLElement
 
   submenu_Parent.style.display = "none"
   const buttonNext = document.querySelector(".arrow_Up_2") as HTMLElement
   buttonNext.style.display = "none"
 
-  this.nameSub = []
   submenu_Opt.style.display = "none"
 
   for(let subsection of this.subSection){
@@ -485,40 +559,112 @@ submenu_Click(section: any){
   this.cont = 0
   this.contSubsection = 0
 }
+}
 
-submenu_SubOpt(subsection: any){
-
+submenu_SubOpt(subsection: any, op: number){
   this.parent = []
   this.nameSection[1] = subsection.name
-  const submenu_Opt = document.querySelector(".submenu_Parent") as HTMLElement
-  const buttonNext = document.querySelector(".arrow_Up_3") as HTMLElement
-  buttonNext.style.display = "none"
-
-  for(let parent of this.subSection){
-  
-    if(subsection.id == parent.parentId){
-      this.parent.push(parent)
-      
-    }
- 
-  }
-
-  const buttonBack = document.querySelector(".arrow_Down_3") as HTMLElement
-
-  
-  if((this.nameSub.length - 15) <= 0){
+  let submenu_Opt
+  if(op == 2){
    
-    buttonBack.style.display = "none"
+    const submenu_Father = document.querySelector(".hbg_Swiper_Subsection") as HTMLElement
+   
+    submenu_Opt = document.querySelector(".hbg_Swiper_Parent") as HTMLElement
+    
+    for(let parent of this.subSection){
+  
+      if(subsection.id == parent.parentId){
+        this.parent.push(parent)
+        
+      }
+   
+    }
 
+    submenu_Father.style.display = "none"
+    submenu_Opt.style.display = "block"
+  
   }
 
   else{
-     buttonBack.style.display = "flex"
+
+    submenu_Opt = document.querySelector(".submenu_Parent") as HTMLElement
+    const buttonNext = document.querySelector(".arrow_Up_3") as HTMLElement
+    buttonNext.style.display = "none"
+  
+    for(let parent of this.subSection){
+    
+      if(subsection.id == parent.parentId){
+        this.parent.push(parent)
+        
+      }
+   
+    }
+  
+    const buttonBack = document.querySelector(".arrow_Down_3") as HTMLElement
+  
+    
+    if((this.nameSub.length - 15) <= 0){
+     
+      buttonBack.style.display = "none"
+  
+    }
+  
+    else{
+       buttonBack.style.display = "flex"
+    }
+  
+    submenu_Opt.style.display = "flex"
+    this.contSubsection = 0
+
+  }
+ 
+ 
+}
+
+backMobile(name: string){
+  let Section, beginMenu, subsection, parent
+  switch(name){
+
+
+    case 'section':
+
+    Section = document.querySelector(".hbg_Swiper_Section") as HTMLElement
+    beginMenu = document.querySelector(".hbg_Begin") as HTMLElement
+    Section.style.display = "none"
+    beginMenu.style.display = "block"
+
+
+    break
+
+    case 'subsection':
+
+    Section = document.querySelector(".hbg_Swiper_Section") as HTMLElement
+    subsection = document.querySelector(".hbg_Swiper_Subsection") as HTMLElement
+    subsection.style.display = "none"
+    Section.style.display = "block"
+    
+    break;
+
+    case 'parent':
+
+    parent = document.querySelector(".hbg_Swiper_Parent") as HTMLElement
+    subsection = document.querySelector(".hbg_Swiper_Subsection") as HTMLElement
+    parent.style.display = "none"
+    subsection.style.display = "block"
+    break
+
+  
   }
 
-  submenu_Opt.style.display = "flex"
-  this.contSubsection = 0
 }
+
+nextMobile(){
+  const section = document.querySelector(".hbg_Swiper_Section") as HTMLElement
+  const beginMenu = document.querySelector(".hbg_Begin") as HTMLElement
+  section.style.display = "block"
+  beginMenu.style.display = "none"
+}
+
 
 NavigationPage(name: string){
   this.leave()
@@ -529,5 +675,6 @@ NavigationPage(name: string){
   this.router.navigateByUrl('/Filter');
    
 }
+
 
 }

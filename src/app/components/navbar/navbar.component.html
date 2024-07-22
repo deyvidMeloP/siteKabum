@@ -72,7 +72,7 @@
 
     </div>
 
-    <div class="navbar_menuMobile">
+    <div class="navbar_menuMobile" style="position: relative;">
     
         <div class="menuMobile">
 
@@ -95,21 +95,92 @@
             </div>
 
         </div>
-        
-
-         
+ 
         <div class="menu_Barsearch">
             
             <div class="barSearch">
-                <input class="searchbar" type="text" name="searchbar" placeholder="Aperte o k e busque aqui">
+                <input class="searchbar"  [(ngModel)]="searchQuery" (input)="onSearchChange($event)" type="text" name="searchbar" placeholder="Aperte o k e busque aqui" autocomplete="off">
             </div>
             
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="barsearch_Icon_Mobile" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.0073 8.73113H9.37176L9.15083 8.51364C9.93128 7.61116 10.4059 6.44118 10.4059 5.15929C10.4059 2.30976 8.07662 -2.57492e-05 5.20297 -2.57492e-05C2.32933 -2.57492e-05 0 2.30976 0 5.15929C0 8.00882 2.32933 10.3186 5.20297 10.3186C6.49571 10.3186 7.67479 9.84872 8.58491 9.07561L8.80583 9.2931V9.92174L12.8065 13.8833L14 12.6998L10.0073 8.73113ZM5.20338 8.73088C3.21344 8.73088 1.60132 7.13228 1.60132 5.15904C1.60132 3.18659 3.21344 1.5872 5.20338 1.5872C7.19252 1.5872 8.80545 3.18659 8.80545 5.15904C8.80545 7.13228 7.19252 8.73088 5.20338 8.73088Z" fill="#7F858D"></path></svg>
+             <ul class="tips_Search" style="position: absolute; top: 100%; margin-top: 2px; background-color: #ffff; list-style: none; z-index: 3;">
+           
+            </ul>
         </div>
 
+     
+
+    </div>
+   
+    <div class="menu_Hamburguer" style="width: 100%; height: 85.5vh; z-index: 10; top: 102px; background-color: #f2f3f4;">
+       
+        <div class="hbg_Begin" style="background-color: red;">
+
+            <div class="hbg_Icon">
+                    
+                <div class="cadastro_Icon">
+            
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconDefaaultProfileLogo"><mask id="mask1" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="28" style="mask-type: alpha;"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.6375 13.5625C20.6063 12.2062 21.875 9.975 21.875 7.4375C21.875 3.325 18.55 0 14.4375 0C10.325 0 7 3.325 7 7.4375C7 9.975 8.26875 12.2062 10.2375 13.5625C6.34375 14.7875 3.5 18.4625 3.5 22.75V28H25.375V22.75C25.375 18.4625 22.5312 14.7875 18.6375 13.5625Z" fill="#347BBE"></path></mask><g mask="url(#mask1)"><circle cx="14.5" cy="11.5" r="15.5" fill="#C4C4C4"></circle></g></svg>
+            
+                </div>
+            
+                <h1>Olá. Faça seu login</h1>
+
+            </div>
+
+            <ul class="hbg_Items">
+
+                <li class="hbg_Item">
+                
+                    <a (click)="nextMobile()">
+                        <svg width="16" height="16" viewBox="0 0 22 18" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCategories"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.86816 0.232422H0V5.10058H4.86816V0.232422ZM22.0002 0.232422H6.41501V5.10058H22.0002V0.232422ZM0 6.5493H4.86816V11.4175H0V6.5493ZM22.0002 6.5493H6.41501V11.4175H22.0002V6.5493ZM0 12.866H4.86816V17.7343H0V12.866ZM22.0002 12.866H6.41501V17.7343H22.0002V12.866Z" fill="#ffffffff"></path></svg>
+                        Departamentos
+
+                    </a>
+                    
+                </li>
+
+            </ul>
+            
+        </div>
+        
+        <div class="hbg_Swiper_Section" style="display: none;">
+            <h1 (click)="backMobile('section')">>DEPARTAMENTOS</h1>
+            <swiper-container class="hbg_Section" direction="vertical" style="height: 50%; min-width: 100%;" slides-per-view="auto" loop="false" init="false">
+
+                <swiper-slide style="height: min-content; background-color: white;" *ngFor="let section of Section" (click)="submenu_Click(section, 2)">{{section.name}}<svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#565c69ff"></path></svg></swiper-slide>
+                          
+            </swiper-container>
+
+        </div>
+        
+        <div class="hbg_Swiper_Subsection" style="display: none;">
+            <h1 (click)="backMobile('subsection')">{{nameSection[0]}}</h1>
+            <swiper-container class="hbg_Section hgb_Subsection" style=" height: 50%; min-width: 100%;" slides-per-view="auto" speed="500" loop="false" direction="vertical" >
+                           
+                <swiper-slide style="height: auto;" *ngFor="let subsection of nameSub" (click)="submenu_SubOpt(subsection, 2)">{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+             
+            </swiper-container>
+        
+        </div>
+      
+        <div class="hbg_Swiper_Parent" style="display: none;">
+            <h1 (click)="backMobile('parent')">{{nameSection[1]}}</h1>
+            <swiper-container class="hbg_Section hgb_Parent" style="height: 50%; min-width: 100%;" slides-per-view="auto" speed="500" loop="false" direction="vertical">
+                         
+                <swiper-slide style="height: auto;"  *ngFor="let subsection of parent" (click)="NavigationPage(subsection.name)" >{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+                
+            </swiper-container>
+
+        </div>
+
+       
     </div>
 
-    <div class="navbar_downMenu">
+  
+
+    
+    <div class="navbar_downMenu" style="display: none;">
         <ul>
             <li class="downMenu_List downMenu_Sublist" (mouseenter)="departments_Enter()"><a >DEPARTAMENTOS <i class="fa-solid fa-chevron-down"></i></a>
                
@@ -123,9 +194,9 @@
                         
                         </button>
 
-                        <swiper-container class="swiper_Section" slides-per-view="15" speed="500" loop="false" direction="vertical" >
+                        <swiper-container class="swiper_Section" slides-per-view="15" speed="500" loop="false" direction="vertical">
                         
-                            <swiper-slide style="height: auto;" class="item" *ngFor="let section of Section"(click)="submenu_Click(section)">{{section.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+                            <swiper-slide style="height: auto;" class="item" *ngFor="let section of Section"(click)="submenu_Click(section, 1)">{{section.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
                           
                           </swiper-container>
                       
@@ -148,7 +219,7 @@
                         <swiper-container class="swiper_Subsection" slides-per-view="auto" speed="500" loop="false" direction="vertical" [allowTouchMove]="false">
                            
                             <swiper-slide style="height: auto;" class="item item_Subsection" (click)="NavigationPage(nameSection[0])">Ver tudo de {{nameSection[0]}}</swiper-slide>
-                            <swiper-slide style="height: auto;" class="item" *ngFor="let subsection of nameSub" (click)="submenu_SubOpt(subsection)">{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+                            <swiper-slide style="height: auto;" class="item" *ngFor="let subsection of nameSub" (click)="submenu_SubOpt(subsection, 2)">{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
                          
                           </swiper-container>
                       
@@ -201,5 +272,8 @@
             <li class="downMenu_List"><a href="#">APERTE O K!</a></li>
         </ul>
     </div>
+
+
+
 
 </div>

@@ -44,7 +44,7 @@ function TesteHello() {
     }
 
     function swiper_Section(){
-
+/*
       const swiper = new Swiper('.departments_Swiper', {
         // Optional parameters
         
@@ -63,7 +63,7 @@ function TesteHello() {
       
     
       });
-
+*/
     }
 
     function swiper_Filter() {

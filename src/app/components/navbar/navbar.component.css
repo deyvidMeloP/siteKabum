@@ -5,6 +5,12 @@
     width: 100%;
 }
 
+.menu_Hamburguer{
+    display: flex;;
+    flex-direction: column;
+    background-color: #0060b1;
+}
+
 .navbar_Menu{
     background-color: #0060b1;
     height: 105px;
@@ -122,6 +128,36 @@
     justify-content: center;
     align-items: center;
 }
+
+.hbg_Icon{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background-color: red;
+    color: #f0f0f5;
+}
+.hbg_Item a{
+    display: flex;
+    align-items: center;
+    color: #f0f0f5;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.hbg_Section swiper-slide{
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
 
 .menu_Icons{
     margin-left: 45px;
@@ -278,11 +314,7 @@
     overflow: hidden;
 }
 
-swiper-container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
+
 
 .swiper_Section, .swiper_Subsection, .swiper_Parent{
     height: 95%;
@@ -373,6 +405,8 @@ swiper-container{
 }
 
 @media screen and (max-width: 1020px){
+    
+
    .navbar{
     height: max-content;
     
