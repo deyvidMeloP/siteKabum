@@ -724,13 +724,12 @@ clickMenuMobile(){
 closeMenuMobile(){
   const menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
   const IconSandwich = document.querySelector(".menuMobile .IconSandwich") as HTMLElement
-  
   const iconClose = document.querySelector(".buttonMobileSandwich") as HTMLElement
   const navbardownMenu = document.querySelector(".navbar_downMenu") as HTMLElement
 
   IconSandwich.style.display = "flex"
   iconClose.style.display = "none"
-  menuHamb.style.display = "none"
+  this.menuHamb.style.display = "none"
   this.commandSource.sendCommand('flex');
 
   if(menuHamb.offsetWidth > 1020){
@@ -745,7 +744,7 @@ NavigationPage(name: string){
   this.leave()
   this.leaveButton()
   this.departments_Leave()
-
+  this.closeMenuMobile()
   this.stateService.changeFilterName(name);
   this.router.navigateByUrl('/Filter');
    

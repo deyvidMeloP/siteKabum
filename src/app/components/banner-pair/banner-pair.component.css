@@ -939,6 +939,14 @@
 .departments_Item{
     gap: 20px;
 }
+
+.banner_Departments{
+    display: none;
+}
+
+.text_Blinking{
+    font-size: 20px;
+}
  }
 
 
