@@ -5,7 +5,7 @@
 
 
 
-<div class="navbar" (mouseleave)="departments_Leave()" (mouseleave)="leave()">
+<div class="navbar" (mouseleave)="departments_Leave()" (mouseleave)="leave()">  
 
     <div class="navbar_Menu" (mouseenter)="departments_Leave()" (mouseenter)="leave()">
         
@@ -111,76 +111,8 @@
      
 
     </div>
-   
-    <div class="menu_Hamburguer" style="width: 100%; height: 85.5vh; z-index: 10; top: 102px; background-color: #f2f3f4;">
-       
-        <div class="hbg_Begin" style="background-color: red;">
-
-            <div class="hbg_Icon">
-                    
-                <div class="cadastro_Icon">
-            
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconDefaaultProfileLogo"><mask id="mask1" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="28" style="mask-type: alpha;"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.6375 13.5625C20.6063 12.2062 21.875 9.975 21.875 7.4375C21.875 3.325 18.55 0 14.4375 0C10.325 0 7 3.325 7 7.4375C7 9.975 8.26875 12.2062 10.2375 13.5625C6.34375 14.7875 3.5 18.4625 3.5 22.75V28H25.375V22.75C25.375 18.4625 22.5312 14.7875 18.6375 13.5625Z" fill="#347BBE"></path></mask><g mask="url(#mask1)"><circle cx="14.5" cy="11.5" r="15.5" fill="#C4C4C4"></circle></g></svg>
-            
-                </div>
-            
-                <h1>Olá. Faça seu login</h1>
-
-            </div>
-
-            <ul class="hbg_Items">
-
-                <li class="hbg_Item">
-                
-                    <a (click)="nextMobile()">
-                        <svg width="16" height="16" viewBox="0 0 22 18" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCategories"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.86816 0.232422H0V5.10058H4.86816V0.232422ZM22.0002 0.232422H6.41501V5.10058H22.0002V0.232422ZM0 6.5493H4.86816V11.4175H0V6.5493ZM22.0002 6.5493H6.41501V11.4175H22.0002V6.5493ZM0 12.866H4.86816V17.7343H0V12.866ZM22.0002 12.866H6.41501V17.7343H22.0002V12.866Z" fill="#ffffffff"></path></svg>
-                        Departamentos
-
-                    </a>
-                    
-                </li>
-
-            </ul>
-            
-        </div>
-        
-        <div class="hbg_Swiper_Section" style="display: none;">
-            <h1 (click)="backMobile('section')">>DEPARTAMENTOS</h1>
-            <swiper-container class="hbg_Section" direction="vertical" style="height: 50%; min-width: 100%;" slides-per-view="auto" loop="false" init="false">
-
-                <swiper-slide style="height: min-content; background-color: white;" *ngFor="let section of Section" (click)="submenu_Click(section, 2)">{{section.name}}<svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#565c69ff"></path></svg></swiper-slide>
-                          
-            </swiper-container>
-
-        </div>
-        
-        <div class="hbg_Swiper_Subsection" style="display: none;">
-            <h1 (click)="backMobile('subsection')">{{nameSection[0]}}</h1>
-            <swiper-container class="hbg_Section hgb_Subsection" style=" height: 50%; min-width: 100%;" slides-per-view="auto" speed="500" loop="false" direction="vertical" >
-                           
-                <swiper-slide style="height: auto;" *ngFor="let subsection of nameSub" (click)="submenu_SubOpt(subsection, 2)">{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
-             
-            </swiper-container>
-        
-        </div>
-      
-        <div class="hbg_Swiper_Parent" style="display: none;">
-            <h1 (click)="backMobile('parent')">{{nameSection[1]}}</h1>
-            <swiper-container class="hbg_Section hgb_Parent" style="height: 50%; min-width: 100%;" slides-per-view="auto" speed="500" loop="false" direction="vertical">
-                         
-                <swiper-slide style="height: auto;"  *ngFor="let subsection of parent" (click)="NavigationPage(subsection.name)" >{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
-                
-            </swiper-container>
-
-        </div>
-
-       
-    </div>
-
-  
-
     
-    <div class="navbar_downMenu" style="display: none;">
+    <div class="navbar_downMenu">
         <ul>
             <li class="downMenu_List downMenu_Sublist" (mouseenter)="departments_Enter()"><a >DEPARTAMENTOS <i class="fa-solid fa-chevron-down"></i></a>
                
@@ -273,7 +205,164 @@
         </ul>
     </div>
 
+</div>
 
+<div class="menu_Hamburguer" style="width: 100%; z-index: 3; display: none;">
+       
+    <div class="hbg_Begin">
 
+        <div class="hbg_Icon">
+                
+            <div class="cadastro_Icon">
+        
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconDefaaultProfileLogo"><mask id="mask1" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="28" style="mask-type: alpha;"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.6375 13.5625C20.6063 12.2062 21.875 9.975 21.875 7.4375C21.875 3.325 18.55 0 14.4375 0C10.325 0 7 3.325 7 7.4375C7 9.975 8.26875 12.2062 10.2375 13.5625C6.34375 14.7875 3.5 18.4625 3.5 22.75V28H25.375V22.75C25.375 18.4625 22.5312 14.7875 18.6375 13.5625Z" fill="#347BBE"></path></mask><g mask="url(#mask1)"><circle cx="14.5" cy="11.5" r="15.5" fill="#C4C4C4"></circle></g></svg>
+        
+            </div>
+        
+            <h1>Olá. Faça seu login</h1>
 
+        </div>
+
+        <ul class="hbg_Items">
+
+            <li class="hbg_Item" (click)="nextMobile()">
+            
+                <a>
+                    <svg width="16" height="16" viewBox="0 0 22 18" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCategories"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.86816 0.232422H0V5.10058H4.86816V0.232422ZM22.0002 0.232422H6.41501V5.10058H22.0002V0.232422ZM0 6.5493H4.86816V11.4175H0V6.5493ZM22.0002 6.5493H6.41501V11.4175H22.0002V6.5493ZM0 12.866H4.86816V17.7343H0V12.866ZM22.0002 12.866H6.41501V17.7343H22.0002V12.866Z" fill="#ffffffff"></path></svg>
+                    Departamentos
+
+                </a>
+                
+            </li>
+
+            <li class="hbg_Item">
+            
+                <a (click)="nextMobile()">
+                    <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path fill="#ffffffff" d="M15.15 6.291c-.367-.266-.584-.591-.65-.975-.067-.383.033-.758.3-1.125.266-.366.59-.575.974-.625.384-.05.759.059 1.125.325l10.05 7.45c.334.267.534.597.6.992.067.394-.033.763-.3 1.108-.266.367-.603.584-1.008.65-.406.067-.787-.033-1.142-.3l-9.95-7.5zm-2 6c-.367-.266-.576-.591-.626-.975-.05-.383.059-.758.325-1.125.267-.366.592-.575.975-.625.384-.05.759.059 1.125.325l6.45 4.8c-.633-.1-1.25.017-1.85.35-.6.334-1.033.684-1.3 1.05l-5.1-3.8zm8.75-8.45c-.367-.266-.576-.591-.626-.975-.05-.383.059-.758.325-1.125.267-.366.592-.575.975-.625.384-.05.759.059 1.125.325l11.3 8.4.6-4.9a2.24 2.24 0 01.625-1.307c.35-.362.775-.576 1.275-.643l.8-.1c.367-.066.709 0 1.025.2.317.2.525.484.625.85l4.2 14.1c.267.867.323 1.72.169 2.559a5.325 5.325 0 01-1.019 2.291l-5.3 7.1a8.712 8.712 0 00-.3-1.9 7.298 7.298 0 00-.75-1.75l3.9-5.25c.275-.338.436-.698.482-1.079.045-.38.018-.754-.082-1.12l-3.05-10.4-.55 4.25c-.066.566-.366.974-.9 1.224-.533.25-1.033.192-1.5-.175L21.9 3.841zm-4.85 18.85l-4.3-3.2c-.367-.266-.576-.591-.626-.975-.05-.383.059-.758.325-1.125.267-.366.592-.575.975-.625.384-.05.759.059 1.125.325l2.45 1.85c0 .634.1 1.267.3 1.9.2.634.467 1.25.8 1.85h-1.05zm-13.55 11c-.426 0-.782-.144-1.07-.433A1.464 1.464 0 012 32.183a1.463 1.463 0 011.5-1.491H16c.424 0 .78.144 1.068.433.287.29.431.648.431 1.075 0 .428-.143.783-.431 1.066a1.462 1.462 0 01-1.069.425H3.5zm2 6c-.426 0-.782-.144-1.07-.433A1.464 1.464 0 014 38.183a1.463 1.463 0 011.5-1.491H16c.424 0 .78.144 1.068.433.287.29.431.648.431 1.075 0 .428-.143.783-.431 1.066a1.462 1.462 0 01-1.069.425H5.5zm4 6c-.426 0-.782-.144-1.07-.433A1.464 1.464 0 018 44.183a1.463 1.463 0 011.5-1.491h21c.708 0 1.301-.24 1.78-.72.48-.479.72-1.072.72-1.78v-10c0-.417-.084-.792-.25-1.126a2.482 2.482 0 00-.75-.875l-8.7-6.5 2.1 3.75c.266.5.258 1-.026 1.5-.283.5-.708.75-1.275.75H7.5c-.425 0-.781-.144-1.068-.433a1.464 1.464 0 01-.432-1.075c0-.428.144-.783.432-1.067a1.463 1.463 0 011.068-.425h14.05l-2.45-4.3a2.074 2.074 0 01-.3-1.4c.067-.5.284-.933.65-1.3l.6-.55a1.5 1.5 0 01.95-.45c.367-.033.7.067 1 .3l11.8 8.8a5.463 5.463 0 012.2 4.4v10c0 1.528-.534 2.827-1.604 3.896-1.07 1.07-2.368 1.604-3.896 1.604h-21z"></path></svg>
+                    Ativar tradutor em Libras
+
+                </a>
+                
+            </li>
+
+            <li class="hbg_Item">
+            
+                <a (click)="nextMobile()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" classname="IconA11y"><path d="M7.7475 11.3359C7.49941 11.3359 7.26172 11.554 7.27319 11.8102C7.28469 12.0672 7.48159 12.2845 7.7475 12.2845C7.9956 12.2845 8.23329 12.0663 8.22182 11.8102C8.21032 11.5532 8.01341 11.3359 7.7475 11.3359Z" fill="white"></path><path d="M5.38737 6.34966C5.38737 5.04844 6.44599 3.98982 7.74721 3.98982C9.04843 3.98982 10.1071 5.04844 10.1071 6.34966C10.1071 7.48847 9.29618 8.44143 8.22153 8.66159V10.1697C8.22153 10.4317 8.00915 10.644 7.74721 10.644C7.48528 10.644 7.2729 10.4316 7.2729 10.1697V8.23518C7.2729 7.97325 7.48528 7.76087 7.74721 7.76087C8.52534 7.76087 9.15843 7.12778 9.15843 6.34966C9.15843 5.57153 8.52534 4.93844 7.74721 4.93844C6.96909 4.93844 6.33599 5.57153 6.33599 6.34966C6.33599 6.61159 6.12362 6.82397 5.86168 6.82397C5.59974 6.82397 5.38737 6.61159 5.38737 6.34966Z" fill="white"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M15.937 14.4892L14.8386 11.2926C15.367 10.2246 15.6464 9.03431 15.6482 7.83656C15.6514 5.774 14.8534 3.82372 13.4011 2.3451C11.9486 0.866197 10.013 0.0337616 7.95094 0.0010429C6.8706 -0.0163008 5.82229 0.182761 4.83354 0.592042C3.87988 0.986822 3.02467 1.55867 2.29167 2.29166C1.55864 3.02466 0.986795 3.87988 0.592045 4.83353C0.182765 5.82228 -0.0160785 6.87112 0.0010152 7.95093C0.0336714 10.013 0.866139 11.9486 2.34504 13.4011C3.82079 14.8506 5.76604 15.6484 7.82416 15.6483H7.83647C9.03422 15.6465 10.2246 15.367 11.2925 14.8387L14.4892 15.9371C14.6121 15.9794 14.7381 16 14.8627 16C15.1588 16 15.4468 15.8837 15.6652 15.6652C15.9755 15.355 16.0797 14.9043 15.937 14.4892ZM14.9944 14.9945C14.9629 15.026 14.8955 15.0737 14.7974 15.04L11.4101 13.8761C11.36 13.8589 11.3079 13.8503 11.256 13.8503C11.1794 13.8503 11.1032 13.8689 11.0342 13.9054C10.0552 14.4233 8.94894 14.698 7.83497 14.6997C4.09904 14.7057 1.00867 11.6712 0.949482 7.9359C0.919701 6.05656 1.63457 4.29029 2.96242 2.96244C4.29026 1.63463 6.056 0.919885 7.93587 0.949604C11.6712 1.00882 14.7054 4.09766 14.6996 7.83509C14.6978 8.94909 14.4232 10.0553 13.9053 11.0342C13.844 11.1501 13.8334 11.2862 13.876 11.4102L15.0399 14.7975C15.0736 14.8956 15.0259 14.963 14.9944 14.9945Z" fill="white"></path></svg>
+                    Acessibilidade
+
+                </a>
+                
+            </li>
+
+        </ul>
+
+        <ul class="hbg_Items" style="margin-top: 20px;">
+
+            <li class="hbg_Item">
+            
+                <a (click)="nextMobile()">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconHome"><path d="M0.413927 9.83614L9.501 0.21903C9.56643 0.149598 9.64415 0.0945134 9.7297 0.0569295C9.81525 0.0193456 9.90697 0 9.99959 0C10.0922 0 10.1839 0.0193456 10.2695 0.0569295C10.355 0.0945134 10.4327 0.149598 10.4982 0.21903L19.5852 9.83614C19.85 10.1165 20 10.4974 20 10.8946C20 11.7194 19.3668 12.39 18.5881 12.39H17.6306V19.2523C17.6306 19.6659 17.3151 20 16.9246 20H11.4115V14.7662H8.94064V20H3.07453C2.68404 20 2.36856 19.6659 2.36856 19.2523V12.39H1.4111C1.03606 12.39 0.676458 12.2334 0.411722 11.9507C-0.137606 11.3666 -0.137608 10.4203 0.413927 9.83614Z" fill="#fff"></path></svg>
+                    Minha Conta
+
+                </a>
+                
+            </li>
+
+            <li class="hbg_Item">
+            
+                <a (click)="nextMobile()">
+                    <svg width="16" height="16" viewBox="0 0 36 36" fill="none" xmlns="https://www.w3.org/2000/svg" classname="IconUser">  <path d="M9 8.52632C9 13.2272 13.038 17.0526 18 17.0526C22.962 17.0526 27 13.2272 27 8.52632C27 3.82547 22.962 0 18 0C13.038 0 9 3.82547 9 8.52632ZM34 36H36V34.1053C36 26.7935 29.718 20.8421 22 20.8421H14C6.28 20.8421 0 26.7935 0 34.1053V36H34Z" fill="#fff"></path> </svg>
+                    Meus dados
+
+                </a>
+                
+            </li>
+
+            <li class="hbg_Item">
+            
+                <a (click)="nextMobile()">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="https://www.w3.org/2000/svg" classname="IconBasket">  <path d="M18.3335 7.50676H14.3418L10.6835 2.03529C10.6073 1.92192 10.5043 1.82904 10.3837 1.76481C10.2631 1.70058 10.1285 1.66699 9.99183 1.66699C9.85516 1.66699 9.72059 1.70058 9.59997 1.76481C9.47935 1.82904 9.37639 1.92192 9.30016 2.03529L5.64183 7.50676H1.66683C1.2085 7.50676 0.833496 7.88152 0.833496 8.33956C0.833496 8.41451 0.841829 8.48946 0.866829 8.56441L2.9835 16.2844C3.17516 16.984 3.81683 17.5003 4.5835 17.5003H15.4168C16.1835 17.5003 16.8252 16.984 17.0252 16.2844L19.1418 8.56441L19.1668 8.33956C19.1668 7.88152 18.7918 7.50676 18.3335 7.50676ZM9.99183 4.00069L12.3335 7.50676H7.65016L9.99183 4.00069ZM10.0002 14.1691C9.0835 14.1691 8.3335 13.4196 8.3335 12.5035C8.3335 11.5875 9.0835 10.8379 10.0002 10.8379C10.9168 10.8379 11.6668 11.5875 11.6668 12.5035C11.6668 13.4196 10.9168 14.1691 10.0002 14.1691Z" fill="#FFF"></path> </svg>
+                    Meus pedidos
+
+                </a>
+                
+            </li>
+
+            <li class="hbg_Item">
+            
+                <a (click)="nextMobile()">
+                    <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="https://www.w3.org/2000/svg" classname="IconThumbsUpFilled"> <path fillrule="evenodd" cliprule="evenodd" d="M10.1386 5.47214H11.8886C12.7441 5.47214 13.4163 6.14436 13.4163 7.03047V7.06103L12.8052 11.9194C12.8052 12.7444 12.1025 13.4166 11.2775 13.4166H6.99967C6.17467 13.4166 5.31912 13.2027 4.58579 12.836L3.63856 12.3777V8.53737C3.63856 7.38601 4.04222 6.27109 4.7793 5.38659C5.62169 4.37573 6.08301 3.10153 6.08301 1.78569V1.49992C6.08301 0.980474 6.51079 0.583252 6.99967 0.583252C7.15245 0.583252 7.30523 0.644363 7.45801 0.705474C8.4969 1.31659 9.13856 2.87492 9.13856 3.94436V4.47214C9.13856 5.02443 9.58628 5.47214 10.1386 5.47214ZM0.888563 6.08325H2.7219C2.90523 6.08325 3.02745 6.20547 3.02745 6.38881V13.111C3.02745 13.2944 2.90523 13.4166 2.7219 13.4166H0.888563C0.70523 13.4166 0.583008 13.2944 0.583008 13.111V6.38881C0.583008 6.20547 0.70523 6.08325 0.888563 6.08325Z" fill="#fff"></path></svg>
+                    Avaliações
+                </a>
+                
+            </li>
+
+            <li class="hbg_Item">
+            
+                <a (click)="nextMobile()">
+                    <svg width="16" height="16" viewBox="2 2 17 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.5085 6.41009H17.5315C18.3393 6.41009 18.9964 7.0672 18.9964 7.87363V9.82675C18.9964 10.6345 18.3393 11.2916 17.5315 11.2916H16.5025C15.7151 13.1822 14.0775 14.5642 12.1279 15.0277V15.6866C12.1279 16.4943 11.4708 17.1514 10.663 17.1514C9.85532 17.1514 9.1982 16.4943 9.1982 15.6866C9.1982 14.8788 9.85966 14.2217 10.6726 14.2217C12.9374 14.2217 14.9651 12.7838 15.719 10.6432L15.7212 10.6375C16.025 9.79941 16.1088 8.87406 15.9621 7.96087C15.9187 7.65531 15.8423 7.35844 15.7334 7.06937L15.7295 7.05852C15.055 5.1666 13.3523 3.77988 11.3913 3.52424C9.53674 3.28118 7.72164 3.99038 6.53284 5.42311C5.3232 6.88101 4.97945 8.78682 5.59013 10.6523L5.79976 11.2929H3.79456C2.98683 11.2929 2.32971 10.6358 2.32971 9.82805V7.87493C2.32971 7.0672 2.98683 6.41009 3.79456 6.41009H4.8002C5.04022 5.83891 5.36747 5.29767 5.78067 4.79984C7.18562 3.1067 9.33275 2.26555 11.5181 2.55679C13.7229 2.84325 15.6387 4.34455 16.5085 6.41009ZM6.26853 13.246V12.2695C6.71341 12.2695 7.08927 11.9778 7.2069 11.5659C6.60013 10.7942 6.26853 9.83936 6.26853 8.85151C6.26853 6.4279 8.23988 4.45698 10.6631 4.45698C13.0862 4.45698 15.0576 6.4279 15.0576 8.85151C15.0576 11.2747 13.0862 13.246 10.6631 13.246H6.26853ZM13.1045 8.36323H12.1279V9.33979H13.1045V8.36323ZM9.19822 8.36323H8.22165V9.33979H9.19822V8.36323ZM11.1513 8.36323H10.1748V9.33979H11.1513V8.36323Z" fill="white"></path></svg>
+                    Atendimento ao cliente
+                </a>
+                
+            </li>
+
+            <li class="hbg_Item">
+            
+                <a (click)="nextMobile()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" classname="IconHeaderFavorites"> <g opacity="0.8"> <path fillrule="evenodd" cliprule="evenodd" d="M24 6.1125C24 2.7375 21.225 0 17.775 0C15.15 0 12.9 1.6125 12 3.8625C11.1 1.6125 8.85 0 6.225 0C2.775 0 0 2.7375 0 6.1125C0 6.15 0 6.45 0 6.5625C0 12.8625 12.45 21 12.45 21C12.45 21 24 12.8625 24 6.5625C24 6.45 24 6.1875 24 6.1125Z" fill="#fff"></path> </g> </svg>
+                    Favoritos
+                </a>
+                
+            </li>
+
+        </ul>
+        
+    </div>
+    
+    <div class="hbg_Swiper_Section" style="display: none;">
+
+        <h1 (click)="backMobile('section')">
+            <svg width="13px" height="13px" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#ff6500ff"></path></svg>
+            DEPARTAMENTOS</h1>
+    
+        <swiper-container class="hbg_Section" direction="vertical" slides-per-view="auto" loop="false" init="false">
+
+            <swiper-slide class="hgb_Slide" *ngFor="let section of Section" (click)="submenu_Click(section, 2)">{{section.name}}<svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#565c69ff"></path></svg></swiper-slide>
+                      
+        </swiper-container>
+
+    </div>
+    
+    <div class="hbg_Swiper_Subsection" style="display: none;">
+        <h1 (click)="backMobile('subsection')">
+           
+            <svg width="13px" height="13px" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#ff6500ff"></path></svg>
+           
+            {{nameSection[0]}}</h1>
+        <swiper-container class="hbg_Section hgb_Subsection" style=" min-width: 100%;" slides-per-view="auto" speed="500" loop="false" direction="vertical" >
+                       
+            <swiper-slide  class="hgb_Slide" *ngFor="let subsection of nameSub" (click)="submenu_SubOpt(subsection, 2)">{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+         
+        </swiper-container>
+    
+    </div>
+  
+    <div class="hbg_Swiper_Parent" style="display: none;">
+        
+        <h1 (click)="backMobile('parent')">
+            
+            <svg width="13px" height="13px" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#ff6500ff"></path></svg>
+           
+            {{nameSection[1]}}</h1>
+        
+        <swiper-container class="hbg_Section hgb_Parent" style="min-width: 100%;" slides-per-view="auto" speed="500" loop="false" direction="vertical">
+                     
+            <swiper-slide  class="hgb_Slide"  *ngFor="let subsection of parent" (click)="NavigationPage(subsection.name)" >{{subsection.name}}<span><svg width="0.75rem" height="0.75rem" viewBox="0 0 25 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconCollapseHeader"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.0908203 16.909L2.27264 19.0908L12.0908 9.27264L21.909 19.0908L24.0908 16.909L12.0908 4.909L0.0908203 16.909Z" fill="#42464dff"></path></svg></span> </swiper-slide>
+            
+        </swiper-container>
+
+    </div>
+
+   
 </div>

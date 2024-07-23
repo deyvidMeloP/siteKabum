@@ -115,6 +115,7 @@ teste(){
      const swiperParams = {
      
       spaceBetween: 0,
+      touchReleaseOnEdges: true,
         on: {
           init(){}
         }
@@ -632,6 +633,8 @@ backMobile(name: string){
     beginMenu = document.querySelector(".hbg_Begin") as HTMLElement
     Section.style.display = "none"
     beginMenu.style.display = "block"
+    const menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
+    menuHamb.style.backgroundColor = "#0060b1"
 
 
     break
@@ -661,6 +664,8 @@ backMobile(name: string){
 nextMobile(){
   const section = document.querySelector(".hbg_Swiper_Section") as HTMLElement
   const beginMenu = document.querySelector(".hbg_Begin") as HTMLElement
+  const menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
+  menuHamb.style.backgroundColor = "#F2F3F4"
   section.style.display = "block"
   beginMenu.style.display = "none"
 }
