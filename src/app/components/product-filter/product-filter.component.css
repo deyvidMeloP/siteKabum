@@ -1,6 +1,8 @@
 .teste{
     background-color: #f2f3f4;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .box{
     width: 94vw;

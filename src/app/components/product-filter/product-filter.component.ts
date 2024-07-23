@@ -31,6 +31,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   convertCategoriesGrouped: any[] = []
   newVisits: any;
   product: any[] = [];
+  changeDisplay: any
   filterProduct: any[] = [];
   auxProduct: any[] = []
   auxFilter: any[] = []
@@ -45,6 +46,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       return `R$ ${value}`;
     }
   };
+
   
 
   constructor(
@@ -55,7 +57,8 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private stateService: KabumServiceService,
-    private productCategoryService: KabumServiceService
+    private productCategoryService: KabumServiceService,
+    private commandSource: KabumServiceService
     
   ) {
     this.stateService.currentFilterName.subscribe(async name => {
@@ -83,11 +86,23 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     window.scrollTo(0, 0);
     this.value = this.options.floor;
     this.highValue = this.options.ceil;
+    this.changeDisplay = this.commandSource.command$.subscribe(
+      command => {
+        this.updateNavigationDisplay(command);
+      }
+    );
   }
 
   ngAfterViewInit(): void {
   
     
+  }
+
+  updateNavigationDisplay(display: string): void {
+    const navigation = document.querySelector(".teste") as HTMLElement;
+    if (navigation) {
+      navigation.style.display = display;
+    }
   }
 
   getDadosDoServico() {

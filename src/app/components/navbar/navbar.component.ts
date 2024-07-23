@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -9,6 +9,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
+
+  @ViewChild('observedElement', { static: true }) observedElement!: ElementRef;
+  private resizeObserver!: ResizeObserver;
 
   Section: any = []
   subSection: any = []
@@ -27,6 +30,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   results: any[] = [];
   mobileSection: any
   swiperMobile: any
+  menuHamb: any
   constructor(
 
   private sectionService: KabumServiceService,
@@ -35,6 +39,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   private stateService: KabumServiceService,
   private productService: KabumServiceService,
   private renderer: Renderer2,
+  private commandSource: KabumServiceService,
 
 
 ){
@@ -128,14 +133,46 @@ teste(){
 
 
   },0)
+  this.resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        this.onResize(entry.contentRect.width);
+      }
+    });
+
+    this.resizeObserver.observe(this.observedElement.nativeElement);
+
+}
+
+onResize(newWidth: number): void {
+
+  if(window.getComputedStyle(this.menuHamb).display == "flex" && newWidth > 1020){
+
+    this.departments_Enter()
+  }
+
+  if(newWidth > 1020){
+    (document.querySelector(".navbar_downMenu") as HTMLElement).style.display = "block"
+
+    const menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
+    const IconSandwich = document.querySelector(".menuMobile .IconSandwich") as HTMLElement
+    const iconClose = document.querySelector(".buttonMobileSandwich") as HTMLElement
   
+    IconSandwich.style.display = "flex"
+    iconClose.style.display = "none"
+    menuHamb.style.display = "none"
+    this.commandSource.sendCommand('flex');
+  
+  }
 
-
+  else if(newWidth <= 1020){
+   (document.querySelector(".navbar_downMenu") as HTMLElement).style.display = "none"
+  }
+ 
 }
 
 ngAfterViewInit(): void {
 
-
+this.menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
 }
 
 getDadosService(){
@@ -671,6 +708,39 @@ nextMobile(){
 }
 
 
+clickMenuMobile(){
+  const menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
+  const IconSandwich = document.querySelector(".menuMobile .IconSandwich") as HTMLElement
+  IconSandwich.style.display = "none"
+  const iconClose = document.querySelector(".buttonMobileSandwich") as HTMLElement
+  const navbardownMenu = document.querySelector(".navbar_downMenu") as HTMLElement
+  navbardownMenu.style.display = "none"
+  iconClose.style.display = "flex"
+  menuHamb.style.display = "flex"
+  this.commandSource.sendCommand('none');
+
+}
+
+closeMenuMobile(){
+  const menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
+  const IconSandwich = document.querySelector(".menuMobile .IconSandwich") as HTMLElement
+  
+  const iconClose = document.querySelector(".buttonMobileSandwich") as HTMLElement
+  const navbardownMenu = document.querySelector(".navbar_downMenu") as HTMLElement
+
+  IconSandwich.style.display = "flex"
+  iconClose.style.display = "none"
+  menuHamb.style.display = "none"
+  this.commandSource.sendCommand('flex');
+
+  if(menuHamb.offsetWidth > 1020){
+  navbardownMenu.style.display = "block"
+  }
+
+  
+
+
+}
 NavigationPage(name: string){
   this.leave()
   this.leaveButton()

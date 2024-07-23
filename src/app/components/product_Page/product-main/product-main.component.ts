@@ -23,8 +23,9 @@ export class ProductMainComponent implements OnInit{
   departments: any[] = [];
   siblingsList: any[] = []
   imageSinbling: any[] = [];
+  changeDisplay: any
 
-  constructor(private productAll: KabumServiceService,  private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService, private departService: KabumServiceService) { }
+  constructor(private productAll: KabumServiceService,  private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService, private departService: KabumServiceService, private commandSource: KabumServiceService) { }
 
   ngOnInit(): void {
     this.productAll.currentProductMainName.subscribe(
@@ -45,8 +46,20 @@ export class ProductMainComponent implements OnInit{
 
       }
     );
+    this.changeDisplay = this.commandSource.command$.subscribe(
+      command => {
+        this.updateNavigationDisplay(command);
+      }
+    );
   }
 
+
+  updateNavigationDisplay(display: string): void {
+    const navigation = document.querySelector(".product_Box") as HTMLElement;
+    if (navigation) {
+      navigation.style.display = display;
+    }
+  }
   
   ngOnDestroy(): void {
 

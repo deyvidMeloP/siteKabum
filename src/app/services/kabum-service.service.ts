@@ -41,6 +41,12 @@ export class KabumServiceService {
   this.productMainNameSource = new BehaviorSubject<any>(savedProductMainName);
 }
 
+private commandSource = new Subject<string>();
+command$ = this.commandSource.asObservable();
+
+sendCommand(command: string) {
+  this.commandSource.next(command);
+}
   getDados(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       tap(data => console.log('Dados recebidos:', data))
