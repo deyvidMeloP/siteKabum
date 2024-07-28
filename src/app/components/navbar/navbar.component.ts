@@ -157,9 +157,14 @@ onResize(newWidth: number): void {
     const IconSandwich = document.querySelector(".menuMobile .IconSandwich") as HTMLElement
     const iconClose = document.querySelector(".buttonMobileSandwich") as HTMLElement
   
+    (menuHamb.querySelector(".hbg_Swiper_Section") as HTMLElement).style.display = "none";
+    (menuHamb.querySelector(".hbg_Swiper_Subsection") as HTMLElement).style.display = "none";
+    (menuHamb.querySelector(".hbg_Swiper_Parent") as HTMLElement).style.display = "none";
+
     IconSandwich.style.display = "flex"
     iconClose.style.display = "none"
     menuHamb.style.display = "none"
+    menuHamb.style.backgroundColor = "#0060b1"
     this.commandSource.sendCommand('flex');
   
   }
@@ -663,7 +668,6 @@ backMobile(name: string){
   let Section, beginMenu, subsection, parent
   switch(name){
 
-
     case 'section':
 
     Section = document.querySelector(".hbg_Swiper_Section") as HTMLElement
@@ -717,6 +721,8 @@ clickMenuMobile(){
   navbardownMenu.style.display = "none"
   iconClose.style.display = "flex"
   menuHamb.style.display = "flex"
+  const beginMenu = document.querySelector(".hbg_Begin") as HTMLElement
+  beginMenu.style.display = "block"
   this.commandSource.sendCommand('none');
 
 }
@@ -727,9 +733,15 @@ closeMenuMobile(){
   const iconClose = document.querySelector(".buttonMobileSandwich") as HTMLElement
   const navbardownMenu = document.querySelector(".navbar_downMenu") as HTMLElement
 
+   (menuHamb.querySelector(".hbg_Swiper_Section") as HTMLElement).style.display = "none";
+    (menuHamb.querySelector(".hbg_Swiper_Subsection") as HTMLElement).style.display = "none";
+    (menuHamb.querySelector(".hbg_Swiper_Parent") as HTMLElement).style.display = "none";
+
+
   IconSandwich.style.display = "flex"
   iconClose.style.display = "none"
   this.menuHamb.style.display = "none"
+  this.menuHamb.style.backgroundColor = "#0060b1"
   this.commandSource.sendCommand('flex');
 
   if(menuHamb.offsetWidth > 1020){

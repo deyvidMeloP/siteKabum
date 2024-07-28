@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, Output, EventEmitter,  NgZone } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
-import { Route, Router } from '@angular/router';
+import { Route, Router, ActivatedRoute } from '@angular/router';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 import { filter, first } from 'rxjs';
 import * as _ from 'lodash';
@@ -11,11 +11,12 @@ declare function swiper_Filter(): any
 @Component({
   selector: 'app-product-filter',
   templateUrl: './product-filter.component.html',
-  styleUrls: ['./product-filter.component.css'] // Corrigido de 'styleUrl' para 'styleUrls'
+  styleUrls: ['./product-filter.component.css']
 })
 export class ProductFilterComponent implements OnInit, AfterViewInit {
   CategoryFilter: any;
   name: string = '';
+  param: string = '';
   section: any[] = [];
   products: any[] = []
   subsection: any[] = [];
@@ -36,8 +37,10 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   auxProduct: any[] = []
   auxFilter: any[] = []
   nameGroup: any[] = []
+  filterName: any
   value: any;
   highValue: any;
+  testa: any = 0
   options: Options = {
     floor: 0, // Define um valor padrão para floor
     ceil: 2000,
@@ -58,30 +61,34 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     private router: Router,
     private stateService: KabumServiceService,
     private productCategoryService: KabumServiceService,
-    private commandSource: KabumServiceService
+    private commandSource: KabumServiceService,
+    private route: ActivatedRoute,
+    private lastName: KabumServiceService,
+    private ngZone: NgZone,
     
   ) {
-    this.stateService.currentFilterName.subscribe(async name => {
-      this.name = name;
-      if (this.name) {
-        await this.getDadosDoServico();
-        await this.getProductCaategory();
-        const sectionValues = await this.getDadosSection();
-        // Verifique se sectionValues é um array e tem pelo menos dois elementos
-        if (Array.isArray(sectionValues) && sectionValues.length >= 2) {
-          this.options = {  
-            ...this.options,
-            floor: sectionValues[0], // Define o floor como o primeiro elemento do array
-            ceil: sectionValues[1] // Define o ceil como o segundo elemento do array
-          };
-          this.value = sectionValues[0]
-          this.highValue = sectionValues[1]
-        }
-      }
-    });
+
+   
   }
 
   ngOnInit(): void {
+
+    this.route.params.subscribe(async params => {
+    
+      const name = decodeURIComponent(params['filterName'] || '');
+      this.categoriesSearch = []
+      if (name) {
+        let lastName= this.lastName.getVariable()
+        this.name = name; // Update the service state
+        this.testa = 1
+        await this.loadData(); // Load data based on the new name
+        this.testa = 0
+        this.cdr.detectChanges();
+       
+        
+      }
+    });
+  
 
     window.scrollTo(0, 0);
     this.value = this.options.floor;
@@ -92,6 +99,43 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
+  /*
+    this.route.paramMap.subscribe(params => {
+      
+      this.filterName = params.get('filterName');
+     
+    });
+
+    this.stateService.currentFilterName.subscribe(async name => {
+      
+      this.name = name;
+      if (this.name) {
+        await this.loadData();
+      }
+    });*/
+
+  private async loadData() {
+    try {
+      await this.getDadosDoServico();
+      await this.getProductCaategory();
+      const sectionValues = await this.getDadosSection();
+      
+      // Verifique se sectionValues é um array e tem pelo menos dois elementos
+      if (Array.isArray(sectionValues) && sectionValues.length >= 2) {
+        this.options = {  
+          ...this.options,
+          floor: sectionValues[0], // Define o floor como o primeiro elemento do array
+          ceil: sectionValues[1] // Define o ceil como o segundo elemento do array
+        };
+        this.value = sectionValues[0];
+        this.highValue = sectionValues[1];
+      }
+    } catch (error) {
+      console.error('Erro ao carregar dados:', error);
+    }
+  }
+
 
   ngAfterViewInit(): void {
   
@@ -151,7 +195,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   }
 
 
-  getDadosSection(): Promise<number[]> {
+ async getDadosSection(): Promise<number[]> {
     return new Promise<number[]>((resolve, reject) => {
       this.sectionService.getDadosSection().subscribe(
         (data: any[]) => {
@@ -172,7 +216,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   }
   
 
-  getDadosSubsection(): Promise<number[]> {
+  async getDadosSubsection(): Promise<number[]> {
     return new Promise<number[]>((resolve, reject) => {
       this.subsectionService.getDadosSubsection().subscribe(
         (data: any[]) => {
@@ -194,7 +238,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   
   
 
-  getDadosCategories(): Promise<number[]> {
+  async getDadosCategories(): Promise<number[]> {
     return new Promise<number[]>((resolve, reject) => {
     
        this.categoriesService.getDadosCategories().subscribe(
@@ -215,13 +259,15 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   SearchSection():number[]{
     this.searchSection = false;
     this.searchSubsection = false;
-   
+    this.categoriesRelacionadas = []
+    this.product = []
+   console.log("quantidade"+this.categoriesRelacionadas.length)
     if (!this.searchSection) {
       for (let sc of this.section) {
         /*verifica se o nome encontra o nome em section*/
       
         if (sc.name === this.name) {
-         
+    
           this.idSearch = sc;
           this.searchSection = true;
  /*se encontrar equivalencia ele procura equivalencias na segunda classe em subsection table*/
@@ -298,22 +344,32 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       }
     }
     
-
-    let values: number[] = [this.product[0].price, this.product[0].price];
+    
+    let values: number[] = []
 
     this.filterProduct = cloneDeep(this.product)
-    
+   
 
 
-    for(let pt of this.product){
-      if(pt.price < values[0]){
-        values[0] = pt.price
-      }
-
-      if(pt.price > values[1]){
-        values[1] = pt.price
+    if(this.product.length > 0){
+      values = [this.product[0].price, this.product[0].price];
+      for(let pt of this.product){
+        console.log("teste")
+        if(pt.price < values[0]){
+          values[0] = pt.price
+        }
+  
+        if(pt.price > values[1]){
+          values[1] = pt.price
+        }
       }
     }
+
+    else{
+      values[0] = 0
+      values[1] = 1000
+    }
+   
    
 this.groupCategoriesByParent()
 
@@ -544,10 +600,8 @@ return values
 
   filter_Section(newName: string) {
     this.stateService.changeFilterName(newName);
-    window.location.reload();
+    
     window.scrollTo(0, 0);
-    this.router.navigateByUrl('/Filter').then(() => {
-    });
     
   }
 

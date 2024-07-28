@@ -364,6 +364,7 @@
 .search_Title h1{
     display: flex;
     align-items: center;
+    gap: 10px;
     font-size: 20px;
     font-weight: 700;
     line-height: 14px;
@@ -663,7 +664,7 @@
 @media screen and (max-width: 1440px) {
 
     .banner_Products{
-        padding-right: 15px;
+       justify-content: space-between;
     }
     .banner_Products img{
         max-width: 384px;
@@ -729,12 +730,26 @@
 
     .banner_Pair{
         padding-right: 0;
+        padding-left: 20px;
     }
    
     .banner_Departments{
         flex-direction: row;
         justify-content: space-between;
         width: auto;
+    }
+
+    .banner_Products{
+        padding-right: 20px;
+    }
+
+    .images_Banner{
+        justify-content: space-between;
+        padding-right: 20px;
+    }
+
+    .pair_Brands{
+        padding-right: 20px;
     }
 
     .banner_Departments img{
@@ -763,8 +778,12 @@
 
     .departments_All{
         width: 100%;
+        padding-right: 20px;
     }
 
+    .banner_1{
+        padding-right: 20px;
+    }
     .departments_Back, .departments_Next{
         display: none;
     }
@@ -907,24 +926,56 @@
     .departments_Title a{
         display: flex;
      }
+
+    .banner_Information{
+        height: 330px!important;
+    }
 }
 
  @media screen and (max-width: 600px){
 
-    .brands_Box_All{
-        gap: 20px;
-    }
+.banner_Pair{
+    padding-left: 16px;
+}
+
+
+.pair_Title{
+    margin-left: 24px;
+}
+
+.brands_Box_All{
+    justify-content: space-between;
+}
+
+.banner_Products{
+    padding-right: 16px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.banner_Products img{
+    width: 100%;
+    max-width: 600px;
+}
  .images_Banner{
     flex-wrap: wrap;    
+    padding-right: 16px;
  }  
+
+ .departments_All{
+    padding-right: 16px;
+ }
+ .pair_Brands{
+    padding-right: 16px;
+ }
 
  .images_Banner img{
     width: 93vw;
  }
 
  .brands_Box{
-    width: 40%;
-    max-width: 250px;
+    width: 48%;
+    max-width: 270px;
     height: 134px;
  }
 
@@ -934,6 +985,10 @@
 
  .brands_Box h1{
     margin-bottom: 0;
+ }
+
+ .search_Title h1{
+    font-size: 16px;
  }
 
 .departments_Item{
@@ -947,13 +1002,25 @@
 .text_Blinking{
     font-size: 20px;
 }
+
+.banner_Information{
+    height: 230px!important;
+}
+ }
+
+ @media screen and (max-width: 428px) {
+    .brands_Box{
+        width: 47%;
+        justify-content: space-between;
+    }
+    .pair_Title h1{
+        font-size: 14px;
+    }
+
  }
 
 
  @media screen and (max-width: 350px) {
-    .pair_Title h1{
-        font-size: 14px;
-    }
 
     .pair_Brand h2{
         font-size: 10px;

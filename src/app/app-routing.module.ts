@@ -7,8 +7,11 @@ import { ProductFilterComponent } from './components/product-filter/product-filt
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirecionamento da rota vazia para 'home'
   { path: 'home', component: HomeComponent },
-  {path: 'Product', component: ProductMainComponent},
-  {path: 'Filter', component: ProductFilterComponent}
+  { path: 'Product', component: ProductMainComponent},
+  { path: 'Product/:productName', component: ProductMainComponent },
+  { path: 'Filter', component: ProductFilterComponent},
+  { path: 'Filter/:filterName', component: ProductFilterComponent}
+  
 ];
 
 

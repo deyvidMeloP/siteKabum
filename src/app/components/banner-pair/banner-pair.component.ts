@@ -554,7 +554,8 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
 
      this.stateService.changeProductMainName(produto)
       window.scrollTo(0, 0);
-      this.router.navigateByUrl('/Product').then(() => {
+      this.router.navigateByUrl(`/Product/${produto.name_Product}`).then(() => {
+       
       });
     
  }
@@ -810,9 +811,11 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
 */
   NavigationPage(name: string){
 
-    
     this.stateService.changeFilterName(name);
-    this.router.navigateByUrl('/Filter');
+    this.stateService.setVariable(name)
+    this.router.navigateByUrl(`Filter/${name}`).then(() => {
+      
+    });
      
 
   }

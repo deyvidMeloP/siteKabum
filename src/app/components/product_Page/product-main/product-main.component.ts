@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, OnDestroy} from '@angular/core';
 import { KabumServiceService } from '../../../services/kabum-service.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 declare function swiperProductMain(): any;
 declare function siblings_Swiper(): any;
 
@@ -24,10 +25,18 @@ export class ProductMainComponent implements OnInit{
   siblingsList: any[] = []
   imageSinbling: any[] = [];
   changeDisplay: any
+  productName: any
 
-  constructor(private productAll: KabumServiceService,  private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService, private departService: KabumServiceService, private commandSource: KabumServiceService) { }
+  constructor(private productAll: KabumServiceService,  private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService, private departService: KabumServiceService, 
+    private commandSource: KabumServiceService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.route.paramMap.subscribe(params => {
+      this.productName = params.get('productName');
+    });
+
     this.productAll.currentProductMainName.subscribe(
       name => {
         this.produto= name;

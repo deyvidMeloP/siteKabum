@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable,  Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +32,17 @@ export class KabumServiceService {
   private offerTime3Subject: Subject<string> = new Subject<string>();
   offerTime3$: Observable<string> = this.offerTime3Subject.asObservable();
   
-  private filterNameSource: BehaviorSubject<string>;
-  private productMainNameSource: BehaviorSubject<string>;
   
-  constructor(private http: HttpClient) {const savedName = localStorage.getItem('filterName') || '';
-  this.filterNameSource = new BehaviorSubject<string>(savedName);
+  private productMainNameSource: BehaviorSubject<string>;
+  private filterNameSource: BehaviorSubject<string>;
+  filterName$: Observable<string>;
+
+  private lastName: any;
+
+  constructor(private http: HttpClient, private router: Router) {
+    const savedName = localStorage.getItem('filterName') || '';
+    this.filterNameSource = new BehaviorSubject<string>(savedName);
+    this.filterName$ = this.filterNameSource.asObservable();
 
   const savedProductMainName = localStorage.getItem('productMainName') || '';
   this.productMainNameSource = new BehaviorSubject<any>(savedProductMainName);
@@ -53,6 +60,14 @@ sendCommand(command: string) {
     );
   }
 
+  setVariable(value: any): void {
+    this.lastName = value;
+  }
+
+  getVariable(): any {
+    return this.lastName;
+  }
+
   getProductCategory(): Observable<any[]> {
     
     return this.http.get<any[]>(this.apiUrlProductCategory).pipe(
@@ -60,13 +75,13 @@ sendCommand(command: string) {
     );
   }
   
-  get currentFilterName() {
-    return this.filterNameSource.asObservable();
-  }
 
   changeFilterName(name: string) {
     localStorage.setItem('filterName', name);
     this.filterNameSource.next(name);
+    this.router.navigateByUrl(`Filter/${name}`).then(() => {
+      // Aqui você pode executar qualquer lógica adicional após a navegação
+    });
   }
 
   get currentProductMainName() {
@@ -170,7 +185,7 @@ sendCommand(command: string) {
 
   accountant_Time2(): string {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-07-30T15:30:20');
+    const targetDate = new Date('2024-08-30T15:30:20');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
@@ -213,7 +228,7 @@ sendCommand(command: string) {
 
   accountant_Time3(): string {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-07-14T20:00:00');
+    const targetDate = new Date('2024-08-14T20:00:00');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
