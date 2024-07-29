@@ -498,6 +498,7 @@ ng-magnizoom{
     max-width: max-content;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
    
 }
 .siblings_Slide img{

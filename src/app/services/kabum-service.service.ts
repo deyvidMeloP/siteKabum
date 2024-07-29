@@ -34,8 +34,16 @@ export class KabumServiceService {
   
   
   private productMainNameSource: BehaviorSubject<string>;
+  productMainName$: Observable<string>;
+
   private filterNameSource: BehaviorSubject<string>;
   filterName$: Observable<string>;
+
+  private subsectionNameSource: BehaviorSubject<string>;
+  subsectionName$: Observable<string>;
+
+  private parentNameSource: BehaviorSubject<string>;
+  parentName$: Observable<string>;
 
   private lastName: any;
 
@@ -44,8 +52,19 @@ export class KabumServiceService {
     this.filterNameSource = new BehaviorSubject<string>(savedName);
     this.filterName$ = this.filterNameSource.asObservable();
 
-  const savedProductMainName = localStorage.getItem('productMainName') || '';
-  this.productMainNameSource = new BehaviorSubject<any>(savedProductMainName);
+    const savedSubsectionName = localStorage.getItem('subsectionName') || '';
+    this.subsectionNameSource = new BehaviorSubject<string>(savedSubsectionName);
+    this.subsectionName$ = this.subsectionNameSource.asObservable();
+
+    const savedParentName = localStorage.getItem('subsectionName') || '';
+    this.parentNameSource = new BehaviorSubject<string>(savedParentName)
+    this.parentName$ = this.parentNameSource.asObservable()
+
+    const savedproductMain = localStorage.getItem('productName') || '';
+    this.productMainNameSource = new BehaviorSubject<string>(savedproductMain)
+    this.productMainName$ = this.productMainNameSource.asObservable()
+
+
 }
 
 private commandSource = new Subject<string>();
@@ -84,13 +103,26 @@ sendCommand(command: string) {
     });
   }
 
-  get currentProductMainName() {
-    return this.productMainNameSource.asObservable();
+  changeSubsectionName(name: string){
+
+    localStorage.setItem('subsectionName', name)
+    let filterName = localStorage.getItem('filterName')
+    this.subsectionNameSource.next(name);
+    this.router.navigateByUrl(`Filter/${filterName}/${name}`)
+  }
+
+  changeParentName(name: string){
+    localStorage.setItem('parentName', name)
+    let filterName = localStorage.getItem('filterName')
+    let subsectionName = localStorage.getItem('subsectionName')
+    this.parentNameSource.next(name)
+    this.router.navigateByUrl(`Filter/${filterName}/${subsectionName}/${name}`)
   }
 
   changeProductMainName(name: string) {
-    localStorage.setItem('productMainName', name);
+    localStorage.setItem('productName', name);
     this.productMainNameSource.next(name);
+    this.router.navigateByUrl(`Product/${name}`)
   }
 
   updateProductVisits(id: number, visits: number): Observable<any> {

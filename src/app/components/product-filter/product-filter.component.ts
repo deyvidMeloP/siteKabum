@@ -63,8 +63,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     private productCategoryService: KabumServiceService,
     private commandSource: KabumServiceService,
     private route: ActivatedRoute,
-    private lastName: KabumServiceService,
-    private ngZone: NgZone,
     
   ) {
 
@@ -74,11 +72,25 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     this.route.params.subscribe(async params => {
-    
-      const name = decodeURIComponent(params['filterName'] || '');
+      let name = ''
+      if(decodeURIComponent(params['parentName'] || '')){
+        name = decodeURIComponent(params['parentName'] || '');
+      }
+
+      else if(decodeURIComponent(params['subsectionName'] || '')){
+        name = decodeURIComponent(params['subsectionName'] || '');
+      }
+
+      else if(decodeURIComponent(params['filterName'] || '')){
+        name = decodeURIComponent(params['filterName'] || '');
+      }
+
+
+
+      
+      
       this.categoriesSearch = []
       if (name) {
-        let lastName= this.lastName.getVariable()
         this.name = name; // Update the service state
         this.testa = 1
         await this.loadData(); // Load data based on the new name
@@ -599,8 +611,22 @@ return values
 
 
   filter_Section(newName: string) {
-    this.stateService.changeFilterName(newName);
-    
+    let subsection: boolean = false
+
+    for(let sbc of this.subsection){
+
+      if(sbc.parentId != 0 && sbc.name == newName){
+        this.stateService.changeParentName(newName)
+        break
+      }
+
+      else if(sbc.parentId == 0 && sbc.name == newName){
+        this.stateService.changeSubsectionName(newName)
+        break
+      }
+
+    }
+
     window.scrollTo(0, 0);
     
   }

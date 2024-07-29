@@ -552,11 +552,8 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
        }
      );
 
-     this.stateService.changeProductMainName(produto)
+     this.stateService.changeProductMainName(produto.name_Product)
       window.scrollTo(0, 0);
-      this.router.navigateByUrl(`/Product/${produto.name_Product}`).then(() => {
-       
-      });
     
  }
 

@@ -1,6 +1,6 @@
 <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 
-<div class="product_Box">
+<div class="product_Box" *ngIf="controller == 0">
 
     <div class="box_Show_Information">
 
@@ -233,7 +233,7 @@
 
                             <div class="siblings_Wrapper swiper-wrapper">
                                     
-                                <div class="swiper-slide siblings_Slide" *ngFor="let sb of siblingsList">
+                                <div class="swiper-slide siblings_Slide" *ngFor="let sb of siblingsList" (click)="changeProductName(sb.name_Product)">
                                 
                                     <img [src]="sb.imageUrl" alt="Product">
                                     <h1>{{sb.price  | currency:'BRL'}} </h1>

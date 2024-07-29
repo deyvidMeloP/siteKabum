@@ -25,7 +25,7 @@ export class ProductMainComponent implements OnInit{
   siblingsList: any[] = []
   imageSinbling: any[] = [];
   changeDisplay: any
-  productName: any
+  controller: number = 0
 
   constructor(private productAll: KabumServiceService,  private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService, private departService: KabumServiceService, 
     private commandSource: KabumServiceService,
@@ -33,16 +33,20 @@ export class ProductMainComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.route.paramMap.subscribe(params => {
-      this.productName = params.get('productName');
-    });
+    this.route.params.subscribe(async params => {
+      this.controller = 1
+      this.departments = [];
+      this.siblingsList = []
+      this.imageSinbling = [];
+      this.actual_Url = ''
+      let name = ''
+      if(decodeURIComponent(params['productName'] || '')){
+        name = decodeURIComponent(params['productName'] || '');
+      }
 
-    this.productAll.currentProductMainName.subscribe(
-      name => {
-        this.produto= name;
-        
-    this.getDadosProductAll();
-    this.getDadosServiceImages();
+     await this.getDadosProductAll(name);
+      this.controller = 0
+  
     this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
       tempo => this.offer_Time2= tempo
     );
@@ -53,8 +57,10 @@ export class ProductMainComponent implements OnInit{
     );
     this.timerService.accountant_Time3(); 
 
-      }
-    );
+      
+    })
+
+
     this.changeDisplay = this.commandSource.command$.subscribe(
       command => {
         this.updateNavigationDisplay(command);
@@ -81,10 +87,20 @@ export class ProductMainComponent implements OnInit{
     }
   }
 
-  getDadosProductAll(){
+  getDadosProductAll(name: string){
     this.productAll.getDados().subscribe(
       (data: any[]) => {
         this.dadosProductAll = data;
+
+        for(let product of this.dadosProductAll){
+          if(product.name_Product == name){
+            this.produto = product
+            break
+          }
+        }
+
+        this.getDadosServiceImages();
+  
         console.log('Dados no componente:', this.dadosProductAll);
       },
       (error: any) => {
@@ -105,10 +121,12 @@ export class ProductMainComponent implements OnInit{
           
           return false;
         });
-        
 
+        this.getDadosDepartments()  
         this.start(this.images_Product[0].imageUrl)
-        this.getDadosDepartments()
+                
+        
+        
         
       },
       (error: any)=>{
@@ -140,14 +158,14 @@ export class ProductMainComponent implements OnInit{
 
    let Break = 0
    let idSiblings: any[] = []
-   
+
     for(let dtu of department){
 
       if(this.produto.idProduct == dtu.productId){
 
         for(let dt of department){
           
-          if( (dtu.productId != dt.productId) && (dtu.dtName == dt.dtName)&& (dtu.dtCategory2 == dt.dtCategory2)){
+          if( (dtu.productId != dt.productId) && (dtu.dtName == dt.dtName) && (dtu.dtCategory2 == dt.dtCategory2)){
 
                 idSiblings.push(dt.productId)
 
@@ -172,8 +190,8 @@ export class ProductMainComponent implements OnInit{
       }
 
     }
+  
    siblings_Swiper()
-     
   }
 
   zoom_Focus(){
@@ -245,4 +263,12 @@ export class ProductMainComponent implements OnInit{
 
   }
 
+  changeProductName(name: string){
+  
+    this.departService.changeProductMainName(name)
+    window.scrollTo(0, 0);
+  }
+
 }
+
+
