@@ -1,7 +1,7 @@
 // Função TesteHello
 function swiperProductMain() {
 
-  const swiper = new Swiper('.item_Selection', {
+  const swiper = new Swiper('.item_Selectionn', {
     // Optional parameters
     
     slidesPerView: 5,
@@ -12,8 +12,8 @@ function swiperProductMain() {
   
     // Navigation arrows
     navigation: {
-      nextEl: '.arrow_Back',
-      prevEl: '.arrow_Top',
+      nextEl: '.arrow_Bacddk',
+      prevEl: '.arrow_Topd',
     },
   
 

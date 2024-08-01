@@ -226,10 +226,8 @@ export class ApiKabumComponent implements OnInit{
         }
       );
 
-      this.dadosService.changeProductMainName(produto)
       window.scrollTo(0, 0);
-      this.router.navigateByUrl('/Product').then(() => {
-      });
+      this.dadosService.changeProductMainName(produto.name_Product)
      
   }
 

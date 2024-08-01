@@ -1,9 +1,9 @@
 <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 
-<div class="product_Box" *ngIf="controller == 0">
+<div class="product_Box" *ngIf="controller == 0 && produto">
 
     <div class="box_Show_Information">
-
+        <h1 class="name_Product name_ProductMobile">{{produto.name_Product}}</h1>
         <div class="box_Show_All">
             <h1 class="name_Product">{{produto.name_Product}}</h1>
             <div class="box_Show">
@@ -38,9 +38,7 @@
             
                 </div>
 
-                
-
-                <div class="show_Item">
+                <div class="show_Item" *ngIf="images_Product">
                 
                     <div class="all_Item">
 
@@ -49,24 +47,27 @@
                             <svg width="24" height="15" viewBox="0 0 24 15" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-prev" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 12.8182L21.8182 15L12 5.18182L2.18182 15L2.60179e-08 12.8182L12 0.818182L24 12.8182Z" fill="#565C69"></path></svg>
                 
                         </div>
+                        
                     <div class="item_Selection">
                                     
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide focus_Selection" *ngFor="let images of images_Product">
-                        
-                            <img [src]="images.imageUrl"  (click)="change_Focus(images.imageUrl)"  alt="Product">
+                        <swiper-container direction="vertical" loop="false" speed="500" class="swiper_Focus" [allowTouchMove]="false" init="false" *ngIf="images_Product">
+                          
+                            <swiper-slide class="focus_Selection"  *ngFor="let images of images_Product">
+                                <img [src]="images.imageUrl"  (click)="change_Focus(images.imageUrl)"  alt="Product">
+                            </swiper-slide>
+
+                        </swiper-container>
                     
-                        </div>
                     </div>
                     
-                    </div>
                     <div class="arrow_Back">
             
                         <svg width="24" height="15" viewBox="0 0 13 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-next" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M-5.37986e-08 1.23077L1.18182 -5.16589e-07L6.5 5.53846L11.8182 -5.16589e-08L13 1.23077L6.5 8L-5.37986e-08 1.23077Z" fill="#42464D"></path></svg>
                 
                     </div>
-                </div>
-                <div class="item_Focus" (click)="zoom_Focus()" (mouseenter)="zoom_Focus_Enter()" (mouseleave)="zoom_Focus_Leave()">
+                    
+                    </div>
+                <div class="item_Focus" (click)="zoom_Focus()" (mouseenter)="zoom_Focus_Enter()" (mouseleave)="zoom_Focus_Leave()" *ngIf="this.actual_Url">
 
                     <ng-magnizoom imageSrc= '{{this.actual_Url}}' [imageStyle]="{'width': '101%', 'height': '101%'}" [zoomFactor]="2">
                     </ng-magnizoom>
@@ -75,8 +76,47 @@
                         
                 </div>
                 </div>
+
+                <div class="show_Item_Mobile"  *ngIf="images_Product">
+                    
+                    <div class="all_Item" style="height: 274px;  width: 47vw;">
+
+                        <div class="item_Selection" style="height: max-content;">
+                                        
+                            <swiper-container slide-per-view="1" loop="false" speed="350" class="swiper_MobileMain" init="false" *ngIf="images_Product" style=" height: 250px;">
+                            
+                                <swiper-slide class="product_Mobile" #product_Mobile *ngFor="let images of images_Product">
+                                    <img [src]="images.imageUrl"  (click)="change_Focus(images.imageUrl)"  alt="Product">
+                                </swiper-slide>
+
+                            </swiper-container>
+                        
+                        </div>
+
+                        <div class="swiper_Navigation">
+                            
+                            <label for="{{i}}" class="swiper_Label" *ngFor="let images of images_Product; let i = index">
+                              
+                                <input class="swiper_Radio" type="radio" name="option" id="{{i}}" value="{{i}}"  [checked]="i === 0" (change)="changeSlide(i)">
+                               
+                                <span class="swiper_Radio_Label"></span>
+                            
+                            </label>
+                        
+
+                        </div>
+                    
+                    </div>
+
+                </div>
         
             </div>
+            <div class="price_Subtitle price_Subtitle_Mobile">
+
+                <h1>Vendido e entregue por: <strong>{{produto.delivery}}</strong> | <strong>Em estoque</strong></h1>
+                <h1>Ver mais ofertas</h1>
+        
+        </div>
             <div class="box_Cep">aaa</div>
         </div>
     
@@ -89,7 +129,7 @@
                     <h1>TERMINA EM:</h1>
                 
 
-                    <span><svg width="22" height="30" viewBox="0 0 22 24" fill="#fff" xmlns="https://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.30852 1.94579H13.8024C13.9049 1.94579 13.9888 1.8663 13.9888 1.76913V0.176913C13.9888 0.0797498 13.9049 0 13.8024 0H8.30852C8.20597 0 8.12207 0.0797498 8.12207 0.176913V1.76913C8.12207 1.8663 8.20597 1.94579 8.30852 1.94579ZM0 13.5768C0 19.3238 4.93453 23.9993 11 23.9993C17.0655 23.9993 22 19.3238 22 13.5768C22 7.83001 17.0655 3.1543 11 3.1543C4.93453 3.1543 0 7.83001 0 13.5768ZM2.3466 13.5768C2.3466 9.05604 6.22849 5.37795 11 5.37795C15.7715 5.37795 19.6534 9.05604 19.6534 13.5768C19.6534 18.0978 15.7715 21.7759 11 21.7759C6.22849 21.7759 2.3466 18.0978 2.3466 13.5768ZM9.99573 13.571C9.86644 13.7848 9.83157 14.0197 9.87842 14.2352C9.93502 14.4956 10.1113 14.7275 10.3854 14.8579C10.8865 15.0964 11.5243 14.9064 11.8103 14.434L14.1204 10.6152C14.4061 10.1428 14.2318 9.56692 13.7305 9.3283C13.2297 9.09004 12.5919 9.27995 12.3062 9.7523L9.99573 13.571ZM20.5757 6.16097L18.5687 4.49657C18.5136 4.45089 18.508 4.37064 18.5562 4.3184L19.3468 3.46285C19.395 3.41061 19.4797 3.40531 19.5348 3.45099L21.5418 5.11514C21.597 5.16107 21.6026 5.24107 21.5543 5.29331L20.7638 6.14911C20.7153 6.20135 20.6309 6.20665 20.5757 6.16097Z" fill="#fff" height="12"></path></svg>
+                    <span *ngIf="offer_Time2 && offer_Time3"><svg width="22" height="30" viewBox="0 0 22 24" fill="#fff" xmlns="https://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.30852 1.94579H13.8024C13.9049 1.94579 13.9888 1.8663 13.9888 1.76913V0.176913C13.9888 0.0797498 13.9049 0 13.8024 0H8.30852C8.20597 0 8.12207 0.0797498 8.12207 0.176913V1.76913C8.12207 1.8663 8.20597 1.94579 8.30852 1.94579ZM0 13.5768C0 19.3238 4.93453 23.9993 11 23.9993C17.0655 23.9993 22 19.3238 22 13.5768C22 7.83001 17.0655 3.1543 11 3.1543C4.93453 3.1543 0 7.83001 0 13.5768ZM2.3466 13.5768C2.3466 9.05604 6.22849 5.37795 11 5.37795C15.7715 5.37795 19.6534 9.05604 19.6534 13.5768C19.6534 18.0978 15.7715 21.7759 11 21.7759C6.22849 21.7759 2.3466 18.0978 2.3466 13.5768ZM9.99573 13.571C9.86644 13.7848 9.83157 14.0197 9.87842 14.2352C9.93502 14.4956 10.1113 14.7275 10.3854 14.8579C10.8865 15.0964 11.5243 14.9064 11.8103 14.434L14.1204 10.6152C14.4061 10.1428 14.2318 9.56692 13.7305 9.3283C13.2297 9.09004 12.5919 9.27995 12.3062 9.7523L9.99573 13.571ZM20.5757 6.16097L18.5687 4.49657C18.5136 4.45089 18.508 4.37064 18.5562 4.3184L19.3468 3.46285C19.395 3.41061 19.4797 3.40531 19.5348 3.45099L21.5418 5.11514C21.597 5.16107 21.6026 5.24107 21.5543 5.29331L20.7638 6.14911C20.7153 6.20135 20.6309 6.20665 20.5757 6.16097Z" fill="#fff" height="12"></path></svg>
                     
                         <strong *ngIf="produto.discount <= 10">{{offer_Time3}}</strong>
                 
@@ -229,7 +269,7 @@
                     
                         </div>
                         
-                        <div class="swiper_All">
+                        <div class="swiper_All" *ngIf="siblingsList">
 
                             <div class="siblings_Wrapper swiper-wrapper">
                                     
@@ -261,7 +301,30 @@
 
     </div>
 
-    <div class="buy_ButtonMobile">
+    <div class="buy_Mobile_Fixed" style="position: fixed; bottom: 0px; z-index: 99999;">
+
+        <div class="price_Buy_Mobile">
+            <h1 style="font-size: 12px;" >  {{ produto.price - ((produto.price * produto.discount) / 100) | currency:'BRL' }} </h1>
+            <h2 style="font-size: 12px; font-weight: 400;">À vista no Pix</h2>
+        </div>
+
+        <div class="buy_Button_Fixed">
+            <div class="button_Comprar">
+        
+                <figure><svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="https://www.w3.org/2000/svg"><path d="M7.09977 17.6C5.88981 17.6 4.91085 18.59 4.91085 19.8C4.91085 21.01 5.88981 22 7.09977 22C8.30973 22 9.2997 21.01 9.2997 19.8C9.2997 18.59 8.30973 17.6 7.09977 17.6ZM0.5 0V2.2H2.69992L6.65979 10.549L5.17484 13.244C4.99885 13.552 4.89985 13.915 4.89985 14.3C4.89985 15.51 5.88981 16.5 7.09977 16.5H20.2993V14.3H7.56176C7.40776 14.3 7.28677 14.179 7.28677 14.025L7.31977 13.893L8.30973 12.1H16.5044C17.3294 12.1 18.0554 11.649 18.4294 10.967L22.3672 3.828C22.458 3.66013 22.5037 3.47158 22.4998 3.28078C22.4959 3.08998 22.4426 2.90346 22.345 2.73943C22.2475 2.5754 22.1091 2.43947 21.9433 2.34492C21.7776 2.25037 21.5901 2.20044 21.3993 2.2H5.13084L4.09688 0H0.5ZM18.0994 17.6C16.8894 17.6 15.9105 18.59 15.9105 19.8C15.9105 21.01 16.8894 22 18.0994 22C19.3094 22 20.2993 21.01 20.2993 19.8C20.2993 18.59 19.3094 17.6 18.0994 17.6Z" fill="#ffffffff"></path></svg></figure>
+                <strong>COMPRAR</strong> 
+                
+            </div>
+            
+            <div class="button_Cart">
+    
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconAddToCart"><path d="M17.5 18.78V17.04H6.2C6.06 17 5.96 16.89 5.96 16.75L5.99 16.63L6.87 14.43H14.85C15.56 14.43 16.18 14.03 16.5 13.43L17.38 11.8C14.53 11.12 12.35 8.71 12.03 5.73H4.12L3.2 4H0V5.74H1.94L5.44 13.36L4.13 15.82C3.9 16.23 3.82 16.75 3.95 17.28C4.17 18.19 5.03 18.79 5.94 18.79H17.5V18.78Z" fill="white"></path><path d="M16.18 20C15.1 20 14.23 20.9 14.23 22C14.23 23.1 15.1 24 16.18 24C17.26 24 18.14 23.1 18.14 22C18.13 20.9 17.25 20 16.18 20Z" fill="white"></path><path d="M6.40001 20C5.32001 20 4.45001 20.9 4.45001 22C4.45001 23.1 5.32001 24 6.40001 24C7.48001 24 8.36001 23.1 8.36001 22C8.35001 20.9 7.47001 20 6.40001 20Z" fill="white"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M19 0C16.238 0 14 2.23858 14 5C14 7.76203 16.2386 10 19 10C21.762 10 24 7.76142 24 5C24 2.23797 21.7614 0 19 0ZM18.4444 2.36249V4.44444H16.2236C15.9199 4.44444 15.6667 4.69318 15.6667 5C15.6667 5.30896 15.916 5.55556 16.2236 5.55556H18.4444V7.91529C18.4444 8.21902 18.6932 8.47222 19 8.47222C19.309 8.47222 19.5556 8.22288 19.5556 7.91529V5.55556H21.7764C22.0801 5.55556 22.3333 5.30682 22.3333 5C22.3333 4.69104 22.084 4.44444 21.7764 4.44444H19.5556V2.36249C19.5556 2.05876 19.3068 1.80556 19 1.80556C18.691 1.80556 18.4444 2.0549 18.4444 2.36249Z" fill="white"></path></svg>
+    
+            </div>
+        </div>
+    </div>
+
+    <div class="buy_ButtonMobile"  #observedElement>
 
         <div class="button_Comprar">
         
@@ -277,5 +340,5 @@
         </div>
 
     </div>
-
+   
 </div>

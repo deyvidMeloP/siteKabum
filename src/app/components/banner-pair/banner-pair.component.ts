@@ -35,7 +35,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   departments_Swiper: any = [];
   mostSearch:any = [];
   newVisits: any;
-  
+  swiperMobile: any = []
   constructor(
     private dadosService: KabumServiceService,
     private departService: KabumServiceService, private dadosServiceBrands: KabumServiceService,  private router: Router, private dadosProdutos: KabumServiceService, private timerService: KabumServiceService, 
@@ -177,7 +177,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
         this.produto = this.produtoAll
         this.MostSearch('TODOS')
         setTimeout(()=>{
-
+          
           const marker_Swiper = document.querySelectorAll(".marker_Swiper")
                
           const product_Swiper = document.querySelectorAll(".swiper_Product")
@@ -551,9 +551,9 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
         
        }
      );
-
-     this.stateService.changeProductMainName(produto.name_Product)
-      window.scrollTo(0, 0);
+    const name: string = produto.name_Product
+    this.stateService.changeProductMainName(name)
+    window.scrollTo(0, 0);
     
  }
 
@@ -809,11 +809,6 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   NavigationPage(name: string){
 
     this.stateService.changeFilterName(name);
-    this.stateService.setVariable(name)
-    this.router.navigateByUrl(`Filter/${name}`).then(() => {
-      
-    });
-     
 
   }
 

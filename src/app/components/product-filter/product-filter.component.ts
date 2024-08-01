@@ -91,13 +91,12 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       
       this.categoriesSearch = []
       if (name) {
-        this.name = name; // Update the service state
+        this.name = name; 
         this.testa = 1
-        await this.loadData(); // Load data based on the new name
+        await this.loadData();
         this.testa = 0
         this.cdr.detectChanges();
-       
-        
+
       }
     });
   

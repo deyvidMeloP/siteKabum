@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, OnDestroy} from '@angular/core';
+import { Component, OnInit, ElementRef,QueryList, OnDestroy, ViewChildren, ViewChild} from '@angular/core';
 import { KabumServiceService } from '../../../services/kabum-service.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -26,6 +26,12 @@ export class ProductMainComponent implements OnInit{
   imageSinbling: any[] = [];
   changeDisplay: any
   controller: number = 0
+  swiper: any
+  swiperFocus: any = []
+  swiperMobile: any = []
+  @ViewChild('observedElement') observedElement!: ElementRef;
+
+  private observer!: IntersectionObserver;
 
   constructor(private productAll: KabumServiceService,  private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService, private departService: KabumServiceService, 
     private commandSource: KabumServiceService,
@@ -34,6 +40,7 @@ export class ProductMainComponent implements OnInit{
   ngOnInit(): void {
 
     this.route.params.subscribe(async params => {
+      
       this.controller = 1
       this.departments = [];
       this.siblingsList = []
@@ -43,10 +50,11 @@ export class ProductMainComponent implements OnInit{
       if(decodeURIComponent(params['productName'] || '')){
         name = decodeURIComponent(params['productName'] || '');
       }
+      
 
      await this.getDadosProductAll(name);
       this.controller = 0
-  
+     
     this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
       tempo => this.offer_Time2= tempo
     );
@@ -56,16 +64,65 @@ export class ProductMainComponent implements OnInit{
       tempo => this.offer_Time3 = tempo
     );
     this.timerService.accountant_Time3(); 
-
       
     })
-
 
     this.changeDisplay = this.commandSource.command$.subscribe(
       command => {
         this.updateNavigationDisplay(command);
       }
     );
+
+   
+  }
+
+  private initializeObserver(): void {
+    const options: IntersectionObserverInit = {
+      root: null, // Usa a viewport do navegador como o root
+      rootMargin: '0px', // Margem ao redor da root
+      threshold: 0.9 // Percentual de visibilidade necessário para disparar o callback
+    };
+    this.observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
+    if (this.observedElement) {
+      this.observer.observe(this.observedElement.nativeElement);
+    }
+  }
+
+  private handleIntersection(entries: IntersectionObserverEntry[]): void {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fixed = document.querySelector(".buy_Mobile_Fixed") as HTMLElement   
+        fixed.style.transform = "translateY(80px)"
+
+      } else{
+        
+          const fixed = document.querySelector(".buy_Mobile_Fixed") as HTMLElement   
+          fixed.style.transform = "translateY(0px)"
+        
+        
+
+      }
+    });
+  }
+
+
+  swiperMove(name: string){
+
+    switch(name){
+      case 'arrow_Top':
+
+      this.swiperFocus[0].slidePrev()
+
+      break;
+
+      case'arrow_Back':
+
+      this.swiperFocus[0].slideNext()
+
+      break;
+
+    }
+  
   }
 
 
@@ -98,9 +155,83 @@ export class ProductMainComponent implements OnInit{
             break
           }
         }
+        setTimeout(() => {
+          
+          const swiperFocus = document.querySelectorAll(".swiper_Focus")
+          const swiperMobile = document.querySelectorAll(".swiper_MobileMain")
+
+          const swiperParams2 = {
+            simulateTouch: true,
+            allowTouchMove: true,
+            slidesPerView: 'auto',
+            spaceBetween: 0,
+            touchReleaseOnEdges: true,
+            breakpoints:{
+              1020:{
+                simulateTouch: true,
+                allowTouchMove: true,
+              }
+            },
+            on: {
+              init() {/*trava a inicilização e inicia por aqui */
+                // ...
+              },
+
+              slideChange: () => {
+              this.changeSlide(this.swiperMobile[0].activeIndex)
+                
+              },
+              
+            }
+          }
+
+          swiperMobile.forEach((el: any)=>{
+            Object.assign(el, swiperParams2)
+            el.initialize();
+            this.swiperMobile.push(el.swiper);
+           
+          })
+
+
+          const swiperParams = {
+            simulateTouch: false,
+            allowTouchMove: false,
+            slidesPerView: 'auto',
+            spaceBetween: 0,
+            breakpoints:{
+              1020:{
+                simulateTouch: false,
+                allowTouchMove: false,
+              }
+            },
+            on: {
+              init() {/*trava a inicilização e inicia por aqui */
+                // ...
+              },
+            }
+          }
+          swiperFocus.forEach((el: any)=>{
+            Object.assign(el, swiperParams)
+            el.initialize();
+            this.swiperFocus.push(el.swiper);
+           
+          })
+          this.initializeObserver()
+          const backButton = document.querySelector(".arrow_Top")
+          const nextButton = document.querySelector(".arrow_Back")
+        
+          if (backButton) {
+        backButton.addEventListener('click', this.swiperMove.bind(this, backButton.classList.value));
+        }
+        
+        if (nextButton) {
+        nextButton.addEventListener('click', this.swiperMove.bind(this, nextButton.classList.value));
+        }
+        
+              }, 0);
 
         this.getDadosServiceImages();
-  
+      
         console.log('Dados no componente:', this.dadosProductAll);
       },
       (error: any) => {
@@ -109,6 +240,20 @@ export class ProductMainComponent implements OnInit{
     );
 
   }
+
+changeSlide(a: any){
+
+  const radios = document.querySelectorAll<HTMLInputElement>('.swiper_Radio'); 
+
+    const radio = radios[a];
+
+    radio.checked = true  
+
+  this.swiperMobile[0].slideTo(a)
+
+  const mobile = document.querySelectorAll(".product_Mobile") as NodeListOf<HTMLElement>
+
+}
 
   getDadosServiceImages(){
     this.imagesService.getDadosImages().subscribe(  
@@ -125,9 +270,6 @@ export class ProductMainComponent implements OnInit{
         this.getDadosDepartments()  
         this.start(this.images_Product[0].imageUrl)
                 
-        
-        
-        
       },
       (error: any)=>{
         console.error('Erro ao receber dados do serviço', error)
@@ -190,7 +332,7 @@ export class ProductMainComponent implements OnInit{
       }
 
     }
-  
+
    siblings_Swiper()
   }
 
@@ -222,7 +364,7 @@ export class ProductMainComponent implements OnInit{
 
   start(actual_Url: string){
    this.actual_Url = actual_Url
-   swiperProductMain()
+   
   }
 
   zoom_Focus_Enter(){

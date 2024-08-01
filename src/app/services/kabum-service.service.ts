@@ -79,14 +79,6 @@ sendCommand(command: string) {
     );
   }
 
-  setVariable(value: any): void {
-    this.lastName = value;
-  }
-
-  getVariable(): any {
-    return this.lastName;
-  }
-
   getProductCategory(): Observable<any[]> {
     
     return this.http.get<any[]>(this.apiUrlProductCategory).pipe(
@@ -122,7 +114,9 @@ sendCommand(command: string) {
   changeProductMainName(name: string) {
     localStorage.setItem('productName', name);
     this.productMainNameSource.next(name);
-    this.router.navigateByUrl(`Product/${name}`)
+    this.router.navigateByUrl(`Product/${name}`).then(() => {
+      // Aqui você pode executar qualquer lógica adicional após a navegação
+    });
   }
 
   updateProductVisits(id: number, visits: number): Observable<any> {

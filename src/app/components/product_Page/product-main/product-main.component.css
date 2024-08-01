@@ -1,17 +1,17 @@
 .product_Box{
     display: flex;
-    flex-direction: column;
     margin-top: 50px;
     width: 95.9vw;
-    margin-left: 30px;
+    flex-direction: column;
     border-top: 1px #dee0e4 solid ;
     position: relative;
 }
 
 .box_Show_Information{
     display: flex;
-    width: 100%;
+    width: 95.9vw;
     gap: 15px;
+    margin-left: 30px;
     position: relative;
 }
 
@@ -100,15 +100,18 @@
     align-items: center;  
     height: 370px;
 }
+
 .item_Selection{
+    flex: 1;
+    display: block;
     overflow: hidden;
-    
+    height: 100%;
 }
-.swiper-wrapper{
-    width: max-content;
-    gap: 15px;
-    height: 370px;/*organizar melhor essas divs do swiper*/
+.swiper_Focus{
+    flex: 1;
+    height: 100%;
 }
+
 
 .arrow_Top{
     position: absolute;
@@ -122,6 +125,27 @@
     cursor: pointer;
  
 }
+.swiper_Navigation{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.swiper_Radio{
+    display: none;
+}
+
+.swiper_Radio_Label{
+  display: inline-block;
+  width: 7px;       
+  height: 7px;        
+  background-color: #b6bbc2; 
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swiper_Radio:checked + .swiper_Radio_Label{
+   background-color: #ff6500;
+}
 /* manda pra eles apenas as imagens sem do mesmo productId*/
 .focus_Selection{
     width: 50px;
@@ -132,6 +156,7 @@
     border: solid 1px #dee0e4;
     border-radius: 4px;
     cursor: pointer;
+    margin-bottom: 15px;
 }
 .focus_Selection img{
     width: 40px;
@@ -140,6 +165,30 @@
 
 }
 
+.swiper_MobileMain{
+    display: flex;
+    width: 47vw;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.product_Mobile{
+    object-fit: cover;
+}
+
+.product_Mobile{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.swiper_MobileMain img{
+    width: 250px!important;
+    height: 100%;
+  
+}
 .item_Focus{
     display: flex;
     justify-content: center;
@@ -166,7 +215,7 @@ ng-magnizoom{
 
 
 .box_Cep{
-    height: 96px;
+   
 }
 
 
@@ -338,7 +387,16 @@ ng-magnizoom{
     line-height: 18px;
     font-weight: 400;
     color: #42464d;
-    min-width: max-content;
+}
+
+.price_Subtitle_Mobile{
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    display: none;
+}
+.price_Subtitle_Mobile h1{
+    font-size: 12px;
 }
 
 .price_Subtitle strong:last-child{
@@ -419,7 +477,7 @@ ng-magnizoom{
 }
 
 .price_Card{
-    width: max-content;
+    width: auto;
 }
 .price_Card strong, .price_Card h1{
     font-size: 14px;
@@ -526,6 +584,53 @@ ng-magnizoom{
     right: -32px;
 }
 
+.buy_Mobile_Fixed{
+    display: none;
+    height: 80px;
+    padding: 0px 16px;
+    width: 100%;
+    transform: translateY(80px);
+    background-color: #ffff;
+    transition: all 0.5s ease;
+    justify-content: space-between;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+}
+
+.price_Buy_Mobile{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.price_Buy_Mobile h1{
+    font-weight: 600px;
+}
+
+.buy_Button_Fixed{
+    display: flex;
+    align-items: center;
+    min-width: max-content;
+    gap: 5px;
+}
+
+.buy_Button_Fixed .button_Cart{
+    width: 15vw;
+    height: 48px;
+}
+
+.buy_Button_Fixed .button_Comprar{
+    width: 45vw;
+}
+
+.show_Item_Mobile{
+    display: none;
+    user-select: none;
+}
+
+.name_ProductMobile{
+    display: none;
+    position: relative;
+}
 @media screen and (max-width: 1020px) {
 
     .box_Discount_Stock{
@@ -588,4 +693,87 @@ ng-magnizoom{
    .buy_ButtonMobile{
     display: flex;
    }
+   
+   .show_Item_Mobile{
+    display: flex;
+    justify-content: center;
+    }
+
+    .show_Item{
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+    .product_Box{
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .buy_Mobile_Fixed{
+        display: flex;
+        
+    }
+
+    .box_Show_Information{
+        margin-left: 0;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .name_Product{
+        font-size: 14px;
+        margin-top: 20px;
+        display: none;
+    }
+
+    .name_ProductMobile{
+        display: flex;
+        margin-left: 16px;
+    }
+
+    .box_Show_All{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 16px;
+
+    }
+
+    .box_Information{
+        margin-top: 0px;
+        width: 100%;
+    }
+
+    .swiper_MobileMain{
+        width: 65vw;
+      
+    }
+    .swiper_MobileMain img{
+        width: 100%!important;
+        max-width: 330px;
+       
+    }
+
+    .price_Subtitle{
+        display: none;
+    }
+
+    .box_Cep{
+        display: none;
+    }
+    
+    .box_Show_All{
+        margin-top: 0;
+    }
+
+    .price_Subtitle_Mobile{
+        display: flex;
+    }
+
+    .information_Price{
+        padding-left: 16px;
+    }
 }
