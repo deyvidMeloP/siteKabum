@@ -68,6 +68,8 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     this.timerService.accountant_Time3(); 
 
     
+
+    
   }
 
   ngAfterViewInit(): void {

@@ -5,6 +5,8 @@ import { Options, LabelType } from '@angular-slider/ngx-slider';
 import { filter, first } from 'rxjs';
 import * as _ from 'lodash';
 import { cloneDeep } from 'lodash';
+import { Subscription } from 'rxjs';
+
 
 declare function swiper_Filter(): any
 
@@ -38,6 +40,12 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   auxFilter: any[] = []
   nameGroup: any[] = []
   filterName: any
+  offer_Time1: string = '';
+  offer_Time2: string = '';
+  offer_Time3: string = '';
+  tempoRestante1Subscription: Subscription | undefined;
+  tempoRestante2Subscription: Subscription | undefined;
+  tempoRestante3Subscription: Subscription | undefined;
   value: any;
   highValue: any;
   testa: any = 0
@@ -49,6 +57,9 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       return `R$ ${value}`;
     }
   };
+  
+
+ 
 
   
 
@@ -63,6 +74,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     private productCategoryService: KabumServiceService,
     private commandSource: KabumServiceService,
     private route: ActivatedRoute,
+    private timerService: KabumServiceService
     
   ) {
 
@@ -96,6 +108,22 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
         await this.loadData();
         this.testa = 0
         this.cdr.detectChanges();
+
+        this.tempoRestante1Subscription = this.timerService.offerTime1$.subscribe(
+          tempo => this.offer_Time1= tempo
+        );
+        this.timerService.accountant_Time1(); 
+    
+        this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
+          tempo => this.offer_Time2= tempo
+        );
+        this.timerService.accountant_Time2(); 
+    
+        this.tempoRestante3Subscription = this.timerService.offerTime3$.subscribe(
+          tempo => this.offer_Time3 = tempo
+        );
+        this.timerService.accountant_Time3(); 
+    
 
       }
     });
@@ -1098,8 +1126,51 @@ filterAll(number: number, subcategory: any, event: any){
   }
 }
 
+enterProductItem(event: MouseEvent){
+     
+  const targetElem = event.currentTarget as HTMLElement;
+  const elm_Leave= targetElem.querySelector('.product_Buy') as HTMLElement;
+  elm_Leave.style.display = 'none'
+
+  const elm_Enter = targetElem.querySelector(".product_Buy_Enter") as HTMLElement
+  elm_Enter.style.display = 'flex'
+
+  const elm_Discount_Stock = targetElem.querySelector(".product_Discount_Stock") as HTMLElement
+  elm_Discount_Stock.style.display = 'none'
 
 
+}
+
+leaveProductItem(event: MouseEvent){
+    
+  const targetElem = event.currentTarget as HTMLElement;
+  const elm_Leave = targetElem.querySelector(".product_Buy") as HTMLElement
+  elm_Leave.style.display = 'flex'
+
+  const elm_Enter = targetElem.querySelector(".product_Buy_Enter") as HTMLElement
+  elm_Enter.style.display = 'none'
+
+  const elm_Discount_Stock = targetElem.querySelector(".product_Discount_Stock") as HTMLElement
+  elm_Discount_Stock.style.display = 'flex'
+
+}
+
+
+clickMobileFilter(){
+  const filter = document.querySelector(".filter_Mobile") as HTMLElement
+  const overlay = document.querySelector(".overlay") as HTMLElement
+
+  filter.style.display = "block"
+  overlay.style.display = "block"
+}
+
+closeAp(){
+  const filter = document.querySelector(".filter_Mobile") as HTMLElement
+  const overlay = document.querySelector(".overlay") as HTMLElement
+
+  filter.style.display = "none"
+  overlay.style.display = "none"
+}
 
 
 
