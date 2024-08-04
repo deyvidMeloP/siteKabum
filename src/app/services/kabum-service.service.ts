@@ -70,9 +70,18 @@ export class KabumServiceService {
 private commandSource = new Subject<string>();
 command$ = this.commandSource.asObservable();
 
+private commandNav = new Subject<string>();
+commandNav$ = this.commandNav.asObservable();
+
 sendCommand(command: string) {
   this.commandSource.next(command);
 }
+
+sendNavbar(command: string){
+
+  this.commandNav.next(command)
+}
+
   getDados(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       tap(data => console.log('Dados recebidos:', data))
@@ -88,35 +97,61 @@ sendCommand(command: string) {
   
 
   changeFilterName(name: string) {
+    const encodedName = encodeURIComponent(name);
     localStorage.setItem('filterName', name);
     this.filterNameSource.next(name);
-    this.router.navigateByUrl(`Filter/${name}`).then(() => {
-      // Aqui você pode executar qualquer lógica adicional após a navegação
+    this.router.navigate(['Filter', encodedName]).then(() => {
+      // Lógica adicional após a navegação, se necessário
     });
   }
 
   changeSubsectionName(name: string){
-
+    const encodedName = encodeURIComponent(name);
     localStorage.setItem('subsectionName', name)
     let filterName = localStorage.getItem('filterName')
+    let encodedfilter = filterName
+    if(filterName){
+      encodedfilter= encodeURIComponent(filterName);
+    }
+  
     this.subsectionNameSource.next(name);
-    this.router.navigateByUrl(`Filter/${filterName}/${name}`)
+    this.router.navigate(['Filter', encodedfilter, encodedName]).then(() => {
+      // Lógica adicional após a navegação, se necessário
+    });
   }
 
   changeParentName(name: string){
+    const encodedName = encodeURIComponent(name);
     localStorage.setItem('parentName', name)
+
+   
+   
     let filterName = localStorage.getItem('filterName')
     let subsectionName = localStorage.getItem('subsectionName')
+   
+    let encodedfilter = filterName, encodedSubsection = subsectionName
+    if(filterName){
+      encodedfilter = encodeURIComponent(filterName);
+    }
+
+    if(subsectionName){
+      encodedSubsection = encodeURIComponent(subsectionName);
+    }
+
+
+
+   
     this.parentNameSource.next(name)
-    this.router.navigateByUrl(`Filter/${filterName}/${subsectionName}/${name}`)
+    this.router.navigate(['Filter', encodedfilter, encodedSubsection, encodedName]).then(() => {
+      // Lógica adicional após a navegação, se necessário
+    });
   }
 
   changeProductMainName(name: string) {
+    const encodedName = encodeURIComponent(name);
     localStorage.setItem('productName', name);
     this.productMainNameSource.next(name);
-    this.router.navigateByUrl(`Product/${name}`).then(() => {
-      // Aqui você pode executar qualquer lógica adicional após a navegação
-    });
+    this.router.navigate(['Product', encodedName])
   }
 
   updateProductVisits(id: number, visits: number): Observable<any> {
@@ -294,7 +329,6 @@ sendCommand(command: string) {
     return this.offer_Time3;
    
   }
-
   
   
 }

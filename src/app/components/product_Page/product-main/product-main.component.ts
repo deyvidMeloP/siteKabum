@@ -47,8 +47,11 @@ export class ProductMainComponent implements OnInit{
       this.imageSinbling = [];
       this.actual_Url = ''
       let name = ''
+      
+      
       if(decodeURIComponent(params['productName'] || '')){
-        name = decodeURIComponent(params['productName'] || '');
+        name = decodeURIComponent(params['productName']);
+        
       }
       
 

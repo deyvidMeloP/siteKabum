@@ -9,13 +9,32 @@ import { KabumServiceService } from '../../services/kabum-service.service';
 export class FooterComponent implements OnInit {
 
   section: any[] = []
+  isVisible: boolean = true
   constructor(
     private sectionService: KabumServiceService,
+    private commandNav: KabumServiceService
 
   ){}
 
   ngOnInit(): void {
     this.getDadosSection()
+
+    this.commandNav.command$.subscribe(
+
+      command =>{
+        if(command == 'none'){
+
+          this.isVisible = false
+
+        }
+
+        else if(command == 'flex'){
+          this.isVisible = true
+        }
+      }
+
+
+    )
   }
   getDadosSection(){
    
@@ -30,4 +49,13 @@ export class FooterComponent implements OnInit {
     );
 
   }
+
+  clickNavbar(){
+
+    this.isVisible = false
+  
+    this.commandNav.sendNavbar('flex')
+  }
+
+  
 }

@@ -1,4 +1,4 @@
-<footer style="display: none;">
+<footer class="footer" *ngIf="isVisible">
     <div class="news_Footer">
 
         <div class="footer_Title">
@@ -208,7 +208,7 @@
                         <h1 style="font-weight: 700;">
                             Chat:</h1>
                         
-                       <div class="t" style="background-color: white; border-radius: 5px; display: flex; align-items: center; padding: 5px; gap: 5px; cursor: pointer; margin-top: 20px;">
+                       <div class="service_Button" style="background-color: white; border-radius: 5px; display: flex; align-items: center; padding: 5px; gap: 5px; cursor: pointer; margin-top: 20px; width: 100%;" >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg" class="ml-12 mr-8" aria-hidden="true"><path d="M14.1632 15.3672C15.6139 14.7556 16.7591 13.9231 17.5983 12.8694C18.4375 11.8159 18.8571 10.6686 18.8571 9.42756C18.8571 8.18643 18.4375 7.03908 17.598 5.98554C16.7589 4.93201 15.6138 4.09941 14.1629 3.48767C12.712 2.87602 11.134 2.57031 9.42848 2.57031C7.72314 2.57031 6.14507 2.87621 4.69407 3.48767C3.24321 4.09937 2.09811 4.93196 1.25895 5.98554C0.419697 7.03926 0 8.18643 0 9.4276C0 10.49 0.317435 11.4904 0.95132 12.4279C1.58516 13.3652 2.45575 14.1555 3.56281 14.7983C3.47358 15.0128 3.38206 15.2089 3.28829 15.3878C3.19447 15.5663 3.08297 15.738 2.95341 15.9033C2.82394 16.0687 2.7236 16.1981 2.65211 16.2915C2.58067 16.3852 2.46461 16.5172 2.30381 16.6866C2.14305 16.8562 2.04032 16.9678 1.99575 17.0213C1.99575 17.0123 1.97788 17.0325 1.94214 17.0816C1.90635 17.1308 1.88627 17.153 1.88186 17.1488C1.87736 17.1439 1.85948 17.1663 1.82824 17.2154C1.797 17.2645 1.78133 17.2891 1.78133 17.2891L1.74779 17.3558C1.73456 17.3828 1.72546 17.4092 1.72105 17.4361C1.71655 17.4627 1.7143 17.492 1.7143 17.5231C1.7143 17.5543 1.71871 17.5832 1.72781 17.6101C1.74568 17.726 1.797 17.8196 1.88181 17.8913C1.96658 17.9626 2.058 17.9983 2.15633 17.9983H2.19653C2.64287 17.9358 3.02687 17.8644 3.34824 17.7839C4.72325 17.4269 5.96442 16.8553 7.07152 16.0696C7.87503 16.2125 8.66076 16.2839 9.42857 16.2839C11.1341 16.2845 12.7123 15.9789 14.1632 15.3672Z" fill="#0060b1"></path><path d="M23.0493 15.8629C23.6834 14.9299 24.0002 13.928 24.0002 12.8565C24.0002 11.7582 23.665 10.7307 22.9956 9.77548C22.3259 8.82032 21.4151 8.02553 20.2634 7.3916C20.4686 8.06118 20.5713 8.73973 20.5713 9.42737C20.5713 10.6237 20.2725 11.7576 19.6739 12.8292C19.0757 13.9004 18.2186 14.8468 17.1026 15.6683C16.0668 16.4183 14.8882 16.994 13.5667 17.3959C12.2455 17.7976 10.866 17.9986 9.42845 17.9986C9.1607 17.9986 8.76778 17.9809 8.25 17.9453C10.0446 19.1236 12.1518 19.7131 14.5713 19.7131C15.3392 19.7131 16.1249 19.6415 16.9285 19.4986C18.0356 20.2846 19.2768 20.8558 20.6517 21.2131C20.9731 21.2937 21.3571 21.365 21.8035 21.4274C21.9106 21.4364 22.009 21.4051 22.0982 21.3336C22.1875 21.2622 22.2456 21.1643 22.2723 21.0394C22.2681 20.9858 22.2723 20.9564 22.2857 20.9521C22.2989 20.9479 22.2967 20.9187 22.279 20.8653C22.2614 20.8116 22.2523 20.7848 22.2523 20.7848L22.2189 20.718C22.2097 20.7004 22.1946 20.6756 22.1721 20.6445C22.1498 20.6135 22.132 20.5909 22.1185 20.5776C22.1053 20.5642 22.0854 20.5418 22.0584 20.5108C22.0318 20.4798 22.0138 20.4595 22.0048 20.4506C21.9602 20.397 21.8576 20.2854 21.6969 20.1157C21.536 19.9462 21.4202 19.8145 21.3487 19.7208C21.2773 19.627 21.1768 19.4977 21.0474 19.3323C20.918 19.1673 20.8063 18.9954 20.7125 18.8167C20.6188 18.6382 20.5273 18.4417 20.438 18.2275C21.5451 17.5841 22.4155 16.7962 23.0493 15.8629Z" fill="#0060b1"></path></svg>
                             <h1 style="color:#0060b1; font-size: 12px; line-height: 16px; font-weight: 600;">INICIAR ATENDIMENTO</h1>
                         </div>
@@ -224,5 +224,51 @@
             
         </div>
     
+        <div class="items_Mobile">
+
+    <div class="departments_Mobile item_Mobile" (click)="clickNavbar()">
+            <h1>Departamentos</h1>
+
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowOrangeRight" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.18972 14L0.916992 12.7273L6.64427 7L0.916992 1.27273L2.18972 0L9.18972 7L2.18972 14Z" fill="#ffffffff"></path></svg>
+        </div>
+
+        <div class="accessibility_Mobile item_Mobile">
+            <h1>Acessibilidade</h1>
+
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowOrangeRight" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.18972 14L0.916992 12.7273L6.64427 7L0.916992 1.27273L2.18972 0L9.18972 7L2.18972 14Z" fill="#ffffffff"></path></svg>
+        </div>
+
+        <div class="offers_Mobile item_Mobile">
+            <h1>Novidades e Promoções</h1>
+
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowOrangeRight" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.18972 14L0.916992 12.7273L6.64427 7L0.916992 1.27273L2.18972 0L9.18972 7L2.18972 14Z" fill="#ffffffff"></path></svg>
+        </div>
+
+        <div class="security_Mobile item_Mobile">
+            <h1>Compra Segura</h1>
+
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowOrangeRight" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.18972 14L0.916992 12.7273L6.64427 7L0.916992 1.27273L2.18972 0L9.18972 7L2.18972 14Z" fill="#ffffffff"></path></svg>
+        </div>
+
+        <div class="institutional_Mobile item_Mobile">
+            <h1>Institutional</h1>
+
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowOrangeRight" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.18972 14L0.916992 12.7273L6.64427 7L0.916992 1.27273L2.18972 0L9.18972 7L2.18972 14Z" fill="#ffffffff"></path></svg>
+        </div>
+
+        <div class="profile_Mobile item_Mobile">
+            <h1>Minha Conta</h1>
+
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowOrangeRight" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.18972 14L0.916992 12.7273L6.64427 7L0.916992 1.27273L2.18972 0L9.18972 7L2.18972 14Z" fill="#ffffffff"></path></svg>
+        </div>
+
+        <div class="service_Mobile item_Mobile">
+            <h1>Atendimento</h1>
+
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowOrangeRight" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.18972 14L0.916992 12.7273L6.64427 7L0.916992 1.27273L2.18972 0L9.18972 7L2.18972 14Z" fill="#ffffffff"></path></svg>
+        </div>
+        
+        </div>
+        
     </div>
 </footer>

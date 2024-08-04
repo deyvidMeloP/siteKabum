@@ -49,6 +49,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   value: any;
   highValue: any;
   testa: any = 0
+  ngxSlide: any = 0
   options: Options = {
     floor: 0, // Define um valor padrão para floor
     ceil: 2000,
@@ -57,6 +58,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       return `R$ ${value}`;
     }
   };
+  
   
 
  
@@ -128,7 +130,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       }
     });
   
-
     window.scrollTo(0, 0);
     this.value = this.options.floor;
     this.highValue = this.options.ceil;
@@ -389,11 +390,11 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     this.filterProduct = cloneDeep(this.product)
    
 
-
+    console.log("teste")
     if(this.product.length > 0){
       values = [this.product[0].price, this.product[0].price];
       for(let pt of this.product){
-        console.log("teste")
+
         if(pt.price < values[0]){
           values[0] = pt.price
         }
@@ -408,7 +409,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       values[0] = 0
       values[1] = 1000
     }
-   
    
 this.groupCategoriesByParent()
 
@@ -672,7 +672,6 @@ return values
   }
 
 onValueChange(event: any): void {
-
   if(event == -1){
   
     this.filterProduct = cloneDeep(this.filterProduct.filter(pt => {
@@ -705,13 +704,12 @@ onCheckboxChange(category: any, groupName: any) {
 
 
     let auxProduct: any[] = []
-  
+    this.filterProduct = []
     let state: boolean = false
     let count = 0
     
   
     if(this.auxFilter.length == 0){
-  
      this.filterProduct = cloneDeep(this.product)
     
     }  
@@ -1108,17 +1106,16 @@ onCheckboxChange(category: any, groupName: any) {
   }
 
 filterAll(number: number, subcategory: any, event: any){
-
   switch(number){
 
     case 1:
-    
     this.onCheckboxChange(-1, -2)
     this.onValueChange(-1)
     
     break;
 
     case 2:
+      console.log("alla")
     this.onValueChange(-2)
     this.onCheckboxChange(subcategory, event)
     
@@ -1157,14 +1154,18 @@ leaveProductItem(event: MouseEvent){
 
 
 clickMobileFilter(){
+  this.ngxSlide = 1
   const filter = document.querySelector(".filter_Mobile") as HTMLElement
   const overlay = document.querySelector(".overlay") as HTMLElement
 
+
+  window.scrollTo(0,0)
   filter.style.display = "block"
   overlay.style.display = "block"
 }
 
 closeAp(){
+  this.ngxSlide = 0
   const filter = document.querySelector(".filter_Mobile") as HTMLElement
   const overlay = document.querySelector(".overlay") as HTMLElement
 

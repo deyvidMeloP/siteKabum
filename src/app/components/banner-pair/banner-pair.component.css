@@ -659,6 +659,12 @@
     margin-top: 4px;
 }
 
+.pair_Links{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 /*ng build --configuration production --output-path docs --base-href /siteKabum/
 */
 @media screen and (max-width: 1440px) {
@@ -938,7 +944,6 @@
     padding-left: 16px;
 }
 
-
 .pair_Title{
     margin-left: 24px;
 }
@@ -1006,7 +1011,12 @@
 .banner_Information{
     height: 230px!important;
 }
- }
+
+.link_Button{
+    height: 90px;
+    overflow: hidden;
+}
+}
 
  @media screen and (max-width: 428px) {
     .brands_Box{

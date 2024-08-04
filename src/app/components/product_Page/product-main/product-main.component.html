@@ -1,6 +1,6 @@
 <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 
-<div class="product_Box" *ngIf="controller == 0 && produto">
+<div class="product_Box" *ngIf="controller == 0 && produto" style="margin-bottom: 30px;">
 
     <div class="box_Show_Information">
         <h1 class="name_Product name_ProductMobile">{{produto.name_Product}}</h1>
@@ -83,7 +83,7 @@
 
                         <div class="item_Selection" style="height: max-content;">
                                         
-                            <swiper-container slide-per-view="1" loop="false" speed="350" class="swiper_MobileMain" init="false" *ngIf="images_Product" style=" height: 250px;">
+                            <swiper-container loop="false" speed="350" class="swiper_MobileMain" init="false" *ngIf="images_Product" style=" height: 250px; ">
                             
                                 <swiper-slide class="product_Mobile" #product_Mobile *ngFor="let images of images_Product">
                                     <img [src]="images.imageUrl"  (click)="change_Focus(images.imageUrl)"  alt="Product">
@@ -117,7 +117,7 @@
                 <h1>Ver mais ofertas</h1>
         
         </div>
-            <div class="box_Cep">aaa</div>
+            <div class="box_Cep"></div>
         </div>
     
         <div class="box_Information">

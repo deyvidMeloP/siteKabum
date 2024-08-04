@@ -141,6 +141,14 @@ teste(){
 
     this.resizeObserver.observe(this.observedElement.nativeElement);
 
+    this.commandSource.commandNav$.subscribe(
+      commandNav=>{
+        this.clickMenuMobile()
+        this.nextMobile()
+      }
+
+    );
+
 }
 
 onResize(newWidth: number): void {
@@ -278,11 +286,9 @@ console.log(this.results[0])
 
       tips_Search.removeChild(el)
     })
-      this.stateService.changeProductMainName(product)
+
+      this.stateService.changeProductMainName(product.name_Product)
       window.scrollTo(0, 0);
-      this.router.navigateByUrl('/Product').then(() => {
-      });
-  
     })
   }
 
@@ -758,7 +764,6 @@ NavigationPage(name: string){
   this.departments_Leave()
   this.closeMenuMobile()
   this.stateService.changeFilterName(name);
-  this.router.navigateByUrl('/Filter');
    
 }
 

@@ -724,6 +724,7 @@ ng-magnizoom{
 
     .name_Product{
         font-size: 14px;
+        line-height: 20px;
         margin-top: 20px;
         display: none;
     }
@@ -752,7 +753,7 @@ ng-magnizoom{
       
     }
     .swiper_MobileMain img{
-        width: 100%!important;
+        width: 99%!important;
         max-width: 330px;
        
     }

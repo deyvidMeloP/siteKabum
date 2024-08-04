@@ -1,6 +1,5 @@
 footer{
     background-color: #003A6A;
-    margin-top: 33px;
     
 }
 
@@ -38,7 +37,7 @@ footer{
 
 .footer_Input input{
     width: 29vw;
-    height: 7vh;
+    height: 48px;
     border-radius: 5px;
     padding-left: 25px;
     
@@ -127,15 +126,74 @@ h2{
     list-style: none;
 }
 
-.item:hover{
-   color: rgb(187, 182, 182);
+.items_Mobile{
+    display: none;
+    width: 100%;
 }
-
 .address{
     cursor: pointer;
     list-style: none;
 }
 
-.address:hover{
-    color: rgb(187, 182, 182);
+
+@media screen and (max-width: 1020px) {
+
+    .news_Footer{
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .footer_Title{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer_Title h2{
+        font-size: 10px;
+        line-height: 16px;
+    }
+
+    .footer_Input{
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .footer_Input input{
+        width: 100%;
+        height: 48px;
+    }
+
+    .input_Button{
+        width: 100%;
+        height: 48px;
+    }
+
+    .departments_Items, .offers_Items, .institutional_Items, .accessibility_Items, .service_Items{
+        display: none;
+    }
+
+    .items_Footer{
+        flex-direction: column;
+    }
+
+    .items_Mobile{
+        display: block;
+    }
+    
+    .item_Mobile{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: rgb(0 96 177) solid 1px;
+        padding: 16px 0;
+    }
+
+    .item_Mobile h1{
+        font-size: 12px;
+        line-height: 18px;
+        color: #ffffff;
+    }
 }
