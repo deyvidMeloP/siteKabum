@@ -202,7 +202,7 @@ sendNavbar(command: string){
   accountant_Time1(): string {
     
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-11-03T09:59:47');
+    const targetDate = new Date('2024-11-06T09:59:47');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
