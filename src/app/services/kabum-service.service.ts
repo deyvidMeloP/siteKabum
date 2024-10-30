@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 })
 export class KabumServiceService {
 
-  private apiUrl = 'http://localhost:8080/api/products';
-  private apiUrlImages = 'http://localhost:8080/api/images';
-  private apiUrlBrands = 'http://localhost:8080/api/brands';
-  private apiUrlDepartments = 'http://localhost:8080/api/departments';
-  private apiUrlSection = 'http://localhost:8080/api/section';
-  private apiUrlSubsection = 'http://localhost:8080/api/subsection';
-  private apiUrlCategories = 'http://localhost:8080/api/categories';
-  private apiUrlProductCategory = 'http://localhost:8080/api/productCategory'
+  private apiUrl = 'https://apikabum.onrender.com/api/products';
+  private apiUrlImages = 'https://apikabum.onrender.com/api/images';
+  private apiUrlBrands = 'https://apikabum.onrender.com/api/brands';
+  private apiUrlDepartments = 'https://apikabum.onrender.com/api/departments';
+  private apiUrlSection = 'https://apikabum.onrender.com/api/section';
+  private apiUrlSubsection = 'https://apikabum.onrender.com/api/subsection';
+  private apiUrlCategories = 'https://apikabum.onrender.com/api/categories';
+  private apiUrlProductCategory = 'https://apikabum.onrender.com/api/productCategory'
 
   offer_Time1: string = '';
   offer_Time2: string = '';
