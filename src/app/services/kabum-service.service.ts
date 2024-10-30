@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 })
 export class KabumServiceService {
 
-  private apiUrl = 'https://apikabum.onrender.com/api/products';
-  private apiUrlImages = 'https://apikabum.onrender.com/api/images';
-  private apiUrlBrands = 'https://apikabum.onrender.com/api/brands';
-  private apiUrlDepartments = 'https://apikabum.onrender.com/api/departments';
-  private apiUrlSection = 'https://apikabum.onrender.com/api/section';
-  private apiUrlSubsection = 'https://apikabum.onrender.com/api/subsection';
-  private apiUrlCategories = 'https://apikabum.onrender.com/api/categories';
-  private apiUrlProductCategory = 'https://apikabum.onrender.com/api/productCategory'
+  private apiUrl = 'http://localhost:8080/api/products';
+  private apiUrlImages = 'http://localhost:8080/api/images';
+  private apiUrlBrands = 'http://localhost:8080/api/brands';
+  private apiUrlDepartments = 'http://localhost:8080/api/departments';
+  private apiUrlSection = 'http://localhost:8080/api/section';
+  private apiUrlSubsection = 'http://localhost:8080/api/subsection';
+  private apiUrlCategories = 'http://localhost:8080/api/categories';
+  private apiUrlProductCategory = 'http://localhost:8080/api/productCategory'
 
   offer_Time1: string = '';
   offer_Time2: string = '';
@@ -202,7 +202,7 @@ sendNavbar(command: string){
   accountant_Time1(): string {
     
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-09-03T09:59:47');
+    const targetDate = new Date('2024-11-03T09:59:47');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
@@ -246,7 +246,7 @@ sendNavbar(command: string){
 
   accountant_Time2(): string {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-08-30T15:30:20');
+    const targetDate = new Date('2024-11-30T15:30:20');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
@@ -289,7 +289,7 @@ sendNavbar(command: string){
 
   accountant_Time3(): string {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-08-14T20:00:00');
+    const targetDate = new Date('2024-11-14T20:00:00');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {

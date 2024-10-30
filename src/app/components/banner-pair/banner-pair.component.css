@@ -375,6 +375,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .banner_Departments img{
@@ -422,6 +423,7 @@
     width: 100%;
     justify-content:space-between;
     margin-top: 40px;
+    padding: 0!important;
 }
 
 .banner_Products img{
@@ -1016,6 +1018,12 @@
     height: 90px;
     overflow: hidden;
 }
+
+.banner_1{
+    min-height: auto;
+    height: 110px;
+    object-fit: cover;
+}
 }
 
  @media screen and (max-width: 428px) {
@@ -1042,6 +1050,10 @@
 
     .title_Button{
         font-size: 10px;
+    }
+
+    .banner_1{
+        height: 92px;
     }
 
  }
