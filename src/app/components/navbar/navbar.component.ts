@@ -86,10 +86,6 @@ teste(){
     const backButton_Subsection = document.querySelector('.arrow_Down_3');
     const nextButton_Subsection = document.querySelector('.arrow_Up_3');
     
-    
-    
-   console.log(this.swiper)
-
     if (backButton) {
       backButton.addEventListener('mouseenter', this.swipeBack.bind(this));
     }
@@ -218,7 +214,6 @@ onSearchChange(event: any): void {
   
     })
   }
-console.log(this.results[0])
 
   const navbar = document.querySelector(".navbar_Menu") as HTMLElement
   
@@ -296,7 +291,6 @@ console.log(this.results[0])
 
 
 ngOnDestroy(): void {
-  console.log('ngOnDestroy foi ativado!');
   if (this.swiper) {
     this.swiper.destroy();
   }
@@ -321,7 +315,6 @@ swipeSectionBack(){
         this.swiperSection.slideNext();
         this.swiperSection.update()
         this.contSection += 1;
-        console.log("teste")
         if(buttonNext.style.display != "flex"){
             buttonNext.style.display = "flex"
             
@@ -485,7 +478,6 @@ getDadosSection(){
     (data: any[]) => {
       this.Section = data;
       this.getDadosSubsection()
-      console.log('Dados no componente:', this.Section);
     },
     (error: any) => {
       console.error('Erro ao obter dados do serviço:', error);
@@ -585,7 +577,6 @@ else if(op == 1){
   if(subsection.scId == section.id){
 
     this.nameSub.push(subsection)
-    console.log(subsection.name)
   }
 
 }

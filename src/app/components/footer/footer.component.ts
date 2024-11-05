@@ -41,7 +41,6 @@ export class FooterComponent implements OnInit {
     this.sectionService.getDadosSection().subscribe(
       (data: any[]) => {
         this.section = data;
-        console.log('Dados no componente:', this.section);
       },
       (error: any) => {
         console.error('Erro ao obter dados do serviço:', error);

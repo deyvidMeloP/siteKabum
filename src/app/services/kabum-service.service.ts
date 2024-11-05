@@ -83,16 +83,12 @@ sendNavbar(command: string){
 }
 
   getDados(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl).pipe(
-      tap(data => console.log('Dados recebidos:', data))
-    );
+    return this.http.get<any[]>(this.apiUrl)
   }
 
   getProductCategory(): Observable<any[]> {
     
-    return this.http.get<any[]>(this.apiUrlProductCategory).pipe(
-      tap(data => console.log('Dados recebidos:', data))
-    );
+    return this.http.get<any[]>(this.apiUrlProductCategory)
   }
   
 
@@ -157,46 +153,31 @@ sendNavbar(command: string){
   updateProductVisits(id: number, visits: number): Observable<any> {
 
     const url = `${this.apiUrl}/${id}/visits`;
-    return this.http.put(url, { visits }).pipe(
-      tap(() => console.log('Visitas do produto atualizadas com sucesso!')),
-      // Trate quaisquer erros aqui, se necessário
-    );
+    return this.http.put(url, { visits })
   }
   
   getDadosImages(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlImages).pipe(
-      tap(data => console.log('Dados recebidos:', data))
-    );
+    return this.http.get<any[]>(this.apiUrlImages)
   }
 
   getDadosBrands(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlBrands).pipe(
-      tap(data => console.log('Dados recebidos:', data))
-    );
+    return this.http.get<any[]>(this.apiUrlBrands)
   }
 
   getDadosDepartments(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlDepartments).pipe(
-      tap(data => console.log('Dados recebidos:', data))
-    );
+    return this.http.get<any[]>(this.apiUrlDepartments)
   }
   
   getDadosSection(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlSection).pipe(
-      tap(data => console.log('Dados recebidos:', data))
-    );
+    return this.http.get<any[]>(this.apiUrlSection)
   }
 
   getDadosSubsection(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlSubsection).pipe(
-      tap(data => console.log('Dados recebidos:', data))
-    );
+    return this.http.get<any[]>(this.apiUrlSubsection)
   }
 
   getDadosCategories(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlCategories).pipe(
-      tap(data => console.log('Dados recebidos:', data))
-    );
+    return this.http.get<any[]>(this.apiUrlCategories)
   }
 
   accountant_Time1(): string {

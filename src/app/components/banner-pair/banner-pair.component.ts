@@ -163,17 +163,12 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   
         this.subSection = data       
   
-      },
-  
-      (error: any)=>{
-        console.error('Erro ao obter dados do serviço:', error);
       }
-  
   
     )
   }
   getDadosDoServico() {
-    this.dadosProdutos.getDados().subscribe(
+    this.dadosProdutos.getDados().subscribe(  
       (data: any[]) => {
         this.produtoAll = data;
         this.produto = this.produtoAll
@@ -314,11 +309,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
           }
     
         }, 0)
-        console.log('Dados no componente:', this.produtoAll);
         },
-      (error: any) => {
-        console.error('Erro ao obter dados do serviço:', error);
-      }
     );
 
   }
@@ -408,7 +399,6 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     if(subsection.scId == scId){
   
       this.nameSub.push(subsection.name)
-      console.log(subsection.name)
   
     }
   
@@ -432,11 +422,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
         setTimeout(()=>{
           this.adjusts()
         },0)
-        console.log('Dados no componente:', this.section);
       },
-      (error: any) => {
-        console.error('Erro ao obter dados do serviço:', error);
-      }
     );
 
   }
@@ -482,11 +468,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     this.dadosServiceBrands.getDadosBrands().subscribe(
       (data: any[]) => {
         this.dadosDoServiceBrands = data;
-        console.log('Dados no componente:', this.dadosDoServiceBrands);
       },
-      (error: any) => {
-        console.error('Erro ao obter dados do serviço:', error);
-      }
     );
 
   }
@@ -495,11 +477,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     this.departService.getDadosDepartments().subscribe(
       (data: any[]) => {
         this.departments = data;
-        console.log('Dados no componente:', this.departments);
       },
-      (error: any) => {
-        console.error('Erro ao obter dados do serviço:', error);
-      }
 
       
     );
@@ -547,10 +525,6 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
          this.dadosService.getDados().subscribe(data => {
            
          });
-       },
-       error => {
-         console.error('Erro ao atualizar valor de visitas:', error);
-        
        }
      );
     const name: string = produto.name_Product

@@ -87,9 +87,7 @@ export class ApiKabumComponent implements OnInit{
               },
 
               resize() {
-                console.log('Swiper resized');
                 const screenWidth = window.innerWidth;
-                console.log('Screen width:', screenWidth);
               },
             },
           };
@@ -121,12 +119,7 @@ export class ApiKabumComponent implements OnInit{
           }
     
         }, 0)
-        console.log(this.dadosDoServico[0].imageUrl)
-        console.log('Dados no componente:', this.dadosDoServico);
         },
-      (error: any) => {
-        console.error('Erro ao obter dados do serviço:', error);
-      }
     );
 
     
@@ -172,7 +165,7 @@ export class ApiKabumComponent implements OnInit{
         })
         },
       (error: any)=>{
-        console.error('Erro ao receber dados do serviço', error)
+        console.error('Erro ao receber dados da imagem', error)
       }
       
     )

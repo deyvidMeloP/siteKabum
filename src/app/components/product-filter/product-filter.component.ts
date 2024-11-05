@@ -216,7 +216,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   }
 
   updateVisits(a:any) {
-    alert("teste")
     const productId = a; 
 
     this.productService.updateProductVisits(productId, this.newVisits)
@@ -241,7 +240,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
         (data: any[]) => {
           this.section = data;
           this.getDadosSubsection().then(values => {
-            console.log('Dados no componente:', this.section);
             resolve(values); // Resolvendo a Promise com o valor mínimo
           }).catch(error => {
             reject(error);
@@ -261,8 +259,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       this.subsectionService.getDadosSubsection().subscribe(
         (data: any[]) => {
           this.subsection = data;
-          this.getDadosCategories().then(values => {
-            console.log('Dados no componente:', this.subsection);       
+          this.getDadosCategories().then(values => {     
             resolve(values); // Resolvendo a Promise com o vetor de valores
           }).catch(error => {
             reject(error);
@@ -285,7 +282,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
         (data: any[]) => {
           this.categories = data;
           const values: number[] = this.SearchSection();
-          console.log('Dados no componente:', this.categories);
           resolve(values); // Resolvendo a Promise com o vetor de valores
         },
         (error: any) => {
@@ -301,7 +297,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     this.searchSubsection = false;
     this.categoriesRelacionadas = []
     this.product = []
-   console.log("quantidade"+this.categoriesRelacionadas.length)
     if (!this.searchSection) {
       for (let sc of this.section) {
         /*verifica se o nome encontra o nome em section*/
@@ -389,8 +384,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
 
     this.filterProduct = cloneDeep(this.product)
    
-
-    console.log("teste")
     if(this.product.length > 0){
       values = [this.product[0].price, this.product[0].price];
       for(let pt of this.product){
@@ -526,7 +519,6 @@ return values
 
         box.style.height = '100px'
       }
-      console.log(`Width of the box: ${height}px`);
   });
   
   }
@@ -675,7 +667,6 @@ onValueChange(event: any): void {
   if(event == -1){
   
     this.filterProduct = cloneDeep(this.filterProduct.filter(pt => {
-      console.log('Product Price:', pt.price, 'Value:', this.value, 'High Value:', this.highValue);
       return pt.price >= this.value && pt.price <= this.highValue;
     }));
   
@@ -686,7 +677,6 @@ onValueChange(event: any): void {
   else{
 
     this.filterProduct = cloneDeep(this.product.filter(pt => {
-      console.log('Product Price:', pt.price, 'Value:', this.value, 'High Value:', this.highValue);
       return pt.price >= this.value && pt.price <= this.highValue;
     }));
   
@@ -749,12 +739,9 @@ onCheckboxChange(category: any, groupName: any) {
           let count = 0
           
           for(let pc of this.auxPcProduct){
-
-            console.log("parentId" + this.categories[pc.ctId - 1].parentId)
           
             if(!(parent.includes(this.categories[pc.ctId - 1].parentId))){
-           
-              console.log("parentId" + this.categories[pc.ctId - 1].parentId)
+
               parent.push(this.categories[pc.ctId - 1].parentId)
            
             }
@@ -787,50 +774,8 @@ onCheckboxChange(category: any, groupName: any) {
             return fp
           
           }
-    
-    
-    
-          /*
-          if(fp.idProduct == pc.idProduct){
-    
-            let ctId 
-            ctId = pc.ctId
-              
-              for(let aux of this.auxPcProduct){
-    
-                  if(aux.ctId == ctId && fp.idProduct == aux.idProduct){
-                    state = true 
-                    break
-                  }
-                
-              }
-    
-              if(!state){
-                break
-              }
-    
-            }
-            
-            if(state){
-    
-              return fp
       
-            }
-      */    
-    
-    
-    
         })
-
-      for(let aux of this.filterProduct){
-        console.log("filter em -1"+aux.idProduct)
-      }
-
-  
-      console.log("push nao seguido filter está cheio")
-    
-    
-    
   
   }
   
@@ -838,9 +783,6 @@ onCheckboxChange(category: any, groupName: any) {
   }
 
   else{
-    
-    let auxProduct: any[] = []
-
     let state: boolean = false
     let count = 0
     
@@ -849,8 +791,6 @@ onCheckboxChange(category: any, groupName: any) {
       if(af == category.id){
         this.auxFilter.splice(count, 1)
         state = true
-        console.log("tira")
-
       }
     count +=1
     }
@@ -873,17 +813,12 @@ onCheckboxChange(category: any, groupName: any) {
   
       }
 
-      console.log("auxfilter vazio")
-    
     }
     
   
   else{
-   
-    let stateAfterLoop: Boolean = false
     let sizeOff: any[] = [] 
     for(let aux of this.auxFilter){
-    console.log("aux"+ aux)
     state = false
   
     for(let pc of this.productCategory){
@@ -915,12 +850,9 @@ onCheckboxChange(category: any, groupName: any) {
           let count = 0
           
           for(let pc of this.auxPcProduct){
-
-            console.log("parentId" + this.categories[pc.ctId - 1].parentId)
           
             if(!(parent.includes(this.categories[pc.ctId - 1].parentId))){
            
-              console.log("parentId" + this.categories[pc.ctId - 1].parentId)
               parent.push(this.categories[pc.ctId - 1].parentId)
            
             }
@@ -934,9 +866,7 @@ onCheckboxChange(category: any, groupName: any) {
               newCount -= 1
             }
           }
-        
-           
-          
+              
           const size = parent.length + sizeOff.length + newCount
     
           for(let pc of this.auxPcProduct){
@@ -953,155 +883,11 @@ onCheckboxChange(category: any, groupName: any) {
             return fp
           
           }
-    
-    
-    
-          /*
-          if(fp.idProduct == pc.idProduct){
-    
-            let ctId 
-            ctId = pc.ctId
-              
-              for(let aux of this.auxPcProduct){
-    
-                  if(aux.ctId == ctId && fp.idProduct == aux.idProduct){
-                    state = true 
-                    break
-                  }
-                
-              }
-    
-              if(!state){
-                break
-              }
-    
-            }
-            
-            if(state){
-    
-              return fp
-      
-            }
-      */    
-    
-    
-    
         })
-    }
-   
-
-    /*
-    this.filterProduct = this.filterProduct.filter(fp =>{
-     
-      for(let pc of this.auxPcProduct){
-    
-        const parentId =  this.categories[pc.ctId - 1].parentId
-    
-      }
-
-    })
-
-
-    
-
-  
-    /*significa que ele não desmarca*/
-    /*
-      let state2 = false
-      
-      // verifica
-      for(let aux of this.nameGroup){
-
-        if(aux == groupName){
-
-          count += 1
-
-        }
-      
-      }
-
-      if(count >= 2){
-    
-        state2 = true
-    
-      }
-
-      if(state2){/*se tiver outros categorias da mesma familia
-
-        state = false
-        
-        const size = this.auxFilter.length
-  
-        this.filterProduct = cloneDeep(this.filterProduct.filter(fp =>{
-          count = 0
-  
-          for(let aux of this.auxPcProduct){
-    
-            if(fp.idProduct == aux.idProduct){
-              count +=1
-            }
-
-            
-    
-          }
-    
-        if(count == size){
-          return fp
-        }
-    
-        }))
-  
-  
-        console.log("push nao seguido filter está cheio")
-        
-      }
-      else{
-
-        state = false
-        const size = this.auxFilter.length
-        
-        for(let aux of this.filterProduct){
-          console.log(aux.idProduct)
-  
-        }
-        
-        console.log(this.auxPcProduct.length)
-        this.filterProduct = cloneDeep(this.filterProduct.filter(fp =>{
-          count = 0
-  
-          for(let aux of this.auxPcProduct){
-    
-            if(fp.idProduct == aux.idProduct){
-              count +=1
-            }
-    
-          }
-    
-        if(count == size){
-          return fp
-        }
-    
-        }))
-  
-      }
-*/
-      
-        
-     
-    
-    
-    
-  
+    }  
   }
 
   }
-
-  
-  for(let aux of this.nameGroup){
- 
-    console.log(aux)
-  }
-
 
   }
 
@@ -1115,7 +901,6 @@ filterAll(number: number, subcategory: any, event: any){
     break;
 
     case 2:
-      console.log("alla")
     this.onValueChange(-2)
     this.onCheckboxChange(subcategory, event)
     

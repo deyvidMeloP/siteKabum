@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit{
 
   backgroundColor: string = '#870700';   
   ngOnInit(): void {
-    alert("O SITE ESTÁ PASSANDO POR UMA MIGRAÇÃO DE NUVEM DO BANCO DE DADOS, DADOS PODEM DEMORAR 60 SEGUNDOS PARA CARREGAR E OUTRAS INFORMAÇÕES PODEM NÃO CARREGAR COMPLETAMENTE, TENTE RECARREGAR A PAGINA APÓS ESSE TEMPO. DESCULPE O TRANSTORNO")
+    alert("Os dados demoram 50 segundos para serem carregados")
     this.onStyleChange(this.backgroundColor)
 
     this.changeDisplay = this.commandSource.command$.subscribe(

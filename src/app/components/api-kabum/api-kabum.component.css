@@ -165,12 +165,6 @@
    margin-right: 12px;
 }
 
-
-
-
-
-/*muda a cor do fundo pra #fafafb e o item pra #ffffff*/
-
 .product_Item:not(:first-child){
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 }
@@ -309,7 +303,6 @@
 .buy_Svg_Enter{
     margin-top: 4px;
 }
-/* ALINHAR OS ITEMS QUE FALTAM, CRIE UMA CAIXA PARA NOME E DEIXE A POSIÇÃO DOS ELEMENTOS PRE DETERMINADA PARA QUE TUDO FIQUE ALINHADO INDEPENDENTE DO NOME OU FRETE*/
 
 @media screen and (max-width: 1440px) {
     .product_Item{

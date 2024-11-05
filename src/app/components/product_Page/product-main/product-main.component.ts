@@ -235,7 +235,6 @@ export class ProductMainComponent implements OnInit{
 
         this.getDadosServiceImages();
       
-        console.log('Dados no componente:', this.dadosProductAll);
       },
       (error: any) => {
         console.error('Erro ao obter dados do serviço:', error);
@@ -286,7 +285,6 @@ changeSlide(a: any){
       (data: any[]) => {
         this.departments = data;
         this.siblingsProduct(this.departments)
-        console.log('Dados no componente:', this.departments);
       },
       (error: any) => {
         console.error('Erro ao obter dados do serviço:', error);
