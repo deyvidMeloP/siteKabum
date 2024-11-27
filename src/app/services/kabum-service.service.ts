@@ -183,7 +183,7 @@ sendNavbar(command: string){
   accountant_Time1(): string {
     
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-11-06T09:59:47');
+    const targetDate = new Date('2025-01-06T09:59:47');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
@@ -227,7 +227,7 @@ sendNavbar(command: string){
 
   accountant_Time2(): string {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-11-30T15:30:20');
+    const targetDate = new Date('2024-12-30T15:30:20');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {
@@ -270,7 +270,7 @@ sendNavbar(command: string){
 
   accountant_Time3(): string {
     // Defina a data-alvo para o temporizador
-    const targetDate = new Date('2024-11-14T20:00:00');
+    const targetDate = new Date('2024-12-14T20:00:00');
 
     // Função para atualizar o temporizador
     const updateTimer = () => {

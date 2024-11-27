@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit{
 
   backgroundColor: string = '#870700';   
   ngOnInit(): void {
-    alert("Os dados demoram 50 segundos para serem carregados")
+    alert("O site está passando por uma mudança de database, por isso os dados estão demorando 50 segundos para serem carregados")
     this.onStyleChange(this.backgroundColor)
 
     this.changeDisplay = this.commandSource.command$.subscribe(
