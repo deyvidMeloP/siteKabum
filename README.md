@@ -1,6 +1,19 @@
-# SiteVenda
+# E-commerce
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.1.
+
+# Objective
+
+This was my first project. Its focus is to showcase my abilities in a situation that requires following a certain pattern.
+
+## 🚀 Technologies
+
+- Angular
+- TypeScript
+- HTML / CSS
+- Node.js + npm
+- Java + SpringBoot
+- PostgreSql
 
 ## Development server
 
