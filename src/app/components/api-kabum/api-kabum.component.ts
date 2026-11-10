@@ -22,7 +22,6 @@ export class ApiKabumComponent implements OnInit{
   tempoRestante1Subscription: Subscription | undefined;
   tempoRestante2Subscription: Subscription | undefined;
   tempoRestante3Subscription: Subscription | undefined;
-  newVisits: any;
   swiper: any;
   swiperProduct: any;
   product_Swiper: any = [];
@@ -202,22 +201,9 @@ export class ApiKabumComponent implements OnInit{
   }
 
   navegarParaProductMain(produto: any) {
-
-     this.newVisits = produto.visits + 1
-       
-    this.dadosService.updateProductVisits(produto.idProduct, this.newVisits)
-      .subscribe(
-        () => {
-        
-          this.dadosService.getDados().subscribe(data => {
-            
-          });
-        },
-        error => {
-          console.error('Erro ao atualizar valor de visitas:', error);
-         
-        }
-      );
+    this.dadosService.registerProductVisit(produto.idProduct).subscribe({
+      error: error => console.error('Erro ao registrar visita:', error)
+    });
 
       window.scrollTo(0, 0);
       this.dadosService.changeProductMainName(produto.name_Product)

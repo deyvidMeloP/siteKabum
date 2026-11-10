@@ -32,7 +32,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   categoriesRelacionadas: any[] = []
   categoriesGrouped: { [key: string]: any } = {};
   convertCategoriesGrouped: any[] = []
-  newVisits: any;
   product: any[] = [];
   changeDisplay: any
   filterProduct: any[] = [];
@@ -214,25 +213,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     );
 
   }
-
-  updateVisits(a:any) {
-    const productId = a; 
-
-    this.productService.updateProductVisits(productId, this.newVisits)
-      .subscribe(
-        () => {
-        
-          this.productService.getDados().subscribe(data => {
-            
-          });
-        },
-        error => {
-          console.error('Erro ao atualizar valor de visitas:', error);
-         
-        }
-      );
-  }
-
 
  async getDadosSection(): Promise<number[]> {
     return new Promise<number[]>((resolve, reject) => {

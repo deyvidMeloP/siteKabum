@@ -34,7 +34,6 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   product_Swiper: any = [];
   departments_Swiper: any = [];
   mostSearch:any = [];
-  newVisits: any;
   swiperMobile: any = []
   constructor(
     private dadosService: KabumServiceService,
@@ -323,73 +322,17 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   }
 
   MostSearch(filter: string){
-    const visits: any = []
-    this.mostSearch = []
-   
-    if(filter == 'TODOS'){
-      
-      for(let product of this.produtoAll){
+    const departmentIds = new Set(this.departments
+      .filter(department => department.dtName.toLocaleUpperCase() === filter)
+      .map(department => department.productId));
 
-        if (product && typeof product.visits === 'number') {
-          visits.push(product.visits);
-        }
-             
-      }
-      const value = visits.length
-      for(let i = 0; i < value; i++){
-  
-        const max = Math.max(...visits)
-  
-        const index = visits.indexOf(max)
-      
-        this.mostSearch.push(cloneDeep(this.produtoAll[index]))
-       
-        visits[index] = - 1
-        
-      }
-    }
-
-    else{
-
-      let name: string = '' 
-      let aux: any = []
-      for(let dtp of this.departments){
-
-        name = dtp.dtName.toLocaleUpperCase()
-        if(name == filter){
-          aux.push(dtp.productId)
-        }
-        
-      }
-
-      
-
-      for(let product of this.produtoAll){
-
-        if (product && typeof product.visits === 'number' && aux.includes(product.idProduct)) {
-         
-          visits.push(cloneDeep(product));
-
-        }
-             
-      }
-
-      const value = visits.length
-    
-      for(let i = 0; i < value; i++){
-  
-        let maxIndex = visits.reduce((maxIdx: any, item: any, idx: any, arr: any) => 
-          item.visits > arr[maxIdx].visits ? idx : maxIdx, 0);
-
-        this.mostSearch.push(visits[maxIndex])
-  
-        visits[maxIndex].visits = -1
-     
-      }
-
-    }
-    
+    this.mostSearch = this.produtoAll
+      .filter(product => product && Number.isFinite(product.visits)
+        && (filter === 'TODOS' || departmentIds.has(product.idProduct)))
+      .map(product => cloneDeep(product))
+      .sort((a, b) => b.visits - a.visits);
   }
+
   submenu_Click(scId: number){
     const submenu_Opt = document.querySelector(".submenu_Opt") as HTMLElement
   this.nameSub = []
@@ -515,18 +458,10 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   }
 
   navegarParaProductMain(produto: any) {
+    this.dadosService.registerProductVisit(produto.idProduct).subscribe({
+      error: error => console.error('Erro ao registrar visita:', error)
+    });
 
-    this.newVisits = produto.visits + 1
-      
-   this.dadosService.updateProductVisits(produto.idProduct, this.newVisits)
-     .subscribe(
-       () => {
-       
-         this.dadosService.getDados().subscribe(data => {
-           
-         });
-       }
-     );
     const name: string = produto.name_Product
     this.stateService.changeProductMainName(name)
     window.scrollTo(0, 0);

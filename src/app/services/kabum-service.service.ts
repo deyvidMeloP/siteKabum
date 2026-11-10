@@ -150,10 +150,10 @@ sendNavbar(command: string){
     this.router.navigate(['Product', encodedName])
   }
 
-  updateProductVisits(id: number, visits: number): Observable<any> {
+  registerProductVisit(id: number): Observable<void> {
 
     const url = `${this.apiUrl}/${id}/visits`;
-    return this.http.put(url, { visits })
+    return this.http.post<void>(url, null);
   }
   
   getDadosImages(): Observable<any[]>{
