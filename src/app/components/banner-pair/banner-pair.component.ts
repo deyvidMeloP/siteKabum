@@ -21,6 +21,11 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   produtoAll: any[] = [];
   produto: any[] = [];
   section: any[] = [];
+  readonly departmentLayouts = new Map([
+    ['CASA INTELIGENTE', { itemWidth: '10vw', imageWidth: '90%' }],
+    ['CELULAR & SMARTPHONE', { itemWidth: '12vw', imageWidth: '75%' }],
+    ['TABLETS, IPADS E E-READERS', { itemWidth: '14vw', imageWidth: '64.6%' }]
+  ]);
   departments: any[] = [];
   offer_Time1: string = '';
   offer_Time2: string = '';
@@ -362,48 +367,9 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
       (data: any[]) => {
         this.section = data;
         swiper_Section()
-        setTimeout(()=>{
-          this.adjusts()
-        },0)
       },
     );
 
-  }
-  
-
-  adjusts(){
-
-    const departmentsSection = document.querySelectorAll(".departments_Item") as NodeListOf<HTMLElement>
-
-
-    departmentsSection.forEach((el)=>{
-
-     const h1 = (el.querySelector("h1") as HTMLElement).innerText
-     let te = el.querySelector("img") as HTMLElement
-     
-     if(h1 == "CASA INTELIGENTE"){
-
-        
-        te.style.width = "90%"
-        el.style.width = "10vw"
-       
-     }
-
-     else if(h1 == "CELULAR & SMARTPHONE"){
-   
-      
-      te.style.width = "75%"
-      el.style.width = "12vw"
-   
-    }
-
-    else if(h1 == "TABLETS, IPADS E E-READERS"){
-
-      te.style.width = "64.6%"
-      el.style.width = "14vw"
-
-    }
-    })
   }
   
 

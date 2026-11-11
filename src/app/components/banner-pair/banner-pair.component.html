@@ -295,9 +295,9 @@
 
       <swiper-container class="departments_Swiper" slides-per-view="auto" space-between="0" init="false" loop="true" speed="350">
 
-        <swiper-slide class="swiper-slide departments_Item"*ngFor="let dp of section" (click)="NavigationPage(dp.name)">
-          
-          <img [src]="dp.url">
+        <swiper-slide class="swiper-slide departments_Item" *ngFor="let dp of section" (click)="NavigationPage(dp.name)" [style.width]="departmentLayouts.get(dp.name)?.itemWidth">
+
+          <img [src]="dp.url" [style.width]="departmentLayouts.get(dp.name)?.imageWidth">
             
           <h1>{{dp.name}}</h1>
       
