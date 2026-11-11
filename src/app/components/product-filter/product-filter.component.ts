@@ -9,7 +9,8 @@ import * as _ from 'lodash';
 import { cloneDeep } from 'lodash';
 import { catchError, distinctUntilChanged, forkJoin, map, of, switchMap, timer } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { filterCatalogByCategories, groupFilterCategories } from './category-relations';
+import { filterCatalogByCategories, groupFilterCategories, indexFilterCategories } from './category-relations';
+import { FilterRouteContext, ProductFilterStateService, filterContextKey } from '../../services/product-filter-state.service';
 
 
 declare function swiper_Filter(): any
@@ -26,6 +27,9 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   private viewInitialization?: AfterRenderRef;
   private filterCarousel?: { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void };
   private destroyed = false;
+  private readonly filterState = inject(ProductFilterStateService);
+  private filterContext?: FilterRouteContext;
+  private catalogReady = false;
   loadError = '';
   categoryIssues: string[] = [];
   private hierarchyIssues: string[] = [];
@@ -100,14 +104,22 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.visibilityDestroyRef.onDestroy(() => {
       this.destroyed = true;
+      this.catalogReady = false;
       this.cancelViewInitialization();
     });
     this.startOfferCountdown();
     this.route.params.pipe(
-      map(params => decodeURIComponent(params['parentName'] || params['subsectionName'] || params['filterName'] || '')),
-      distinctUntilChanged(),
-      switchMap(name => {
+      map(params => ({
+        filterName: decodeURIComponent(params['filterName'] || ''),
+        subsectionName: decodeURIComponent(params['subsectionName'] || ''),
+        parentName: decodeURIComponent(params['parentName'] || '')
+      })),
+      distinctUntilChanged((previous, current) => filterContextKey(previous) === filterContextKey(current)),
+      switchMap(context => {
+        this.rememberFilters();
         this.cancelViewInitialization();
+        this.filterContext = context;
+        const name = context.parentName || context.subsectionName || context.filterName;
         this.name = name;
         this.resetCatalog();
         this.loadError = '';
@@ -131,6 +143,8 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
         this.options = { ...this.options, floor, ceil };
         this.minPriceControl.reset(floor, { emitEvent: false });
         this.maxPriceControl.reset(ceil, { emitEvent: false });
+        this.catalogReady = true;
+        this.restoreFilters();
       }
       this.testa = 0;
     });
@@ -166,6 +180,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   }
 
   private resetCatalog(): void {
+    this.catalogReady = false;
     this.products = [];
     this.productCategory = [];
     this.section = [];
@@ -247,12 +262,13 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     this.searchSubsection = false;
     this.categoriesRelacionadas = [];
     this.categoriesSearch = [];
-    this.idSearch = this.section.find(section => section.name === this.name);
-    if (this.idSearch) {
+    const contextualSelection = this.resolveRouteSelection();
+    this.idSearch = contextualSelection?.entity ?? this.section.find(section => section.name === this.name);
+    if (this.idSearch && (contextualSelection?.section ?? true)) {
       this.searchSection = true;
       this.categoriesRelacionadas = this.subsection.filter(subsection => subsection.scId === this.idSearch.id);
     } else {
-      this.idSearch = this.subsection.find(subsection => subsection.name === this.name);
+      this.idSearch = contextualSelection?.entity ?? this.subsection.find(subsection => subsection.name === this.name);
       this.searchSubsection = !!this.idSearch;
       if (this.idSearch?.scId) {
         this.categoriesRelacionadas = this.subsection.filter(subsection => subsection.parentId === this.idSearch.id);
@@ -271,6 +287,49 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     return this.product.length ? this.product.reduce(([minimum, maximum], product) =>
       [Math.min(minimum, product.price), Math.max(maximum, product.price)],
       [this.product[0].price, this.product[0].price]) : [0, 1000];
+  }
+
+  private resolveRouteSelection(): { entity: any; section: boolean } | undefined {
+    const context = this.filterContext;
+    if (!context?.filterName) { return undefined; }
+    const section = this.section.find(item => item.name === context.filterName);
+    if (!section) { return undefined; }
+    if (!context.subsectionName && !context.parentName) { return { entity: section, section: true }; }
+    const subsection = this.subsection.find(item => item.name === context.subsectionName && item.scId === section.id && !item.parentId);
+    if (!subsection) { return undefined; }
+    if (!context.parentName) { return { entity: subsection, section: false }; }
+    const child = this.subsection.find(item => item.name === context.parentName && item.parentId === subsection.id);
+    return child ? { entity: child, section: false } : undefined;
+  }
+
+  private restoreFilters(): void {
+    const snapshot = this.filterContext ? this.filterState.get(this.filterContext) : undefined;
+    if (snapshot) {
+      const validIds = new Set(Object.values(this.categoriesGrouped).flatMap(group => group.children.map((category: any) => category.id)));
+      const { byId } = indexFilterCategories(this.categories);
+      this.auxFilter = [...new Set(snapshot.categoryIds)].filter(id => validIds.has(id) && byId.has(id));
+      const floor = this.options.floor ?? 0;
+      const ceil = this.options.ceil ?? 1000;
+      const minimum = Math.min(ceil, Math.max(floor, Number.isFinite(snapshot.minimumPrice) ? snapshot.minimumPrice : floor));
+      const maximum = Math.min(ceil, Math.max(floor, Number.isFinite(snapshot.maximumPrice) ? snapshot.maximumPrice : ceil));
+      this.minPriceControl.reset(Math.min(minimum, maximum), { emitEvent: false });
+      this.maxPriceControl.reset(Math.max(minimum, maximum), { emitEvent: false });
+    }
+    this.applyCatalogFilters();
+  }
+
+  private rememberFilters(): void {
+    if (!this.catalogReady || !this.filterContext || !this.idSearch) { return; }
+    if (!this.auxFilter.length && this.value === this.options.floor && this.highValue === this.options.ceil) {
+      this.filterState.clear(this.filterContext);
+      return;
+    }
+    this.filterState.set({
+      context: this.filterContext,
+      categoryIds: this.auxFilter,
+      minimumPrice: this.value,
+      maximumPrice: this.highValue
+    });
   }
 
   groupCategoriesByParent(): void {
@@ -491,6 +550,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     this.maxPriceControl.reset(this.options.ceil ?? 2000, { emitEvent: false });
     this.filterAll(1, 0, null);
     this.CategoryFilter = undefined;
+    if (this.filterContext) { this.filterState.clear(this.filterContext); }
   }
 
 onValueChange(event: any): void {
@@ -519,6 +579,7 @@ private applyCatalogFilters(): void {
   }
   this.reportCategoryIssues([...this.hierarchyIssues, ...result.issues]);
   this.filterProduct = cloneDeep(result.products.filter(product => product.price >= this.value && product.price <= this.highValue));
+  this.rememberFilters();
 }
 
 filterAll(number: number, subcategory: any, event: any): void {

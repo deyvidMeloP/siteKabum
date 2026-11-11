@@ -254,11 +254,11 @@ describe('Relacionamentos e hierarquia do ProductFilter', () => {
     expect(ids()).toEqual([2, 3]); select(333); expect(ids()).toEqual([2, 3]);
   }));
 
-  it('limpa o estado da seção antiga durante navegação rápida A → B → A', test(() => {
+  it('restaura o estado de A após cancelar B na navegação rápida A → B → A', test(() => {
     load(); select(17); params.next({ filterName: 'B' }); const b = requests();
     expect(component.auxFilter).toEqual([]); params.next({ filterName: 'A' }); const a = requests();
     endpoints.forEach(e => expect(b[e].cancelled).toBeTrue()); respond(a); render();
-    expect(ids()).toEqual([1, 2, 3, 4]); expect(component.auxFilter).toEqual([]); expectGroups();
+    expect(ids()).toEqual([1, 3]); expect(component.auxFilter).toEqual([17]); expectGroups();
   }));
 
   it('não confunde grupos de seções distintas que possuem o mesmo nome', test(() => {
