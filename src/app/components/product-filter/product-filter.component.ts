@@ -1,3 +1,5 @@
+import { DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef, Output, EventEmitter,  NgZone } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { Route, Router, ActivatedRoute } from '@angular/router';
@@ -16,6 +18,7 @@ declare function swiper_Filter(): any
   styleUrls: ['./product-filter.component.css']
 })
 export class ProductFilterComponent implements OnInit, AfterViewInit {
+  private readonly visibilityDestroyRef = inject(DestroyRef);
   CategoryFilter: any;
   name: string = '';
   param: string = '';
@@ -133,7 +136,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     window.scrollTo(0, 0);
     this.value = this.options.floor;
     this.highValue = this.options.ceil;
-    this.changeDisplay = this.commandSource.command$.subscribe(
+    this.changeDisplay = this.commandSource.command$.pipe(takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
       command => {
         this.updateNavigationDisplay(command);
       }

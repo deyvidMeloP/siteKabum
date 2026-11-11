@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, Renderer2, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Renderer2, NgZone } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -10,8 +11,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
 
-  @ViewChild('observedElement', { static: true }) observedElement!: ElementRef;
-  private resizeObserver!: ResizeObserver;
+  private layoutQuery?: MediaQueryList;
+  private initializationTimer?: ReturnType<typeof setTimeout>;
+  private readonly visibilitySubscriptions = new Subscription();
+  private readonly layoutChange = () => {
+    this.zone.run(() => this.resetMenusForLayout());
+  };
 
   Section: any = []
   subSection: any = []
@@ -40,6 +45,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy{
   private productService: KabumServiceService,
   private renderer: Renderer2,
   private commandSource: KabumServiceService,
+  private zone: NgZone,
 
 
 ){
@@ -55,7 +61,7 @@ teste(){
 
   this.getDadosService()
   this.getDadosSection()
-  setTimeout(()=>{
+  this.initializationTimer = setTimeout(()=>{
     if(this.swiper){
       this.swiper.update()
     }
@@ -129,59 +135,28 @@ teste(){
 
 
   },0)
-  this.resizeObserver = new ResizeObserver(entries => {
-      for (let entry of entries) {
-        this.onResize(entry.contentRect.width);
-      }
-    });
-
-    this.resizeObserver.observe(this.observedElement.nativeElement);
-
-    this.commandSource.commandNav$.subscribe(
+    this.visibilitySubscriptions.add(this.commandSource.commandNav$.subscribe(
       commandNav=>{
         this.clickMenuMobile()
         this.nextMobile()
       }
 
-    );
+    ));
 
-}
-
-onResize(newWidth: number): void {
-
-  if(window.getComputedStyle(this.menuHamb).display == "flex" && newWidth > 1020){
-
-    this.departments_Enter()
-  }
-
-  if(newWidth > 1020){
-    (document.querySelector(".navbar_downMenu") as HTMLElement).style.display = "block"
-
-    const menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
-    const IconSandwich = document.querySelector(".menuMobile .IconSandwich") as HTMLElement
-    const iconClose = document.querySelector(".buttonMobileSandwich") as HTMLElement
-  
-    (menuHamb.querySelector(".hbg_Swiper_Section") as HTMLElement).style.display = "none";
-    (menuHamb.querySelector(".hbg_Swiper_Subsection") as HTMLElement).style.display = "none";
-    (menuHamb.querySelector(".hbg_Swiper_Parent") as HTMLElement).style.display = "none";
-
-    IconSandwich.style.display = "flex"
-    iconClose.style.display = "none"
-    menuHamb.style.display = "none"
-    menuHamb.style.backgroundColor = "#0060b1"
-    this.commandSource.sendCommand('flex');
-  
-  }
-
-  else if(newWidth <= 1020){
-   (document.querySelector(".navbar_downMenu") as HTMLElement).style.display = "none"
-  }
- 
 }
 
 ngAfterViewInit(): void {
+  this.menuHamb = document.querySelector('.menu_Hamburguer') as HTMLElement;
+  // Use the same viewport query as the CSS; element width excludes the scrollbar.
+  this.layoutQuery = window.matchMedia('(max-width: 1020px)');
+  this.layoutQuery.addEventListener('change', this.layoutChange);
+  this.resetMenusForLayout();
+}
 
-this.menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
+private resetMenusForLayout(): void {
+  // Never carry an open menu or hidden page content across a layout change.
+  this.departments_Leave();
+  this.closeMenuMobile();
 }
 
 getDadosService(){
@@ -291,6 +266,10 @@ onSearchChange(event: any): void {
 
 
 ngOnDestroy(): void {
+  this.layoutQuery?.removeEventListener('change', this.layoutChange);
+  this.visibilitySubscriptions.unsubscribe();
+  clearTimeout(this.initializationTimer);
+  clearInterval(this.intervalId);
   if (this.swiper) {
     this.swiper.destroy();
   }
@@ -714,8 +693,6 @@ clickMenuMobile(){
   const IconSandwich = document.querySelector(".menuMobile .IconSandwich") as HTMLElement
   IconSandwich.style.display = "none"
   const iconClose = document.querySelector(".buttonMobileSandwich") as HTMLElement
-  const navbardownMenu = document.querySelector(".navbar_downMenu") as HTMLElement
-  navbardownMenu.style.display = "none"
   iconClose.style.display = "flex"
   menuHamb.style.display = "flex"
   const beginMenu = document.querySelector(".hbg_Begin") as HTMLElement
@@ -728,7 +705,6 @@ closeMenuMobile(){
   const menuHamb = document.querySelector(".menu_Hamburguer") as HTMLElement
   const IconSandwich = document.querySelector(".menuMobile .IconSandwich") as HTMLElement
   const iconClose = document.querySelector(".buttonMobileSandwich") as HTMLElement
-  const navbardownMenu = document.querySelector(".navbar_downMenu") as HTMLElement
 
    (menuHamb.querySelector(".hbg_Swiper_Section") as HTMLElement).style.display = "none";
     (menuHamb.querySelector(".hbg_Swiper_Subsection") as HTMLElement).style.display = "none";
@@ -741,9 +717,7 @@ closeMenuMobile(){
   this.menuHamb.style.backgroundColor = "#0060b1"
   this.commandSource.sendCommand('flex');
 
-  if(menuHamb.offsetWidth > 1020){
-  navbardownMenu.style.display = "block"
-  }
+
 
   
 

@@ -1,3 +1,5 @@
+import { DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, OnInit } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
 
@@ -7,6 +9,7 @@ import { KabumServiceService } from '../../services/kabum-service.service';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent implements OnInit {
+  private readonly visibilityDestroyRef = inject(DestroyRef);
 
   section: any[] = []
   isVisible: boolean = true
@@ -19,7 +22,7 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
     this.getDadosSection()
 
-    this.commandNav.command$.subscribe(
+    this.commandNav.command$.pipe(takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
 
       command =>{
         if(command == 'none'){

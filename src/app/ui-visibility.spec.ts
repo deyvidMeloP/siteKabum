@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
@@ -15,14 +15,25 @@ describe('Page visibility and responsive layout', () => {
   let footer: ComponentFixture<FooterComponent>;
   let filter: ComponentFixture<ProductFilterComponent>;
   let commands: Subject<string>;
+  let navbarCommands: Subject<string>;
+  let layoutListeners: Set<EventListener>;
+  let mediaQuery: MediaQueryList;
   let frame: HTMLIFrameElement | undefined;
 
   beforeEach(async () => {
     // Stub before Angular resolves lifecycle hooks, not on an already compiled instance.
     spyOn(NavbarComponent.prototype, 'ngOnInit').and.stub();
+    layoutListeners = new Set<EventListener>();
+    mediaQuery = {
+      media: '(max-width: 1020px)', matches: true,
+      addEventListener: (_type: string, listener: EventListener) => layoutListeners.add(listener),
+      removeEventListener: (_type: string, listener: EventListener) => layoutListeners.delete(listener)
+    } as unknown as MediaQueryList;
+    spyOn(window, 'matchMedia').and.returnValue(mediaQuery);
     commands = new Subject<string>();
+    navbarCommands = new Subject<string>();
     const service = {
-      command$: commands.asObservable(), commandNav$: EMPTY,
+      command$: commands.asObservable(), commandNav$: navbarCommands.asObservable(),
       getDados: () => of([]), getDadosSection: () => of([]),
       getDadosSubsection: () => of([]),
       sendCommand: (value: string) => commands.next(value)
@@ -37,7 +48,7 @@ describe('Page visibility and responsive layout', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     navbar = TestBed.createComponent(NavbarComponent);
-    // Isolate visibility from the unrelated Swiper/ResizeObserver lifecycle.
+    // Isolate Swiper initialization; the responsive lifecycle in ngAfterViewInit still runs.
     // The real template, styles, view initialization and menu handlers still run.
     navbar.detectChanges();
     footer = TestBed.createComponent(FooterComponent);
@@ -54,6 +65,7 @@ describe('Page visibility and responsive layout', () => {
   afterEach(() => {
     frame?.remove();
     commands.complete();
+    navbarCommands.complete();
   });
 
   function detectChanges(): void {
@@ -95,7 +107,53 @@ describe('Page visibility and responsive layout', () => {
     expect(getComputedStyle(filter.nativeElement.querySelector('.product-filter-page')).display).toBe('flex');
   });
 
-  for (const width of [375, 768, 1020, 1021, 1150, 1151, 1440]) {
+  it('uses the CSS viewport query and renders a layout change delivered outside Angular', () => {
+    expect(window.matchMedia).toHaveBeenCalledOnceWith('(max-width: 1020px)');
+    navbar.autoDetectChanges();
+    footer.autoDetectChanges();
+    filter.autoDetectChanges();
+    navbar.componentInstance.clickMenuMobile();
+    detectChanges();
+    expect(footer.nativeElement.querySelector('footer')).toBeNull();
+    TestBed.inject(NgZone).runOutsideAngular(() => {
+      for (const listener of layoutListeners) {
+        listener(new MediaQueryListEvent('change', { matches: false }));
+      }
+    });
+    // No manual detectChanges or user interaction after the callback.
+    expect(footer.nativeElement.querySelector('footer')).not.toBeNull();
+    expect(getComputedStyle(filter.nativeElement.querySelector('.product-filter-page')).display).toBe('flex');
+    expect(getComputedStyle(navbar.nativeElement.querySelector('.menu_Hamburguer')).display).toBe('none');
+    expect(getComputedStyle(navbar.nativeElement.querySelector('.departments_Submenu')).display).toBe('none');
+  });
+
+  it('removes the layout listener and navbar command subscription on destruction', () => {
+    expect(layoutListeners.size).toBe(1);
+    // Exercise the original ngOnInit command subscription without starting Swiper timers.
+    spyOn(window, 'setTimeout').and.returnValue(0);
+    (NavbarComponent.prototype.ngOnInit as jasmine.Spy).and.callThrough();
+    navbar.componentInstance.ngOnInit();
+    const open = spyOn(navbar.componentInstance, 'clickMenuMobile').and.stub();
+    spyOn(navbar.componentInstance, 'nextMobile').and.stub();
+    navbarCommands.next('flex');
+    expect(open).toHaveBeenCalledTimes(1);
+    navbar.destroy();
+    expect(layoutListeners.size).toBe(0);
+    navbarCommands.next('flex');
+    expect(open).toHaveBeenCalledTimes(1);
+  });
+
+  it('unsubscribes destroyed page components from visibility changes', () => {
+    const footerComponent = footer.componentInstance;
+    const filterComponent = filter.componentInstance;
+    footer.destroy();
+    filter.destroy();
+    commands.next('none');
+    expect(footerComponent.isVisible).toBeTrue();
+    expect(filterComponent.isContentVisible).toBeTrue();
+  });
+
+  for (const width of [375, 768, 1009, 1020, 1021, 1024, 1150, 1151, 1440]) {
     it(`renders real component markup and media queries at ${width}px`, () => {
       frame = document.createElement('iframe');
       frame.style.width = `${width}px`;

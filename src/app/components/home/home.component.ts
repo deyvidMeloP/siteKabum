@@ -1,3 +1,5 @@
+import { DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, OnInit } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
 
@@ -7,6 +9,7 @@ import { KabumServiceService } from '../../services/kabum-service.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
+  private readonly visibilityDestroyRef = inject(DestroyRef);
   changeDisplay: any
   constructor(private commandSource: KabumServiceService) {}
 
@@ -16,7 +19,7 @@ export class HomeComponent implements OnInit{
     alert("O site está passando por uma mudança de database, por isso os dados estão demorando 50 segundos para serem carregados")
     this.onStyleChange(this.backgroundColor)
 
-    this.changeDisplay = this.commandSource.command$.subscribe(
+    this.changeDisplay = this.commandSource.command$.pipe(takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
       command => {
         this.updateNavigationDisplay(command);
       }

@@ -1,3 +1,5 @@
+import { DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, OnInit, ElementRef,QueryList, OnDestroy, ViewChildren, ViewChild} from '@angular/core';
 import { KabumServiceService } from '../../../services/kabum-service.service';
 import { Subscription } from 'rxjs';
@@ -11,6 +13,7 @@ declare function siblings_Swiper(): any;
   styleUrl: './product-main.component.css'
 })
 export class ProductMainComponent implements OnInit{
+  private readonly visibilityDestroyRef = inject(DestroyRef);
 
   dadosProductAll: any[] = [];
   produto: any;
@@ -70,7 +73,7 @@ export class ProductMainComponent implements OnInit{
       
     })
 
-    this.changeDisplay = this.commandSource.command$.subscribe(
+    this.changeDisplay = this.commandSource.command$.pipe(takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
       command => {
         this.updateNavigationDisplay(command);
       }
