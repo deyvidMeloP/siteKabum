@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { cloneDeep } from 'lodash';
 import { catchError, distinctUntilChanged, forkJoin, map, of, switchMap, timer } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { filterCatalogByCategories, groupFilterCategories } from './category-relations';
 
 
 declare function swiper_Filter(): any
@@ -26,6 +27,8 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   private filterCarousel?: { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void };
   private destroyed = false;
   loadError = '';
+  categoryIssues: string[] = [];
+  private hierarchyIssues: string[] = [];
   CategoryFilter: any;
   name: string = '';
   param: string = '';
@@ -168,6 +171,8 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     this.section = [];
     this.subsection = [];
     this.categories = [];
+    this.categoryIssues = [];
+    this.hierarchyIssues = [];
     this.product = [];
     this.filterProduct = [];
     this.categoriesSearch = [];
@@ -237,195 +242,52 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     this.isContentVisible = display !== 'none';
   }
 
-  SearchSection():number[]{
+  SearchSection(): number[] {
     this.searchSection = false;
     this.searchSubsection = false;
-    this.categoriesRelacionadas = []
-    this.product = []
-    if (!this.searchSection) {
-      for (let sc of this.section) {
-        /*verifica se o nome encontra o nome em section*/
-      
-        if (sc.name === this.name) {
-    
-          this.idSearch = sc;
-          this.searchSection = true;
- /*se encontrar equivalencia ele procura equivalencias na segunda classe em subsection table*/
-          for(let sbc of this.subsection){
-
-            if(this.idSearch.id == sbc.scId){
-              this.categoriesRelacionadas.push(sbc)
-            }
-
-          }
-
-          for(let pt of this.products){
-
-            if(pt.scId == this.idSearch.id){
-                this.product.push(pt)
-            }
-
-          }
-
-          
- /*roda todas as categories pra encontrar a equivalencia do id com os id da foreigh key em categories*/
-          for(let ct of this.categories){
-
-            if(this.idSearch.id == ct.scId && !ct.parentId){
-             
-              this.SearchSort(ct)
-             /*envia o ct encontrado, que é um name de uma classe de categorias, para que ele seja ordenado com os seus subcategorias equivalentes */
-            }
-          }
-          break; // Adicionado para sair do loop após encontrar a correspondência
-        }
-      }
-
-      if (!this.searchSection) {
-        
-        for (let sbc of this.subsection) {
-         
-          if (sbc.name === this.name) {
-            this.idSearch = sbc;
-            this.searchSubsection = true;
-
-            if(this.idSearch.scId){
-            
-              for(let sbc of this.subsection){
-
-                if(this.idSearch.id == sbc.parentId){
-                  this.categoriesRelacionadas.push(sbc)
-                }
-    
-              }
-           
-          
-            }
-            
-            for(let ct of this.categories){
-
-              if(this.idSearch.id == ct.sbcId && !ct.parentId){
-                this.SearchSort(ct)
-              }
-
-            }
-            for(let pt of this.products){
-
-              if(pt.sbcId == this.idSearch.id){
-                  this.product.push(pt)
-
-
-              }
-  
-            }
-            break; // Adicionado para sair do loop após encontrar a correspondência
-          }
-        }
+    this.categoriesRelacionadas = [];
+    this.categoriesSearch = [];
+    this.idSearch = this.section.find(section => section.name === this.name);
+    if (this.idSearch) {
+      this.searchSection = true;
+      this.categoriesRelacionadas = this.subsection.filter(subsection => subsection.scId === this.idSearch.id);
+    } else {
+      this.idSearch = this.subsection.find(subsection => subsection.name === this.name);
+      this.searchSubsection = !!this.idSearch;
+      if (this.idSearch?.scId) {
+        this.categoriesRelacionadas = this.subsection.filter(subsection => subsection.parentId === this.idSearch.id);
       }
     }
-    
-    
-    let values: number[] = []
-
-    this.filterProduct = cloneDeep(this.product)
-   
-    if(this.product.length > 0){
-      values = [this.product[0].price, this.product[0].price];
-      for(let pt of this.product){
-
-        if(pt.price < values[0]){
-          values[0] = pt.price
-        }
-  
-        if(pt.price > values[1]){
-          values[1] = pt.price
-        }
-      }
+    const scope = this.searchSection ? 'scId' : 'sbcId';
+    this.product = this.idSearch ? [...new Map(this.products
+      .filter(product => product[scope] === this.idSearch.id)
+      .map(product => [product.idProduct, product])).values()] : [];
+    if (this.idSearch) {
+      this.categoriesSearch = this.categories.filter(category => category[scope] === this.idSearch.id)
+        .map(category => ({ ...category, selected: false }));
     }
-
-    else{
-      values[0] = 0
-      values[1] = 1000
-    }
-   
-this.groupCategoriesByParent()
-
-return values
-
+    this.filterProduct = cloneDeep(this.product);
+    this.groupCategoriesByParent();
+    return this.product.length ? this.product.reduce(([minimum, maximum], product) =>
+      [Math.min(minimum, product.price), Math.max(maximum, product.price)],
+      [this.product[0].price, this.product[0].price]) : [0, 1000];
   }
 
-  SearchSort(ct: any){
-
-    this.categoriesSearch.push(ct)
-    
-    if(ct.scId){
-      
-      for(let ct2 of this.categories){
-
-        if(ct2.scId){
-    
-          if(ct2.scId == this.idSearch.id && ct2.parentId == ct.id){
-            
-            this.categoriesSearch.push(ct2)
-        
-          }
-        
-        }   
-        
-      }
-    }
-
-    else if(ct.sbcId){
-      
-      for(let ct2 of this.categories){
-
-        if(ct2.sbcId){
-  
-          if(ct2.sbcId == this.idSearch.id && ct2.parentId == ct.id){
-            
-            this.categoriesSearch.push(ct2)
-        
-          }
-        
-        }   
-    
-      }
-    }
-   
-  }
-
-
-  groupCategoriesByParent() {
-    this.categoriesGrouped = this.categoriesSearch.reduce((acc, category) => {
-      if (category.parentId === 0) {
-        acc[category.id] = { ...category, children: [] };
-      } else {
-        if (!acc[category.parentId]) {
-          acc[category.parentId] = { children: [] };
-        }
-        acc[category.parentId].children.push(category);
-      }
-      return acc;
-    }, {});
-
+  groupCategoriesByParent(): void {
+    const { groups, issues } = groupFilterCategories(this.categoriesSearch);
+    this.categoriesGrouped = groups;
+    this.hierarchyIssues = issues;
+    this.reportCategoryIssues(issues);
+    this.convertCategoriesGrouped = Object.values(groups).flatMap(group => [group.name, ...group.children.map(child => child.id)]);
     this.scheduleViewInitialization();
+  }
 
-    let i = 0
-    for (const key in this.categoriesGrouped) {
-      if (this.categoriesGrouped.hasOwnProperty(key)) {
-        const group = this.categoriesGrouped[key];
-        this.convertCategoriesGrouped[i] = group.name
-        i += 1
-        group.children.forEach((child: any) => {
-          this.convertCategoriesGrouped[i] = child.id
-          i += 1
-         
-        });
-      }
+  private reportCategoryIssues(issues: string[]): void {
+    const next = [...new Set(issues)].sort();
+    if (next.length && JSON.stringify(next) !== JSON.stringify(this.categoryIssues)) {
+      console.warn('Dados de categorias inconsistentes:', next);
     }
-
-
-    
+    this.categoryIssues = next;
   }
 
   initLess(){
@@ -632,248 +494,36 @@ return values
   }
 
 onValueChange(event: any): void {
-  if(event == -1){
-  
-    this.filterProduct = cloneDeep(this.filterProduct.filter(pt => {
-      return pt.price >= this.value && pt.price <= this.highValue;
-    }));
-  
-
-  
-  }
-
-  else{
-
-    this.filterProduct = cloneDeep(this.product.filter(pt => {
-      return pt.price >= this.value && pt.price <= this.highValue;
-    }));
-  
-
-  }
-
+  this.applyCatalogFilters();
 }
 
-onCheckboxChange(category: any, groupName: any) {
-  
- this.CategoryFilter = category
- this.auxPcProduct = []
-  
-  if(category == -1){
-
-
-    let auxProduct: any[] = []
-    this.filterProduct = []
-    let state: boolean = false
-    let count = 0
-    
-  
-    if(this.auxFilter.length == 0){
-     this.filterProduct = cloneDeep(this.product)
-    
-    }  
-  
-  else{
-  
-    this.filterProduct = cloneDeep(this.product)
-   
-    let stateAfterLoop: Boolean = false
-    let sizeOff: any[] = [] 
-    for(let aux of this.auxFilter){
-    state = false
-  
-    for(let pc of this.productCategory){
-    
-     if(pc.ctId == aux){
-      this.auxPcProduct.push(pc)
-      state = true
-     
-     }
-    
-    }
-
-    if(!state && !(sizeOff.includes(aux))){
-      sizeOff.push(aux)
-    }
-
-    
-    }
-
-      state = false
-      const size = this.auxFilter.length
-  
-      this.filterProduct = this.filterProduct.filter(fp => {
-        state = false
-          let parent: any[] = []
-          let count = 0
-          
-          for(let pc of this.auxPcProduct){
-          
-            if(!(parent.includes(this.categories[pc.ctId - 1].parentId))){
-
-              parent.push(this.categories[pc.ctId - 1].parentId)
-           
-            }
-            
-          }
-
-          let newCount = 0
-          for(let aux of sizeOff){
-
-            if(parent.includes(this.categories[aux - 1].parentId)){
-              newCount -= 1
-            }
-          }
-        
-           
-          
-          const size = parent.length + sizeOff.length + newCount
-    
-          for(let pc of this.auxPcProduct){
-    
-    
-            if(pc.idProduct == fp.idProduct){
-              count += 1
-            }
-    
-          }
-    
-          if(count >= size){
-    
-            return fp
-          
-          }
-      
-        })
-  
+onCheckboxChange(category: any, groupName: any): void {
+  if (category !== -1) {
+    this.CategoryFilter = category;
+    this.auxFilter = this.auxFilter.includes(category.id)
+      ? this.auxFilter.filter(id => id !== category.id)
+      : [...this.auxFilter, category.id];
   }
-  
-  
+  this.applyCatalogFilters();
+}
+
+private applyCatalogFilters(): void {
+  this.auxFilter = [...new Set(this.auxFilter)];
+  const result = filterCatalogByCategories(this.product, this.categories, this.productCategory, this.auxFilter);
+  this.auxPcProduct = result.links;
+  this.nameGroup = result.groupNames;
+  for (const group of Object.values(this.categoriesGrouped)) {
+    for (const category of group.children ?? []) {
+      category.selected = this.auxFilter.includes(category.id);
+    }
   }
+  this.reportCategoryIssues([...this.hierarchyIssues, ...result.issues]);
+  this.filterProduct = cloneDeep(result.products.filter(product => product.price >= this.value && product.price <= this.highValue));
+}
 
-  else{
-    let state: boolean = false
-    let count = 0
-    
-    for(let af of this.auxFilter){
-      
-      if(af == category.id){
-        this.auxFilter.splice(count, 1)
-        state = true
-      }
-    count +=1
-    }
-  
-    if(!state){
-      
-      this.auxFilter.push(category.id)
-      
-    }
-  
-    if(this.auxFilter.length == 0){
-  
-      for(let i = this.nameGroup.length - 1; i>=0; i--){
-
-        if(this.nameGroup[i] == groupName){
-       
-          this.nameGroup.splice(i, 1)
-          break
-        }
-  
-      }
-
-    }
-    
-  
-  else{
-    let sizeOff: any[] = [] 
-    for(let aux of this.auxFilter){
-    state = false
-  
-    for(let pc of this.productCategory){
-    
-     if(pc.ctId == aux){
-      
-      this.auxPcProduct.push(pc)
-      state = true
-     
-    }
-
-    
-    }
-
-    if(!state && !(sizeOff.includes(aux))){
-      sizeOff.push(aux)
-    }
-
-    }
-
-
-    if(this.auxPcProduct.length == 0){
-      this.filterProduct = []
-    }
-    else{
-      this.filterProduct = this.filterProduct.filter(fp => {
-        state = false
-          let parent: any[] = []
-          let count = 0
-          
-          for(let pc of this.auxPcProduct){
-          
-            if(!(parent.includes(this.categories[pc.ctId - 1].parentId))){
-           
-              parent.push(this.categories[pc.ctId - 1].parentId)
-           
-            }
-            
-          }
-
-          let newCount = 0
-          for(let aux of sizeOff){
-
-            if(parent.includes(this.categories[aux - 1].parentId)){
-              newCount -= 1
-            }
-          }
-              
-          const size = parent.length + sizeOff.length + newCount
-    
-          for(let pc of this.auxPcProduct){
-    
-    
-            if(pc.idProduct == fp.idProduct){
-              count += 1
-            }
-    
-          }
-    
-          if(count >= size){
-    
-            return fp
-          
-          }
-        })
-    }  
-  }
-
-  }
-
-  }
-
-filterAll(number: number, subcategory: any, event: any){
-  switch(number){
-
-    case 1:
-    this.onCheckboxChange(-1, -2)
-    this.onValueChange(-1)
-    
-    break;
-
-    case 2:
-    this.onValueChange(-2)
-    this.onCheckboxChange(subcategory, event)
-    
-    break;
-  }
+filterAll(number: number, subcategory: any, event: any): void {
+  if (number === 2) { this.onCheckboxChange(subcategory, event); }
+  else if (number === 1) { this.applyCatalogFilters(); }
 }
 
 enterProductItem(event: MouseEvent){
