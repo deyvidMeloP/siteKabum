@@ -1,4 +1,4 @@
 {
   "extends": "./tsconfig.spec.json",
-  "include": ["src/app/ui-visibility.spec.ts", "src/app/visits.spec.ts", "src/app/banner-pair-layout.spec.ts", "src/**/*.d.ts"]
+  "include": ["src/app/ui-visibility.spec.ts", "src/app/visits.spec.ts", "src/app/banner-pair-layout.spec.ts", "src/app/product-main-lifecycle.spec.ts", "src/**/*.d.ts"]
 }

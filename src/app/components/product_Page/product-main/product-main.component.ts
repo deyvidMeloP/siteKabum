@@ -1,8 +1,8 @@
 import { DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Component, OnInit, ElementRef,QueryList, OnDestroy, ViewChildren, ViewChild} from '@angular/core';
+import { Component, OnInit, ElementRef,QueryList, OnDestroy, ViewChildren, ViewChild, NgZone, Injector, afterNextRender, AfterRenderRef, AfterRenderPhase} from '@angular/core';
 import { KabumServiceService } from '../../../services/kabum-service.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 declare function swiperProductMain(): any;
 declare function siblings_Swiper(): any;
@@ -12,8 +12,16 @@ declare function siblings_Swiper(): any;
   templateUrl: './product-main.component.html',
   styleUrl: './product-main.component.css'
 })
-export class ProductMainComponent implements OnInit{
+export class ProductMainComponent implements OnInit, OnDestroy{
   private readonly visibilityDestroyRef = inject(DestroyRef);
+  private readonly zone = inject(NgZone);
+  private readonly productChanged = new Subject<void>();
+  private readonly injector = inject(Injector);
+  private viewInitialization?: AfterRenderRef;
+  private loadVersion = 0;
+  private destroyed = false;
+  private siblingsReady = false;
+  isBuyButtonVisible = true;
 
   dadosProductAll: any[] = [];
   produto: any;
@@ -32,9 +40,15 @@ export class ProductMainComponent implements OnInit{
   swiper: any
   swiperFocus: any = []
   swiperMobile: any = []
-  @ViewChild('observedElement') observedElement!: ElementRef;
+  private observedTarget?: HTMLElement;
+  private observer?: IntersectionObserver;
 
-  private observer!: IntersectionObserver;
+  @ViewChild('observedElement')
+  set observedElement(element: ElementRef<HTMLElement> | undefined) {
+    this.disconnectObserver();
+    this.observedTarget = element?.nativeElement;
+    this.initializeObserver();
+  }
 
   constructor(private productAll: KabumServiceService,  private imagesService: KabumServiceService, private elementRef: ElementRef, private timerService: KabumServiceService, private departService: KabumServiceService, 
     private commandSource: KabumServiceService,
@@ -42,7 +56,13 @@ export class ProductMainComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.route.params.subscribe(async params => {
+    this.route.params.pipe(takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(params => {
+      this.productChanged.next();
+      this.loadVersion++;
+      this.resetProductView();
+      this.produto = undefined;
+      this.images_Product = [];
+      this.isBuyButtonVisible = true;
       
       this.controller = 1
       this.departments = [];
@@ -58,9 +78,9 @@ export class ProductMainComponent implements OnInit{
       }
       
 
-     await this.getDadosProductAll(name);
-      this.controller = 0
-     
+      this.getDadosProductAll(name);
+    });
+
     this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
       tempo => this.offer_Time2= tempo
     );
@@ -71,8 +91,6 @@ export class ProductMainComponent implements OnInit{
     );
     this.timerService.accountant_Time3(); 
       
-    })
-
     this.changeDisplay = this.commandSource.command$.pipe(takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
       command => {
         this.updateNavigationDisplay(command);
@@ -83,32 +101,53 @@ export class ProductMainComponent implements OnInit{
   }
 
   private initializeObserver(): void {
+    if (this.destroyed || !this.observedTarget?.isConnected || this.observer) {
+      return;
+    }
     const options: IntersectionObserverInit = {
       root: null, // Usa a viewport do navegador como o root
       rootMargin: '0px', // Margem ao redor da root
       threshold: 0.9 // Percentual de visibilidade necessário para disparar o callback
     };
-    this.observer = new IntersectionObserver(this.handleIntersection.bind(this), options);
-    if (this.observedElement) {
-      this.observer.observe(this.observedElement.nativeElement);
-    }
+    const observer = new IntersectionObserver(entries => {
+      if (this.destroyed || this.observer !== observer || !this.observedTarget?.isConnected) {
+        return;
+      }
+      this.zone.run(() => this.handleIntersection(entries));
+    }, options);
+    this.observer = observer;
+    observer.observe(this.observedTarget);
   }
 
   private handleIntersection(entries: IntersectionObserverEntry[]): void {
+    if (this.destroyed || !this.observedTarget?.isConnected) {
+      return;
+    }
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const fixed = document.querySelector(".buy_Mobile_Fixed") as HTMLElement   
-        fixed.style.transform = "translateY(80px)"
-
-      } else{
-        
-          const fixed = document.querySelector(".buy_Mobile_Fixed") as HTMLElement   
-          fixed.style.transform = "translateY(0px)"
-        
-        
-
+      if (entry.target === this.observedTarget) {
+        this.isBuyButtonVisible = entry.isIntersecting;
       }
     });
+  }
+
+  private disconnectObserver(): void {
+    this.observer?.disconnect();
+    this.observer = undefined;
+  }
+
+  private resetProductView(): void {
+    this.viewInitialization?.destroy();
+    this.viewInitialization = undefined;
+    this.disconnectObserver();
+    for (const swiper of new Set([...this.swiperFocus, ...this.swiperMobile, this.swiper])) {
+      if (swiper && !swiper.destroyed) {
+        swiper.destroy(true, true);
+      }
+    }
+    this.swiperFocus = [];
+    this.swiperMobile = [];
+    this.swiper = undefined;
+    this.siblingsReady = false;
   }
 
 
@@ -117,13 +156,13 @@ export class ProductMainComponent implements OnInit{
     switch(name){
       case 'arrow_Top':
 
-      this.swiperFocus[0].slidePrev()
+        this.swiperFocus[0]?.slidePrev()
 
       break;
 
       case'arrow_Back':
 
-      this.swiperFocus[0].slideNext()
+      this.swiperFocus[0]?.slideNext()
 
       break;
 
@@ -133,13 +172,18 @@ export class ProductMainComponent implements OnInit{
 
 
   updateNavigationDisplay(display: string): void {
-    const navigation = document.querySelector(".product_Box") as HTMLElement;
+    const navigation = this.elementRef.nativeElement.querySelector(".product_Box") as HTMLElement;
     if (navigation) {
       navigation.style.display = display;
     }
   }
   
   ngOnDestroy(): void {
+    this.destroyed = true;
+    this.loadVersion++;
+    this.productChanged.next();
+    this.productChanged.complete();
+    this.resetProductView();
 
     if (this.tempoRestante2Subscription) {
       this.tempoRestante2Subscription.unsubscribe();
@@ -151,7 +195,7 @@ export class ProductMainComponent implements OnInit{
   }
 
   getDadosProductAll(name: string){
-    this.productAll.getDados().subscribe(
+    this.productAll.getDados().pipe(takeUntil(this.productChanged), takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
       (data: any[]) => {
         this.dadosProductAll = data;
 
@@ -161,83 +205,13 @@ export class ProductMainComponent implements OnInit{
             break
           }
         }
-        setTimeout(() => {
-          
-          const swiperFocus = document.querySelectorAll(".swiper_Focus")
-          const swiperMobile = document.querySelectorAll(".swiper_MobileMain")
-
-          const swiperParams2 = {
-            simulateTouch: true,
-            allowTouchMove: true,
-            slidesPerView: 'auto',
-            spaceBetween: 0,
-            touchReleaseOnEdges: true,
-            breakpoints:{
-              1020:{
-                simulateTouch: true,
-                allowTouchMove: true,
-              }
-            },
-            on: {
-              init() {/*trava a inicilização e inicia por aqui */
-                // ...
-              },
-
-              slideChange: () => {
-              this.changeSlide(this.swiperMobile[0].activeIndex)
-                
-              },
-              
-            }
-          }
-
-          swiperMobile.forEach((el: any)=>{
-            Object.assign(el, swiperParams2)
-            el.initialize();
-            this.swiperMobile.push(el.swiper);
-           
-          })
-
-
-          const swiperParams = {
-            simulateTouch: false,
-            allowTouchMove: false,
-            slidesPerView: 'auto',
-            spaceBetween: 0,
-            breakpoints:{
-              1020:{
-                simulateTouch: false,
-                allowTouchMove: false,
-              }
-            },
-            on: {
-              init() {/*trava a inicilização e inicia por aqui */
-                // ...
-              },
-            }
-          }
-          swiperFocus.forEach((el: any)=>{
-            Object.assign(el, swiperParams)
-            el.initialize();
-            this.swiperFocus.push(el.swiper);
-           
-          })
-          this.initializeObserver()
-          const backButton = document.querySelector(".arrow_Top")
-          const nextButton = document.querySelector(".arrow_Back")
-        
-          if (backButton) {
-        backButton.addEventListener('click', this.swiperMove.bind(this, backButton.classList.value));
+        this.controller = 0;
+        if (!this.produto) {
+          return;
         }
-        
-        if (nextButton) {
-        nextButton.addEventListener('click', this.swiperMove.bind(this, nextButton.classList.value));
-        }
-        
-              }, 0);
 
         this.getDadosServiceImages();
-      
+
       },
       (error: any) => {
         console.error('Erro ao obter dados do serviço:', error);
@@ -246,22 +220,111 @@ export class ProductMainComponent implements OnInit{
 
   }
 
+  private scheduleViewInitialization(): void {
+    this.viewInitialization?.destroy();
+    const version = this.loadVersion;
+    this.viewInitialization = afterNextRender(() => {
+      this.viewInitialization = undefined;
+      if (this.destroyed || version !== this.loadVersion || !this.produto) {
+        return;
+      }
+      const swiperFocus = this.elementRef.nativeElement.querySelectorAll(".swiper_Focus")
+      const swiperMobile = this.elementRef.nativeElement.querySelectorAll(".swiper_MobileMain")
+
+      const swiperParams2 = {
+        simulateTouch: true,
+        allowTouchMove: true,
+        slidesPerView: 'auto',
+        spaceBetween: 0,
+        touchReleaseOnEdges: true,
+        breakpoints:{
+          1020:{
+            simulateTouch: true,
+            allowTouchMove: true,
+          }
+        },
+        on: {
+          init() {/*trava a inicilização e inicia por aqui */
+            // ...
+          },
+
+          slideChange: () => {
+          if (!this.destroyed && version === this.loadVersion && this.swiperMobile[0]) {
+            this.changeSlide(this.swiperMobile[0].activeIndex);
+          }
+
+          },
+
+        }
+      }
+
+      swiperMobile.forEach((el: any)=>{
+        if (this.swiperMobile.includes(el.swiper)) {
+          return;
+        }
+        Object.assign(el, swiperParams2)
+        el.initialize();
+        this.swiperMobile.push(el.swiper);
+
+      })
+
+
+      const swiperParams = {
+        simulateTouch: false,
+        allowTouchMove: false,
+        slidesPerView: 'auto',
+        spaceBetween: 0,
+        breakpoints:{
+          1020:{
+            simulateTouch: false,
+            allowTouchMove: false,
+          }
+        },
+        on: {
+          init() {/*trava a inicilização e inicia por aqui */
+            // ...
+          },
+        }
+      }
+      swiperFocus.forEach((el: any)=>{
+        if (this.swiperFocus.includes(el.swiper)) {
+          return;
+        }
+        Object.assign(el, swiperParams)
+        el.initialize();
+        this.swiperFocus.push(el.swiper);
+
+      })
+      this.initializeObserver();
+      if (this.siblingsReady && !this.swiper) {
+        siblings_Swiper();
+        this.swiper = this.elementRef.nativeElement.querySelector('.swiper_All')?.swiper;
+      }
+    }, { injector: this.injector, phase: AfterRenderPhase.MixedReadWrite });
+  }
+
 changeSlide(a: any){
 
-  const radios = document.querySelectorAll<HTMLInputElement>('.swiper_Radio'); 
+  if (this.destroyed) {
+    return;
+  }
+  const radios = (this.elementRef.nativeElement as HTMLElement).querySelectorAll<HTMLInputElement>('.swiper_Radio');
 
     const radio = radios[a];
 
-    radio.checked = true  
-
-  this.swiperMobile[0].slideTo(a)
-
-  const mobile = document.querySelectorAll(".product_Mobile") as NodeListOf<HTMLElement>
+    const swiper = this.swiperMobile[0];
+    if (!radio || !swiper || swiper.destroyed) {
+      return;
+    }
+    radio.checked = true;
+    if (swiper.activeIndex !== a) {
+      swiper.slideTo(a);
+    }
 
 }
 
   getDadosServiceImages(){
-    this.imagesService.getDadosImages().subscribe(  
+    this.imagesService.getDadosImages().pipe(takeUntil(this.productChanged), takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
       (data: any[])=> {
         this.images_Product= data.filter(image =>{
           if(this.produto.idProduct == image.productId){
@@ -273,7 +336,8 @@ changeSlide(a: any){
         });
 
         this.getDadosDepartments()  
-        this.start(this.images_Product[0].imageUrl)
+        this.start(this.images_Product[0]?.imageUrl ?? '');
+        this.scheduleViewInitialization();
                 
       },
       (error: any)=>{
@@ -284,7 +348,7 @@ changeSlide(a: any){
   }
 
   getDadosDepartments() {
-    this.departService.getDadosDepartments().subscribe(
+    this.departService.getDadosDepartments().pipe(takeUntil(this.productChanged), takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
       (data: any[]) => {
         this.departments = data;
         this.siblingsProduct(this.departments)
@@ -337,7 +401,8 @@ changeSlide(a: any){
 
     }
 
-   siblings_Swiper()
+   this.siblingsReady = true;
+   this.scheduleViewInitialization();
   }
 
   zoom_Focus(){

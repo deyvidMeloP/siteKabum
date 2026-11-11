@@ -42,7 +42,7 @@
                 
                     <div class="all_Item">
 
-                        <div class="arrow_Top">
+                        <div class="arrow_Top" (click)="swiperMove('arrow_Top')">
             
                             <svg width="24" height="15" viewBox="0 0 24 15" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-prev" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 12.8182L21.8182 15L12 5.18182L2.18182 15L2.60179e-08 12.8182L12 0.818182L24 12.8182Z" fill="#565C69"></path></svg>
                 
@@ -60,7 +60,7 @@
                     
                     </div>
                     
-                    <div class="arrow_Back">
+                    <div class="arrow_Back" (click)="swiperMove('arrow_Back')">
             
                         <svg width="24" height="15" viewBox="0 0 13 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-next" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M-5.37986e-08 1.23077L1.18182 -5.16589e-07L6.5 5.53846L11.8182 -5.16589e-08L13 1.23077L6.5 8L-5.37986e-08 1.23077Z" fill="#42464D"></path></svg>
                 
@@ -301,7 +301,7 @@
 
     </div>
 
-    <div class="buy_Mobile_Fixed" style="position: fixed; bottom: 0px; z-index: 99999;">
+    <div class="buy_Mobile_Fixed" [style.transform]="isBuyButtonVisible ? 'translateY(80px)' : 'translateY(0px)'" style="position: fixed; bottom: 0px; z-index: 99999;">
 
         <div class="price_Buy_Mobile">
             <h1 style="font-size: 12px;" >  {{ produto.price - ((produto.price * produto.discount) / 100) | currency:'BRL' }} </h1>
