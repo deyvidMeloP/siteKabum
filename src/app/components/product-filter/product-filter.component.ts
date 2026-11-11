@@ -1,4 +1,4 @@
-import { DestroyRef, inject } from '@angular/core';
+import { AfterRenderRef, DestroyRef, ElementRef, Injector, afterNextRender, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef, Output, EventEmitter,  NgZone } from '@angular/core';
 import { KabumServiceService } from '../../services/kabum-service.service';
@@ -7,7 +7,7 @@ import { Options, LabelType } from '@angular-slider/ngx-slider';
 import { filter, first } from 'rxjs';
 import * as _ from 'lodash';
 import { cloneDeep } from 'lodash';
-import { Subscription } from 'rxjs';
+import { catchError, distinctUntilChanged, forkJoin, map, of, switchMap, timer } from 'rxjs';
 import { FormControl } from '@angular/forms';
 
 
@@ -20,6 +20,12 @@ declare function swiper_Filter(): any
 })
 export class ProductFilterComponent implements OnInit, AfterViewInit {
   private readonly visibilityDestroyRef = inject(DestroyRef);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly viewInjector = inject(Injector);
+  private viewInitialization?: AfterRenderRef;
+  private filterCarousel?: { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void };
+  private destroyed = false;
+  loadError = '';
   CategoryFilter: any;
   name: string = '';
   param: string = '';
@@ -47,9 +53,6 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   offer_Time1: string = '';
   offer_Time2: string = '';
   offer_Time3: string = '';
-  tempoRestante1Subscription: Subscription | undefined;
-  tempoRestante2Subscription: Subscription | undefined;
-  tempoRestante3Subscription: Subscription | undefined;
   readonly minPriceControl = new FormControl<number | null>(null);
   readonly maxPriceControl = new FormControl<number | null>(null);
   get value(): any { return this.minPriceControl.value; }
@@ -84,8 +87,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     private stateService: KabumServiceService,
     private productCategoryService: KabumServiceService,
     private commandSource: KabumServiceService,
-    private route: ActivatedRoute,
-    private timerService: KabumServiceService
+    private route: ActivatedRoute
     
   ) {
 
@@ -93,59 +95,45 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
-    this.route.params.subscribe(async params => {
-      let name = ''
-      if(decodeURIComponent(params['parentName'] || '')){
-        name = decodeURIComponent(params['parentName'] || '');
-      }
-
-      else if(decodeURIComponent(params['subsectionName'] || '')){
-        name = decodeURIComponent(params['subsectionName'] || '');
-      }
-
-      else if(decodeURIComponent(params['filterName'] || '')){
-        name = decodeURIComponent(params['filterName'] || '');
-      }
-
-
-
-      
-      
-      this.categoriesSearch = []
-      if (name) {
-        this.name = name; 
-        this.testa = 1
-        await this.loadData();
-        this.testa = 0
-        this.cdr.detectChanges();
-
-        this.tempoRestante1Subscription = this.timerService.offerTime1$.subscribe(
-          tempo => this.offer_Time1= tempo
-        );
-        this.timerService.accountant_Time1(); 
-    
-        this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
-          tempo => this.offer_Time2= tempo
-        );
-        this.timerService.accountant_Time2(); 
-    
-        this.tempoRestante3Subscription = this.timerService.offerTime3$.subscribe(
-          tempo => this.offer_Time3 = tempo
-        );
-        this.timerService.accountant_Time3(); 
-    
-
-      }
+    this.visibilityDestroyRef.onDestroy(() => {
+      this.destroyed = true;
+      this.cancelViewInitialization();
     });
-  
-    window.scrollTo(0, 0);
-    this.value = this.options.floor;
-    this.highValue = this.options.ceil;
-    this.changeDisplay = this.commandSource.command$.pipe(takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
-      command => {
-        this.updateNavigationDisplay(command);
+    this.startOfferCountdown();
+    this.route.params.pipe(
+      map(params => decodeURIComponent(params['parentName'] || params['subsectionName'] || params['filterName'] || '')),
+      distinctUntilChanged(),
+      switchMap(name => {
+        this.cancelViewInitialization();
+        this.name = name;
+        this.resetCatalog();
+        this.loadError = '';
+        this.testa = name ? 1 : 0;
+        return name ? this.loadData().pipe(
+          catchError(() => {
+            this.loadError = 'Não foi possível carregar os produtos. Tente novamente mais tarde.';
+            return of(null);
+          })
+        ) : of(null);
+      }),
+      takeUntilDestroyed(this.visibilityDestroyRef)
+    ).subscribe(data => {
+      if (data) {
+        this.products = data.products;
+        this.productCategory = data.productCategory;
+        this.section = data.section;
+        this.subsection = data.subsection;
+        this.categories = data.categories;
+        const [floor, ceil] = this.SearchSection();
+        this.options = { ...this.options, floor, ceil };
+        this.minPriceControl.reset(floor, { emitEvent: false });
+        this.maxPriceControl.reset(ceil, { emitEvent: false });
       }
+      this.testa = 0;
+    });
+    window.scrollTo(0, 0);
+    this.changeDisplay = this.commandSource.command$.pipe(takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(
+      command => this.updateNavigationDisplay(command)
     );
   }
 
@@ -164,121 +152,91 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
       }
     });*/
 
-  private async loadData() {
-    try {
-      await this.getDadosDoServico();
-      await this.getProductCaategory();
-      const sectionValues = await this.getDadosSection();
-      
-      // Verifique se sectionValues é um array e tem pelo menos dois elementos
-      if (Array.isArray(sectionValues) && sectionValues.length >= 2) {
-        this.options = {  
-          ...this.options,
-          floor: sectionValues[0], // Define o floor como o primeiro elemento do array
-          ceil: sectionValues[1] // Define o ceil como o segundo elemento do array
-        };
-        this.value = sectionValues[0];
-        this.highValue = sectionValues[1];
-      }
-    } catch (error) {
-      console.error('Erro ao carregar dados:', error);
-    }
+  private loadData() {
+    return forkJoin({
+      products: this.productService.getDados(),
+      productCategory: this.productCategoryService.getProductCategory(),
+      section: this.sectionService.getDadosSection(),
+      subsection: this.subsectionService.getDadosSubsection(),
+      categories: this.categoriesService.getDadosCategories()
+    });
   }
 
+  private resetCatalog(): void {
+    this.products = [];
+    this.productCategory = [];
+    this.section = [];
+    this.subsection = [];
+    this.categories = [];
+    this.product = [];
+    this.filterProduct = [];
+    this.categoriesSearch = [];
+    this.categoriesRelacionadas = [];
+    this.categoriesGrouped = {};
+    this.convertCategoriesGrouped = [];
+    this.auxFilter = [];
+    this.auxPcProduct = [];
+    this.auxProduct = [];
+    this.nameGroup = [];
+    this.idSearch = undefined;
+    this.CategoryFilter = undefined;
+    this.searchSection = false;
+    this.searchSubsection = false;
+    this.ngxSlide = 0;
+    this.options = { ...this.options, floor: 0, ceil: 1000 };
+    this.minPriceControl.reset(0, { emitEvent: false });
+    this.maxPriceControl.reset(1000, { emitEvent: false });
+  }
+
+  private startOfferCountdown(): void {
+    const deadlines = [1, 2, 3].map(months => {
+      const date = new Date();
+      return date.setMonth(date.getMonth() + months);
+    });
+    timer(0, 1000).pipe(takeUntilDestroyed(this.visibilityDestroyRef)).subscribe(() => {
+      const values = deadlines.map(deadline => {
+        const seconds = Math.max(0, Math.floor((deadline - Date.now()) / 1000));
+        const days = Math.floor(seconds / 86400).toString().padStart(2, '0');
+        const hours = Math.floor(seconds % 86400 / 3600).toString().padStart(2, '0');
+        const minutes = Math.floor(seconds % 3600 / 60).toString().padStart(2, '0');
+        const remaining = (seconds % 60).toString().padStart(2, '0');
+        return days + 'D ' + hours + ' : ' + minutes + ' : ' + remaining;
+      });
+      [this.offer_Time1, this.offer_Time2, this.offer_Time3] = values;
+    });
+  }
+
+  private cancelViewInitialization(): void {
+    this.viewInitialization?.destroy();
+    this.viewInitialization = undefined;
+    this.filterCarousel?.destroy(true, true);
+    this.filterCarousel = undefined;
+  }
+
+  private scheduleViewInitialization(): void {
+    this.cancelViewInitialization();
+    this.viewInitialization = afterNextRender(() => {
+      this.viewInitialization = undefined;
+      if (this.destroyed) { return; }
+      const container = this.host.nativeElement.querySelector<HTMLElement & {
+        swiper?: { destroy(deleteInstance?: boolean, cleanStyles?: boolean): void }
+      }>('.marker_Swiper');
+      if (!container) { return; }
+      this.initLess();
+      swiper_Filter();
+      this.filterCarousel = container.swiper;
+    }, { injector: this.viewInjector });
+  }
 
   ngAfterViewInit(): void {
-  
-    
+
+
   }
 
   updateNavigationDisplay(display: string): void {
     this.isContentVisible = display !== 'none';
   }
 
-  getDadosDoServico() {
-    this.productService.getDados().subscribe(
-      (data: any[]) => {
-        this.products = data;
-},
-      (error: any) => {
-        console.error('Erro ao obter dados do serviço:', error);
-      }
-    );
-
-    
-  }
-
-  getProductCaategory(){
-
-    this.productCategoryService.getProductCategory().subscribe(
-      (data: any[]) => {
-        this.productCategory = data;
-},
-      (error: any) => {
-        console.error('Erro ao obter dados do serviço:', error);
-      }
-    );
-
-  }
-
- async getDadosSection(): Promise<number[]> {
-    return new Promise<number[]>((resolve, reject) => {
-      this.sectionService.getDadosSection().subscribe(
-        (data: any[]) => {
-          this.section = data;
-          this.getDadosSubsection().then(values => {
-            resolve(values); // Resolvendo a Promise com o valor mínimo
-          }).catch(error => {
-            reject(error);
-          });
-        },
-        (error: any) => {
-          console.error('Erro ao obter dados do serviço:', error);
-          reject(error);
-        }
-      );
-    });
-  }
-  
-
-  async getDadosSubsection(): Promise<number[]> {
-    return new Promise<number[]>((resolve, reject) => {
-      this.subsectionService.getDadosSubsection().subscribe(
-        (data: any[]) => {
-          this.subsection = data;
-          this.getDadosCategories().then(values => {     
-            resolve(values); // Resolvendo a Promise com o vetor de valores
-          }).catch(error => {
-            reject(error);
-          });
-        },
-        (error: any) => {
-          console.error('Erro ao obter dados do serviço:', error);
-          reject(error);
-        }
-      );
-    });
-  }
-  
-  
-
-  async getDadosCategories(): Promise<number[]> {
-    return new Promise<number[]>((resolve, reject) => {
-    
-       this.categoriesService.getDadosCategories().subscribe(
-        (data: any[]) => {
-          this.categories = data;
-          const values: number[] = this.SearchSection();
-          resolve(values); // Resolvendo a Promise com o vetor de valores
-        },
-        (error: any) => {
-          console.error('Erro ao obter dados do serviço:', error);
-          reject(error);
-        }
-      );
-    });
-  }
-  
   SearchSection():number[]{
     this.searchSection = false;
     this.searchSubsection = false;
@@ -450,13 +408,7 @@ return values
       return acc;
     }, {});
 
-    setTimeout(() => {
-      this.initLess();
-    }, 0);
-
-    setTimeout(()=>{
-      swiper_Filter()
-    },0)
+    this.scheduleViewInitialization();
 
     let i = 0
     for (const key in this.categoriesGrouped) {
@@ -477,8 +429,9 @@ return values
   }
 
   initLess(){
-    const categories_Box = document.querySelectorAll(".categories_Box_Items") as NodeListOf<HTMLElement>
-    const related_Items = document.querySelector(".related_Items") as HTMLElement
+    const categories_Box = this.host.nativeElement.querySelectorAll<HTMLElement>(".categories_Box_Items")
+    const related_Items = this.host.nativeElement.querySelector<HTMLElement>(".related_Items");
+    if (!related_Items) { return; }
     const related_Item = related_Items.querySelectorAll(".related_Item") as NodeListOf<HTMLElement>
 
 

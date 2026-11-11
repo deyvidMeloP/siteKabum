@@ -1,4 +1,6 @@
-<div class="product-filter-page" *ngIf="testa == 0" [style.display]="isContentVisible ? 'flex' : 'none'" style="margin-bottom: 30px;">
+<p *ngIf="testa == 1 && isContentVisible" class="filter-load-message" role="status">Carregando produtos...</p>
+<p *ngIf="loadError && isContentVisible" class="filter-load-message" role="alert">{{ loadError }}</p>
+<div class="product-filter-page" *ngIf="testa == 0 && !loadError" [style.display]="isContentVisible ? 'flex' : 'none'" style="margin-bottom: 30px;">
 <div class="box" style="position: relative;">
 
     <div class="filter_Mobile" style="display: none;">

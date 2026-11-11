@@ -1170,3 +1170,10 @@ ngx-slider {
     box-shadow: none;
     box-sizing: border-box;
 }
+
+:host .filter-load-message {
+    color: #565c69;
+    margin: 24px auto;
+    max-width: 1280px;
+    padding: 0 20px;
+}
