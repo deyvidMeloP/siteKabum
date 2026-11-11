@@ -14,7 +14,7 @@
 
 
     <div class="slide_Images">
-            <div class="image first"><img src="assets/Images_Banner/banner_img.webp" alt="image 1"></div>
+            <div class="image first" [style.margin-left.%]="slideOffset"><img src="assets/Images_Banner/banner_img.webp" alt="image 1"></div>
             <div class="image"><img src="assets/Images_Banner/banner_img 2.webp" alt="image 2"></div>
             <div class="image"><img src="assets/Images_Banner/banner_img 3.webp" alt="image 3"></div>
             <div class="image"><img src="assets/Images_Banner/banner_img 4.webp" alt="image 4"></div>
@@ -41,17 +41,17 @@
             </div>
 
             <div class="manual-navigation">
-                <label for="radio_1" class="manual-btn" (click)="btn_Complete1()" ><div class="filling"></div></label>
-                <label for="radio_2" class="manual-btn" (click)="btn_Complete2()" ><div class="filling"></div></label>
-                <label for="radio_3" class="manual-btn" (click)="btn_Complete3()" ><div class="filling"></div></label>
-                <label for="radio_4" class="manual-btn" (click)="btn_Complete4()" ><div class="filling"></div></label>
-                <label for="radio_5" class="manual-btn" (click)="btn_Complete5()"><div class="filling"></div></label>
-                <label for="radio_6" class="manual-btn" (click)="btn_Complete6()"><div class="filling"></div></label>
-                <label for="radio_7" class="manual-btn" (click)="btn_Complete7()"><div class="filling"></div></label>
-                <label for="radio_8" class="manual-btn" (click)="btn_Complete8()"><div class="filling"></div></label>
-                <label for="radio_9" class="manual-btn" (click)="btn_Complete9()"><div class="filling"></div></label>
-                <label for="radio_10" class="manual-btn" (click)="btn_Complete10()"><div class="filling"></div></label>
-                <label for="radio_11" class="manual-btn" (click)="btn_Complete11()"><div class="filling"></div></label>
+                <label for="radio_1" class="manual-btn" (click)="btn_Complete1()" ><div class="filling" [class.btn_Play]="play && progressSlide === 1"></div></label>
+                <label for="radio_2" class="manual-btn" (click)="btn_Complete2()" ><div class="filling" [class.btn_Play]="play && progressSlide === 2"></div></label>
+                <label for="radio_3" class="manual-btn" (click)="btn_Complete3()" ><div class="filling" [class.btn_Play]="play && progressSlide === 3"></div></label>
+                <label for="radio_4" class="manual-btn" (click)="btn_Complete4()" ><div class="filling" [class.btn_Play]="play && progressSlide === 4"></div></label>
+                <label for="radio_5" class="manual-btn" (click)="btn_Complete5()"><div class="filling" [class.btn_Play]="play && progressSlide === 5"></div></label>
+                <label for="radio_6" class="manual-btn" (click)="btn_Complete6()"><div class="filling" [class.btn_Play]="play && progressSlide === 6"></div></label>
+                <label for="radio_7" class="manual-btn" (click)="btn_Complete7()"><div class="filling" [class.btn_Play]="play && progressSlide === 7"></div></label>
+                <label for="radio_8" class="manual-btn" (click)="btn_Complete8()"><div class="filling" [class.btn_Play]="play && progressSlide === 8"></div></label>
+                <label for="radio_9" class="manual-btn" (click)="btn_Complete9()"><div class="filling" [class.btn_Play]="play && progressSlide === 9"></div></label>
+                <label for="radio_10" class="manual-btn" (click)="btn_Complete10()"><div class="filling" [class.btn_Play]="play && progressSlide === 10"></div></label>
+                <label for="radio_11" class="manual-btn" (click)="btn_Complete11()"><div class="filling" [class.btn_Play]="play && progressSlide === 11"></div></label>
                 
                 <div class="btn_Pause"(click)="Pause()">
                 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, inject, Output, EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -6,379 +6,121 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.css'
 })
-export class BannerComponent implements OnInit{
+export class BannerComponent implements OnInit, OnDestroy{
 @Output() styleChange = new EventEmitter<string>();
-state: boolean = false
-play: boolean = true
-lastCall: number = -1
-ngOnInit(): void {
-  this.btn_Complete1();
-  
-  setTimeout(()=>{
-this.teste()
-  },0)
-}
+  state: boolean = false;
+  play: boolean = true;
+  lastCall: number = 1;
+  slideOffset = 0;
+  progressSlide: number | null = null;
+  private readonly bannerHost = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly pendingTimers = new Set<number>();
+  private destroyed = false;
+  private timerVersion = 0;
+  private readonly bannerColors = ['#870700', '#022b9a', '#1a1c1e', '#ff6601', '#ff6a01', '#232834', '#880801', '#870700', '#001994', '#880801', '#880700'];
 
-teste(){
-  const btn_Manual = document.querySelectorAll(".manual-btn") as NodeListOf<HTMLElement>;
-
-
-}
-
-timeoutIds: any[] = [];
-
-
-btn_Complete1() {
-  const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-  const slides = document.querySelector(".first") as HTMLElement;
-  this.lastCall = 1
-  this.styleChange.emit('#870700');
-  if(!this.play){
-    slides.style.marginLeft = "0%"
-  }
-  else{
-    this.timeoutIds.forEach(id => clearTimeout(id));
-    this.timeoutIds = [];
-  
-    setTimeout(()=>{
-    
-      btn_Manual.forEach((el)=>{
-        el.classList.remove("btn_Play")
-       })
-  
-       btn_Manual.forEach((el)=>{
-        el.classList.remove("btn_Play")
-        })
-  
-       slides.style.marginLeft = "0%"
-  
-       btn_Manual[0].classList.add("btn_Play");
-    
-    }, 0)
-  
-    const timeoutId = setTimeout(()=>{
-    
-      this.btn_Complete2()
-    
-    }, 7000)
-    this.timeoutIds.push(timeoutId);
-  }
-  
- 
-}
-
-
-btn_Complete2(){
-  const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-  const slides = document.querySelector(".first") as HTMLElement;
-  this.lastCall = 2
-  this.styleChange.emit('#022b9a');
-  if(!this.play){
-    slides.style.marginLeft = "-100%"
-  }
-  else{
-    this.timeoutIds.forEach(id => clearTimeout(id));
-    this.timeoutIds = [];
-  
-    btn_Manual.forEach((el)=>{
-    el.classList.remove("btn_Play")
-    })
-    slides.style.marginLeft = "-100%"
-    btn_Manual[1].classList.add("btn_Play")
-  
-    const timeoutId = setTimeout(()=>{
-    
-      this.btn_Complete3()
-    
-    }, 7000)
-  
-    this.timeoutIds.push(timeoutId);
-  }
- 
-}
-
-btn_Complete3(){
-  const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-  const slides = document.querySelector(".first") as HTMLElement;
-  this.styleChange.emit('#1a1c1e');
-  this.lastCall = 3
-  if(!this.play){
-    slides.style.marginLeft = "-200%"
-  }
-  else{
-    this.timeoutIds.forEach(id => clearTimeout(id));
-    this.timeoutIds = [];
-    
-    btn_Manual.forEach((el)=>{
-      el.classList.remove("btn_Play")
-     })
-     slides.style.marginLeft = "-200%"
-    btn_Manual[2].classList.add("btn_Play")
-  
-    const timeoutId = setTimeout(()=>{
-    
-      this.btn_Complete4()
-    
-    }, 7000)
-    this.timeoutIds.push(timeoutId);
-  }
- 
-
-}
-
-btn_Complete4(){
-  const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-  const slides = document.querySelector(".first") as HTMLElement;
-  this.styleChange.emit('#ff6601');
-  this.lastCall = 4
-  if(!this.play){
-    slides.style.marginLeft = "-300%"
-  }
-  else{
-    this.timeoutIds.forEach(id => clearTimeout(id));
-    this.timeoutIds = [];
-  
-    btn_Manual.forEach((el)=>{
-      el.classList.remove("btn_Play")
-     })
-  
-     slides.style.marginLeft = "-300%"
-    btn_Manual[3].classList.add("btn_Play")
-  
-    const timeoutId = setTimeout(()=>{
-    
-      this.btn_Complete5()
-    
-    }, 7000)
-    this.timeoutIds.push(timeoutId);
-  }
- 
-}
-
-  btn_Complete5(){
-    const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-    const slides = document.querySelector(".first") as HTMLElement;
-    this.styleChange.emit('#ff6a01');
-    this.lastCall = 5
-    if(!this.play){
-      slides.style.marginLeft = "-400%"
-    }
-    else{
-      this.timeoutIds.forEach(id => clearTimeout(id));
-      this.timeoutIds = [];
-  
-      btn_Manual.forEach((el)=>{
-        el.classList.remove("btn_Play")
-       })
-    
-      slides.style.marginLeft = "-400%"
-      btn_Manual[4].classList.add("btn_Play")
-    
-      const timeoutId = setTimeout(()=>{
-      
-        this.btn_Complete6()
-      
-      }, 7000)
-      this.timeoutIds.push(timeoutId);
-    }
-   
+  ngOnInit(): void {
+    this.schedule(() => this.btn_Complete1(), 0);
+    this.schedule(() => this.teste(), 0);
   }
 
-    btn_Complete6(){
-      const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-      const slides = document.querySelector(".first") as HTMLElement;
-      this.styleChange.emit('#232834');
-      this.lastCall = 6
-      if(!this.play){
-        slides.style.marginLeft = "-500%"
+  ngOnDestroy(): void {
+    this.destroyed = true;
+    this.cancelTimers();
+  }
+
+  private cancelTimers(): void {
+    this.timerVersion++;
+    this.pendingTimers.forEach(id => window.clearTimeout(id));
+    this.pendingTimers.clear();
+  }
+
+  private schedule(callback: () => void, delay: number): void {
+    const version = this.timerVersion;
+    const id = window.setTimeout(() => {
+      this.pendingTimers.delete(id);
+      if (!this.destroyed && version === this.timerVersion) {
+        callback();
       }
+    }, delay);
+    this.pendingTimers.add(id);
+  }
 
-      else{
-        this.timeoutIds.forEach(id => clearTimeout(id));
-        this.timeoutIds = [];
-  
-        btn_Manual.forEach((el)=>{
-          el.classList.remove("btn_Play")
-         })
-      
-         slides.style.marginLeft = "-500%"
-        btn_Manual[5].classList.add("btn_Play")
-      
-        const timeoutId = setTimeout(()=>{
-        
-          this.btn_Complete7()
-        
-        }, 7000)
-        this.timeoutIds.push(timeoutId);
-      }
-     
-
+  private selectSlide(slide: number): void {
+    if (this.destroyed) {
+      return;
     }
-      btn_Complete7(){
-        const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-        const slides = document.querySelector(".first") as HTMLElement;
-        this.styleChange.emit('#880801');
-        this.lastCall = 7
-        if(!this.play){
-          slides.style.marginLeft = "-600%"
-        }
-        else{
-          this.timeoutIds.forEach(id => clearTimeout(id));
-          this.timeoutIds = [];
-          
-          btn_Manual.forEach((el)=>{
-            el.classList.remove("btn_Play")
-           })
-        
-           slides.style.marginLeft = "-600%"
-          btn_Manual[6].classList.add("btn_Play")
-        
-          const timeoutId = setTimeout(()=>{
-          
-            this.btn_Complete8()
-          
-          }, 7000)
-  
-          this.timeoutIds.push(timeoutId);
-        }
-        
-}
-
-btn_Complete8(){
-  const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-  const slides = document.querySelector(".first") as HTMLElement;
-  this.styleChange.emit('#870700');
-  this.lastCall = 8
-  if(!this.play){
-    slides.style.marginLeft = "-700%"
-  }
-else{
-  this.timeoutIds.forEach(id => clearTimeout(id));
-  this.timeoutIds = [];
-  
-  btn_Manual.forEach((el)=>{
-    el.classList.remove("btn_Play")
-   })
-
-   slides.style.marginLeft = "-700%"
-  btn_Manual[7].classList.add("btn_Play")
-
-  const timeoutId = setTimeout(()=>{
-  
-    this.btn_Complete9()
-  
-  }, 7000)
-
-  this.timeoutIds.push(timeoutId);
-}
-  
-}
-
-btn_Complete9(){
-  const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-  const slides = document.querySelector(".first") as HTMLElement;
-  this.styleChange.emit('#001994');
-  this.lastCall = 9
-  if(!this.play){
-    slides.style.marginLeft = "-800%"
+    this.cancelTimers();
+    this.lastCall = slide;
+    this.slideOffset = (1 - slide) * 100;
+    this.progressSlide = null;
+    this.styleChange.emit(this.bannerColors[slide - 1]);
+    if (this.play) {
+      this.schedule(() => this.progressSlide = slide, 0);
+      this.schedule(() => this.selectSlide(slide % this.bannerColors.length + 1), 7000);
+    }
   }
 
-  else{
-    this.timeoutIds.forEach(id => clearTimeout(id));
-    this.timeoutIds = [];
-    
-    btn_Manual.forEach((el)=>{
-      el.classList.remove("btn_Play")
-     })
-  
-     slides.style.marginLeft = "-800%"
-    btn_Manual[8].classList.add("btn_Play")
-  
-    const timeoutId = setTimeout(()=>{
-    
-      this.btn_Complete10()
-    
-    }, 7000)
-  
-    this.timeoutIds.push(timeoutId);
-  }
-  
-}
-
-btn_Complete10(){
-  const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-  const slides = document.querySelector(".first") as HTMLElement;
-  this.styleChange.emit('#880801');
-  this.lastCall = 10
-  if(!this.play){
-    slides.style.marginLeft = "-900%"
+  teste(){
+    const btn_Manual = this.bannerHost.nativeElement.querySelectorAll(".manual-btn") as NodeListOf<HTMLElement>;
   }
 
-  else{
-    this.timeoutIds.forEach(id => clearTimeout(id));
-  this.timeoutIds = [];
-  
-  btn_Manual.forEach((el)=>{
-    el.classList.remove("btn_Play")
-   })
-
-   slides.style.marginLeft = "-900%"
-  btn_Manual[9].classList.add("btn_Play")
-
-  const timeoutId = setTimeout(()=>{
-  
-    this.btn_Complete11()
-  
-  }, 7000)
-
-  this.timeoutIds.push(timeoutId);
+  btn_Complete1() {
+    this.selectSlide(1);
   }
-  
-}
 
-btn_Complete11(){
-  const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-  const slides = document.querySelector(".first") as HTMLElement;
- this.styleChange.emit('#880700');
- this.lastCall = 11
- if(!this.play){
-  slides.style.marginLeft = "-1000%"
-}
+  btn_Complete2() {
+    this.selectSlide(2);
+  }
 
-else{
-  this.timeoutIds.forEach(id => clearTimeout(id));
-  this.timeoutIds = [];
-  
-  btn_Manual.forEach((el)=>{
-    el.classList.remove("btn_Play")
-   })
+  btn_Complete3() {
+    this.selectSlide(3);
+  }
 
-   slides.style.marginLeft = "-1000%"
-  btn_Manual[10].classList.add("btn_Play")
+  btn_Complete4() {
+    this.selectSlide(4);
+  }
 
-  const timeoutId = setTimeout(()=>{
-  
-    this.btn_Complete1()
-  
-  }, 7000)
+  btn_Complete5() {
+    this.selectSlide(5);
+  }
 
-  this.timeoutIds.push(timeoutId);
-}
-  
-}
+  btn_Complete6() {
+    this.selectSlide(6);
+  }
 
+  btn_Complete7() {
+    this.selectSlide(7);
+  }
+
+  btn_Complete8() {
+    this.selectSlide(8);
+  }
+
+  btn_Complete9() {
+    this.selectSlide(9);
+  }
+
+  btn_Complete10() {
+    this.selectSlide(10);
+  }
+
+  btn_Complete11() {
+    this.selectSlide(11);
+  }
 
 Pause(){
+    if (this.destroyed) {
+      return;
+    }
+
 
   if(!this.state){
-    const div = document.querySelector(".btn_Pause") as HTMLElement;
-    const btn_Manual = document.querySelectorAll(".filling") as NodeListOf<HTMLElement>;
-  this.timeoutIds.forEach(id => clearTimeout(id));
-  this.timeoutIds = [];
+    const div = this.bannerHost.nativeElement.querySelector(".btn_Pause") as HTMLElement | null;
+      if (!div) { return; }
+  this.cancelTimers();
+      this.progressSlide = null;
   this.play = false
-  btn_Manual.forEach((el)=>{
-    el.classList.remove("btn_Play")
-   })
   while (div.firstChild) {
     div.removeChild(div.firstChild);
   }
@@ -405,13 +147,11 @@ div.appendChild(novoSVG);
 div.style.transform = "rotate(-90deg)"
 div.style.paddingTop = "3.2px"
 this.state = true
-div.addEventListener("click", ()=>{
-
-})
   }
 
   else{
-    const div = document.querySelector(".btn_Pause") as HTMLElement;
+    const div = this.bannerHost.nativeElement.querySelector(".btn_Pause") as HTMLElement | null;
+      if (!div) { return; }
 
   while (div.firstChild) {
     div.removeChild(div.firstChild);
