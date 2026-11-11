@@ -69,14 +69,7 @@ export class ProductMainComponent implements OnInit, OnDestroy{
       this.siblingsList = []
       this.imageSinbling = [];
       this.actual_Url = ''
-      let name = ''
-      
-      
-      if(decodeURIComponent(params['productName'] || '')){
-        name = decodeURIComponent(params['productName']);
-        
-      }
-      
+      const name = params['productName'] || '';
 
       this.getDadosProductAll(name);
     });
@@ -199,10 +192,13 @@ export class ProductMainComponent implements OnInit, OnDestroy{
       (data: any[]) => {
         this.dadosProductAll = data;
 
-        for(let product of this.dadosProductAll){
-          if(product.name_Product == name){
-            this.produto = product
-            break
+        this.produto = this.dadosProductAll.find(product => product.name_Product === name);
+        if (!this.produto) {
+          try {
+            const legacyName = decodeURIComponent(name);
+            this.produto = this.dadosProductAll.find(product => product.name_Product === legacyName);
+          } catch {
+            this.produto = undefined;
           }
         }
         this.controller = 0;

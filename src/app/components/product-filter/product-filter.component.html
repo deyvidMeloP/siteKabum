@@ -662,7 +662,7 @@
 
                     <div class="swiper_Product">
                 
-                        <div class="product_Item" *ngFor="let produto of filterProduct" (mouseenter) = "enterProductItem($event)" (mouseleave) = "leaveProductItem($event)">
+                        <a class="product_Item" [attr.tabindex]="produto.name_Product ? null : -1" [routerLink]="produto.name_Product ? ['/Product', produto.name_Product] : null" *ngFor="let produto of filterProduct" (mouseenter) = "enterProductItem($event)" (mouseleave) = "leaveProductItem($event)">
                          
                         <div class="product_Discount_Stock">
                                   
@@ -765,7 +765,7 @@
               
                         </div> 
                         
-                        </div>
+                        </a>
                       
                     </div>
                 

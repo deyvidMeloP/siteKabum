@@ -712,6 +712,8 @@ ngx-slider {
 
 
 .product_Item{
+    color: inherit;
+    text-decoration: none;
     width: 23%;
     height: 436px;
     position: relative;
