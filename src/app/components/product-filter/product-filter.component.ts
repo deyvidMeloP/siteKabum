@@ -34,6 +34,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   convertCategoriesGrouped: any[] = []
   product: any[] = [];
   changeDisplay: any
+  isContentVisible = true;
   filterProduct: any[] = [];
   auxProduct: any[] = []
   auxFilter: any[] = []
@@ -182,10 +183,7 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   }
 
   updateNavigationDisplay(display: string): void {
-    const navigation = document.querySelector(".teste") as HTMLElement;
-    if (navigation) {
-      navigation.style.display = display;
-    }
+    this.isContentVisible = display !== 'none';
   }
 
   getDadosDoServico() {
