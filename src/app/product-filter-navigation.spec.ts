@@ -1,7 +1,7 @@
 ﻿import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -27,7 +27,7 @@ class NavigationHostComponent {}
     spyOn(window, 'IntersectionObserver').and.returnValue({ observe() {}, disconnect() {} } as any);
     await TestBed.configureTestingModule({
       declarations: [NavigationHostComponent, ProductFilterComponent, ProductMainComponent],
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([
+      imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterTestingModule.withRoutes([
         { path: 'Filter/:filterName', component: ProductFilterComponent },
         { path: 'Product/:productName', component: ProductMainComponent }
       ])],

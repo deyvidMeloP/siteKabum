@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, Subject, of } from 'rxjs';
@@ -40,7 +40,7 @@ describe('Page visibility and responsive layout', () => {
     };
     await TestBed.configureTestingModule({
       declarations: [NavbarComponent, FooterComponent, ProductFilterComponent],
-      imports: [FormsModule, RouterTestingModule, NgxSliderModule],
+      imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, NgxSliderModule],
       providers: [
         { provide: KabumServiceService, useValue: service },
         { provide: ActivatedRoute, useValue: { params: EMPTY } }

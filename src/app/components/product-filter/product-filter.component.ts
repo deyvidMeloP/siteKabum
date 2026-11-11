@@ -8,6 +8,7 @@ import { filter, first } from 'rxjs';
 import * as _ from 'lodash';
 import { cloneDeep } from 'lodash';
 import { Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 
 declare function swiper_Filter(): any
@@ -49,14 +50,19 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
   tempoRestante1Subscription: Subscription | undefined;
   tempoRestante2Subscription: Subscription | undefined;
   tempoRestante3Subscription: Subscription | undefined;
-  value: any;
-  highValue: any;
+  readonly minPriceControl = new FormControl<number | null>(null);
+  readonly maxPriceControl = new FormControl<number | null>(null);
+  get value(): any { return this.minPriceControl.value; }
+  set value(value: any) { this.minPriceControl.setValue(value ?? null, { emitEvent: false }); }
+  get highValue(): any { return this.maxPriceControl.value; }
+  set highValue(value: any) { this.maxPriceControl.setValue(value ?? null, { emitEvent: false }); }
   testa: any = 0
   ngxSlide: any = 0
   options: Options = {
     floor: 0, // Define um valor padrão para floor
     ceil: 2000,
     step: 1,
+    enforceStep: false,
     translate: (value: number, label: LabelType): string => {
       return `R$ ${value}`;
     }
@@ -634,14 +640,42 @@ return values
   onMinInputChange(event: any) {
     const value = parseFloat(event) || 0; // Converte o valor para um número float ou define como 0 se for inválido
     this.value = value;
+    this.applyPriceRange(true);
   }
 
-  onMaxInputChange(event: any) {
-    
-    const inputElement = event.target as HTMLInputElement;
-    
-   
-    
+  onMaxInputChange(value: number | null) {
+    this.highValue = value;
+    this.applyPriceRange(false);
+  }
+
+  private applyPriceRange(changedMinimum: boolean): void {
+    const floor = this.options.floor ?? 0;
+    const ceil = this.options.ceil ?? 2000;
+    let minimum = Math.min(ceil, Math.max(floor, Number.isFinite(this.value) ? this.value : floor));
+    let maximum = Math.min(ceil, Math.max(floor, Number.isFinite(this.highValue) ? this.highValue : ceil));
+    if (minimum > maximum) {
+      if (changedMinimum) { minimum = maximum; }
+      else { maximum = minimum; }
+    }
+    this.value = minimum;
+    this.highValue = maximum;
+    this.filterAll(1, 0, null);
+  }
+
+  clearFilters(): void {
+    for (const group of Object.values(this.categoriesGrouped)) {
+      for (const category of group.children ?? []) {
+        category.selected = false;
+      }
+    }
+    this.auxFilter = [];
+    this.auxPcProduct = [];
+    this.auxProduct = [];
+    this.nameGroup = [];
+    this.minPriceControl.reset(this.options.floor ?? 0, { emitEvent: false });
+    this.maxPriceControl.reset(this.options.ceil ?? 2000, { emitEvent: false });
+    this.filterAll(1, 0, null);
+    this.CategoryFilter = undefined;
   }
 
 onValueChange(event: any): void {
