@@ -273,12 +273,12 @@
 
                             <div class="siblings_Wrapper swiper-wrapper">
                                     
-                                <div class="swiper-slide siblings_Slide" *ngFor="let sb of siblingsList" (click)="changeProductName(sb.name_Product)">
+                                <button type="button" class="swiper-slide siblings_Slide" *ngFor="let sb of siblingsList" [disabled]="!sb.name_Product" [attr.aria-label]="'Ver produto ' + (sb.name_Product || 'indisponível')" (click)="changeProductName(sb.name_Product, $event)">
                                 
                                     <img [src]="sb.imageUrl" alt="Product">
                                     <h1>{{sb.price  | currency:'BRL'}} </h1>
         
-                                </div>
+                                </button>
                                                 
                             </div>
                         </div>

@@ -16,7 +16,6 @@ describe('Ciclo de vida do ProductMain', () => {
   let offer3: Subject<string>;
   let observers: Array<{ callback: IntersectionObserverCallback; instance: any; target: Element }>;
   let swipers: any[];
-  let originalSiblings: any;
   let service: any;
   let originalInitialize: PropertyDescriptor | undefined;
   let initializers: WeakMap<HTMLElement, jasmine.Spy>;
@@ -34,7 +33,7 @@ describe('Ciclo de vida do ProductMain', () => {
   function swiper(): any {
     const instance: any = {
       activeIndex: 0, destroyed: false,
-      slidePrev: jasmine.createSpy(), slideNext: jasmine.createSpy(), slideTo: jasmine.createSpy(),
+      slidePrev: jasmine.createSpy(), slideNext: jasmine.createSpy(), slideTo: jasmine.createSpy(), update: jasmine.createSpy(),
       destroy: jasmine.createSpy().and.callFake(() => instance.destroyed = true)
     };
     swipers.push(instance);
@@ -89,11 +88,10 @@ describe('Ciclo de vida do ProductMain', () => {
       command$: EMPTY, offerTime2$: offer2.asObservable(), offerTime3$: offer3.asObservable(),
       accountant_Time2: jasmine.createSpy(), accountant_Time3: jasmine.createSpy()
     };
-    originalSiblings = (window as any).siblings_Swiper;
-    (window as any).siblings_Swiper = () => {
-      const element = fixture.nativeElement.querySelector('.swiper_All');
-      if (element) { element.swiper = swiper(); }
-    };
+    spyOn(ProductMainComponent.prototype as any, 'createRelatedSwiper').and.callFake((element: any) => {
+      element.swiper = swiper();
+      return element.swiper;
+    });
     await TestBed.configureTestingModule({
       declarations: [ProductMainComponent], imports: [CommonModule],
       providers: [
@@ -111,8 +109,6 @@ describe('Ciclo de vida do ProductMain', () => {
     offer2.complete();
     offer3.complete();
     for (const response of [...products, ...images, ...departments]) { response.complete(); }
-    if (originalSiblings === undefined) { delete (window as any).siblings_Swiper; }
-    else { (window as any).siblings_Swiper = originalSiblings; }
     if (originalInitialize) { Object.defineProperty(HTMLElement.prototype, 'initialize', originalInitialize); }
     else { delete (HTMLElement.prototype as any).initialize; }
   });

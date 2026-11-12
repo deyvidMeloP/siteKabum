@@ -6,7 +6,8 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { resolveCatalogName } from '../../../routing/catalog-route';
 declare function swiperProductMain(): any;
-declare function siblings_Swiper(): any;
+import Swiper from 'swiper';
+import { A11y, Navigation } from 'swiper/modules';
 
 @Component({
   selector: 'app-product-main',
@@ -286,11 +287,33 @@ export class ProductMainComponent implements OnInit, OnDestroy{
 
       })
       this.initializeObserver();
-      if (this.siblingsReady && !this.swiper) {
-        siblings_Swiper();
-        this.swiper = this.elementRef.nativeElement.querySelector('.swiper_All')?.swiper;
+      if (this.siblingsReady) {
+        const element = this.elementRef.nativeElement.querySelector('.swiper_All') as HTMLElement | null;
+        if (element) {
+          if (!this.swiper || this.swiper.destroyed) {
+            this.swiper = this.createRelatedSwiper(element);
+          } else {
+            this.swiper.update();
+          }
+        }
       }
     }, { injector: this.injector, phase: AfterRenderPhase.MixedReadWrite });
+  }
+
+  private createRelatedSwiper(element: HTMLElement): Swiper {
+    Swiper.use([A11y, Navigation]);
+    const controls = element.parentElement!;
+    return new Swiper(element, {
+      a11y: { slideRole: '', slideLabelMessage: '' },
+      slidesPerView: 'auto',
+      spaceBetween: 40,
+      slidesOffsetBefore: 15,
+      slidesOffsetAfter: 15,
+      navigation: {
+        prevEl: controls.querySelector<HTMLElement>('.siblings_Back'),
+        nextEl: controls.querySelector<HTMLElement>('.siblings_Next')
+      }
+    });
   }
 
 changeSlide(a: any){
@@ -464,7 +487,11 @@ changeSlide(a: any){
 
   }
 
-  changeProductName(name: string){
+  changeProductName(name: string, event?: Event){
+    if (this.destroyed || !name || event?.defaultPrevented || this.swiper?.allowClick === false) {
+      event?.preventDefault();
+      return;
+    }
   
     this.departService.changeProductMainName(name)
     window.scrollTo(0, 0);
