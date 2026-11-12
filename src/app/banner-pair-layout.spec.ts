@@ -15,6 +15,7 @@ describe('Layout dos departamentos do BannerPair', () => {
 
   beforeEach(async () => {
     spyOn(BannerPairComponent.prototype, 'ngOnInit').and.stub();
+    spyOn(BannerPairComponent.prototype as any, 'initializeSwipers').and.stub();
     spyOn(window as any, 'swiper_Section').and.stub();
     sections = new Subject<any[]>();
     await TestBed.configureTestingModule({
@@ -106,4 +107,76 @@ describe('Layout dos departamentos do BannerPair', () => {
       expect(banner.nativeElement.querySelectorAll('.departments_Swiper .departments_Item').length).toBe(size);
     }
   }));
+
+  function inViewport(width: number, verify: (document: Document) => void): void {
+    const frame = document.createElement('iframe');
+    frame.style.cssText = 'position:fixed;inset:0;border:0;height:900px;z-index:10000';
+    frame.style.width = width + 'px';
+    document.body.appendChild(frame);
+    try {
+      const view = frame.contentDocument!;
+      view.head.innerHTML = '<style>*{box-sizing:border-box;margin:0;padding:0}</style>';
+      for (const style of Array.from(document.querySelectorAll('style'))) {
+        view.head.appendChild(style.cloneNode(true));
+      }
+      const content = banner.nativeElement.cloneNode(true) as HTMLElement;
+      for (const image of Array.from(content.querySelectorAll('img'))) {
+        image.width = 350;
+        image.height = 298;
+        image.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="350" height="298"/>';
+      }
+      view.body.appendChild(content);
+      verify(view);
+    } finally {
+      frame.remove();
+    }
+  }
+
+  it('mantém as duas setas acima da área dos departamentos em 1440px', () => {
+    render(['HARDWARE', 'COMPUTADORES']);
+    inViewport(1440, view => {
+      for (const selector of ['.departments_Back', '.departments_Next']) {
+        const arrow = view.querySelector(selector)!;
+        arrow.scrollIntoView({ block: 'center' });
+        const bounds = arrow.getBoundingClientRect();
+        const hit = view.elementFromPoint(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+        expect(hit === arrow || arrow.contains(hit)).withContext(selector).toBeTrue();
+        expect(bounds.width).toBe(32);
+        expect(bounds.height).toBe(32);
+      }
+      const back = view.querySelector('.departments_Back')!.getBoundingClientRect();
+      const pair = view.querySelector('.banner_Pair')!.getBoundingClientRect();
+      expect(back.left - pair.left).toBe(32);
+    });
+  });
+
+  it('acomoda os três banners em 768px sem depender de recorte de overflow', () => {
+    inViewport(768, view => {
+      const container = view.querySelector('.banner_Departments') as HTMLElement;
+      container.style.overflow = 'visible';
+      const bounds = container.getBoundingClientRect();
+      const images = Array.from(container.querySelectorAll('img'));
+      expect(images.length).toBe(3);
+      for (const image of images) {
+        const imageBounds = image.getBoundingClientRect();
+        expect(imageBounds.left).toBeGreaterThanOrEqual(bounds.left);
+        expect(imageBounds.right).toBeLessThanOrEqual(bounds.right + 1);
+        expect(imageBounds.width).toBeGreaterThan(0);
+        expect(imageBounds.height).toBe(298);
+      }
+      expect(container.scrollWidth).toBeLessThanOrEqual(container.clientWidth + 1);
+    });
+  });
+
+  it('preserva a visibilidade responsiva dos banners e das setas', () => {
+    for (const width of [375, 768, 1024, 1440]) {
+      inViewport(width, view => {
+        const css = (selector: string) => view.defaultView!.getComputedStyle(view.querySelector(selector)!);
+        expect(css('.banner_Departments').display === 'none').withContext(String(width)).toBe(width <= 600);
+        for (const selector of ['.departments_Back', '.departments_Next']) {
+          expect(css(selector).display === 'none').withContext(width + ' ' + selector).toBe(width <= 1020);
+        }
+      });
+    }
+  });
 });
