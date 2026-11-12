@@ -723,12 +723,18 @@ closeMenuMobile(){
 
 
 }
-NavigationPage(name: string){
+NavigationPage(name: string, level: 'section' | 'subsection' | 'parent' = 'section'){
   this.leave()
   this.leaveButton()
   this.departments_Leave()
   this.closeMenuMobile()
-  this.stateService.changeFilterName(name);
+  if (level === 'parent') {
+    this.stateService.changeParentName(name, { filterName: this.nameSection[0], subsectionName: this.nameSection[1], parentName: '' });
+  } else if (level === 'subsection') {
+    this.stateService.changeSubsectionName(name, this.nameSection[0]);
+  } else {
+    this.stateService.changeFilterName(name);
+  }
    
 }
 

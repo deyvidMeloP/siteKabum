@@ -11,6 +11,7 @@ import { catchError, distinctUntilChanged, forkJoin, map, of, switchMap, timer }
 import { FormControl } from '@angular/forms';
 import { filterCatalogByCategories, groupFilterCategories, indexFilterCategories } from './category-relations';
 import { FilterRouteContext, ProductFilterStateService, filterContextKey } from '../../services/product-filter-state.service';
+import { resolveFilterRouteContext } from '../../routing/catalog-route';
 
 
 declare function swiper_Filter(): any
@@ -110,9 +111,9 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     this.startOfferCountdown();
     this.route.params.pipe(
       map(params => ({
-        filterName: decodeURIComponent(params['filterName'] || ''),
-        subsectionName: decodeURIComponent(params['subsectionName'] || ''),
-        parentName: decodeURIComponent(params['parentName'] || '')
+        filterName: params['filterName'] || '',
+        subsectionName: params['subsectionName'] || '',
+        parentName: params['parentName'] || ''
       })),
       distinctUntilChanged((previous, current) => filterContextKey(previous) === filterContextKey(current)),
       switchMap(context => {
@@ -139,6 +140,8 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
         this.section = data.section;
         this.subsection = data.subsection;
         this.categories = data.categories;
+        this.filterContext = resolveFilterRouteContext(this.filterContext!, this.section, this.subsection);
+        this.name = this.filterContext.parentName || this.filterContext.subsectionName || this.filterContext.filterName;
         const [floor, ceil] = this.SearchSection();
         this.options = { ...this.options, floor, ceil };
         this.minPriceControl.reset(floor, { emitEvent: false });
@@ -491,24 +494,13 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
 
 
   filter_Section(newName: string) {
-    let subsection: boolean = false
-
-    for(let sbc of this.subsection){
-
-      if(sbc.parentId != 0 && sbc.name == newName){
-        this.stateService.changeParentName(newName)
-        break
-      }
-
-      else if(sbc.parentId == 0 && sbc.name == newName){
-        this.stateService.changeSubsectionName(newName)
-        break
-      }
-
+    if (!this.filterContext || !this.categoriesRelacionadas.some(item => item.name === newName)) { return; }
+    if (this.searchSection) {
+      this.stateService.changeSubsectionName(newName, this.filterContext.filterName);
+    } else {
+      this.stateService.changeParentName(newName, this.filterContext);
     }
-
     window.scrollTo(0, 0);
-    
   }
 
   onMinInputChange(event: any) {

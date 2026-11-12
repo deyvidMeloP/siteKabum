@@ -4,6 +4,7 @@ import { Component, OnInit, ElementRef,QueryList, OnDestroy, ViewChildren, ViewC
 import { KabumServiceService } from '../../../services/kabum-service.service';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { resolveCatalogName } from '../../../routing/catalog-route';
 declare function swiperProductMain(): any;
 declare function siblings_Swiper(): any;
 
@@ -192,15 +193,8 @@ export class ProductMainComponent implements OnInit, OnDestroy{
       (data: any[]) => {
         this.dadosProductAll = data;
 
-        this.produto = this.dadosProductAll.find(product => product.name_Product === name);
-        if (!this.produto) {
-          try {
-            const legacyName = decodeURIComponent(name);
-            this.produto = this.dadosProductAll.find(product => product.name_Product === legacyName);
-          } catch {
-            this.produto = undefined;
-          }
-        }
+        const resolvedName = resolveCatalogName(name, this.dadosProductAll.map(product => product.name_Product));
+        this.produto = this.dadosProductAll.find(product => product.name_Product === resolvedName);
         this.controller = 0;
         if (!this.produto) {
           return;

@@ -4,6 +4,7 @@ import { Observable,  Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { FilterRouteContext } from './product-filter-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +57,7 @@ export class KabumServiceService {
     this.subsectionNameSource = new BehaviorSubject<string>(savedSubsectionName);
     this.subsectionName$ = this.subsectionNameSource.asObservable();
 
-    const savedParentName = localStorage.getItem('subsectionName') || '';
+    const savedParentName = localStorage.getItem('parentName') || '';
     this.parentNameSource = new BehaviorSubject<string>(savedParentName)
     this.parentName$ = this.parentNameSource.asObservable()
 
@@ -93,61 +94,45 @@ sendNavbar(command: string){
   
 
   changeFilterName(name: string) {
-    const encodedName = encodeURIComponent(name);
-    localStorage.setItem('filterName', name);
-    this.filterNameSource.next(name);
-    this.router.navigate(['Filter', encodedName]).then(() => {
+    return this.navigateFilter({ filterName: name, subsectionName: '', parentName: '' }).then(() => {
       // Lógica adicional após a navegação, se necessário
     });
   }
 
-  changeSubsectionName(name: string){
-    const encodedName = encodeURIComponent(name);
-    localStorage.setItem('subsectionName', name)
-    let filterName = localStorage.getItem('filterName')
-    let encodedfilter = filterName
-    if(filterName){
-      encodedfilter= encodeURIComponent(filterName);
-    }
-  
-    this.subsectionNameSource.next(name);
-    this.router.navigate(['Filter', encodedfilter, encodedName]).then(() => {
+  changeSubsectionName(name: string, filterName = this.currentFilterContext().filterName) {
+    return this.navigateFilter({ filterName, subsectionName: name, parentName: '' }).then(() => {
       // Lógica adicional após a navegação, se necessário
     });
   }
 
-  changeParentName(name: string){
-    const encodedName = encodeURIComponent(name);
-    localStorage.setItem('parentName', name)
-
-   
-   
-    let filterName = localStorage.getItem('filterName')
-    let subsectionName = localStorage.getItem('subsectionName')
-   
-    let encodedfilter = filterName, encodedSubsection = subsectionName
-    if(filterName){
-      encodedfilter = encodeURIComponent(filterName);
-    }
-
-    if(subsectionName){
-      encodedSubsection = encodeURIComponent(subsectionName);
-    }
-
-
-
-   
-    this.parentNameSource.next(name)
-    this.router.navigate(['Filter', encodedfilter, encodedSubsection, encodedName]).then(() => {
+  changeParentName(name: string, context = this.currentFilterContext()) {
+    return this.navigateFilter({ ...context, parentName: name }).then(() => {
       // Lógica adicional após a navegação, se necessário
     });
+  }
+
+  private currentFilterContext(): FilterRouteContext {
+    let route = this.router.routerState.snapshot.root;
+    while (route.firstChild) { route = route.firstChild; }
+    return { filterName: route.params['filterName'] || '', subsectionName: route.params['subsectionName'] || '', parentName: route.params['parentName'] || '' };
+  }
+
+  private navigateFilter(context: FilterRouteContext): Promise<boolean> {
+    if (!context.filterName || (context.parentName && !context.subsectionName)) { return Promise.resolve(false); }
+    const keys = ['filterName', 'subsectionName', 'parentName'] as const;
+    const sources = [this.filterNameSource, this.subsectionNameSource, this.parentNameSource];
+    keys.forEach((key, index) => {
+      if (context[key]) { localStorage.setItem(key, context[key]); }
+      else { localStorage.removeItem(key); }
+      sources[index].next(context[key]);
+    });
+    return this.router.navigate(['/Filter', ...keys.map(key => context[key]).filter(Boolean)]);
   }
 
   changeProductMainName(name: string) {
-    const encodedName = encodeURIComponent(name);
     localStorage.setItem('productName', name);
     this.productMainNameSource.next(name);
-    this.router.navigate(['Product', encodedName])
+    return this.router.navigate(['/Product', name]);
   }
 
   registerProductVisit(id: number): Observable<void> {
