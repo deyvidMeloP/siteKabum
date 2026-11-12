@@ -1,12 +1,13 @@
-import { Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { AfterRenderRef, ElementRef, Injector, OnDestroy, QueryList, ViewChildren, afterNextRender, Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { OnInit} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import type { SwiperContainer } from 'swiper/element';
+import type { Swiper } from 'swiper';
 import { KabumServiceService } from '../../services/kabum-service.service';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { cloneDeep } from 'lodash';
 
-declare function swiper_Section(): any;
 
 
 @Component({
@@ -14,7 +15,7 @@ declare function swiper_Section(): any;
   templateUrl: './banner-pair.component.html',
   styleUrl: './banner-pair.component.css'
 })
-export class BannerPairComponent implements OnInit, AfterViewInit {
+export class BannerPairComponent implements OnInit, AfterViewInit, OnDestroy {
   cont: any = 0
   nameSub: any[] = []
   dadosDoServiceBrands: any[] = [];
@@ -40,11 +41,19 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   departments_Swiper: any = [];
   mostSearch:any = [];
   swiperMobile: any = []
+  @ViewChildren('pairSwiper', { read: ElementRef }) private carouselElements?: QueryList<ElementRef<SwiperContainer>>;
+  private readonly destroy$ = new Subject<void>();
+  private readonly managedSwipers = new Set<Swiper>();
+  private readonly pendingProductResets = new Set<number>();
+  private viewInitialization?: AfterRenderRef;
+  private destroyed = false;
+  private productsLoaded = false;
+  private sectionsLoaded = false;
   constructor(
     private dadosService: KabumServiceService,
     private departService: KabumServiceService, private dadosServiceBrands: KabumServiceService,  private router: Router, private dadosProdutos: KabumServiceService, private timerService: KabumServiceService, 
     private stateService: KabumServiceService, private sectionService: KabumServiceService,
-    private subSectionService: KabumServiceService,) {
+    private subSectionService: KabumServiceService, private readonly viewInjector?: Injector) {
  
    
   }
@@ -56,17 +65,17 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     this.getDadosDepartments()
     this.getDadosSection()
     this.getDadosSubsection()
-    this.tempoRestante1Subscription = this.timerService.offerTime1$.subscribe(
+    this.tempoRestante1Subscription = this.timerService.offerTime1$.pipe(takeUntil(this.destroy$)).subscribe(
       tempo => this.offer_Time1= tempo
     );
     this.timerService.accountant_Time1(); 
 
-    this.tempoRestante2Subscription = this.timerService.offerTime2$.subscribe(
+    this.tempoRestante2Subscription = this.timerService.offerTime2$.pipe(takeUntil(this.destroy$)).subscribe(
       tempo => this.offer_Time2= tempo
     );
     this.timerService.accountant_Time2(); 
 
-    this.tempoRestante3Subscription = this.timerService.offerTime3$.subscribe(
+    this.tempoRestante3Subscription = this.timerService.offerTime3$.pipe(takeUntil(this.destroy$)).subscribe(
       tempo => this.offer_Time3 = tempo
     );
     this.timerService.accountant_Time3(); 
@@ -94,6 +103,105 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     */
   }
 
+
+
+  ngOnDestroy(): void {
+    this.destroyed = true;
+    this.viewInitialization?.destroy();
+    this.viewInitialization = undefined;
+    this.destroy$.next();
+    this.destroy$.complete();
+    for (const swiper of this.managedSwipers) {
+      if (!swiper.destroyed) { swiper.destroy(true, true); }
+    }
+    this.managedSwipers.clear();
+    this.marker_Swiper = [];
+    this.product_Swiper = [];
+    this.departments_Swiper = [];
+    this.pendingProductResets.clear();
+  }
+
+  private scheduleViewInitialization(): void {
+    if (this.destroyed || !this.viewInjector) { return; }
+    this.viewInitialization?.destroy();
+    this.viewInitialization = afterNextRender(() => {
+      this.viewInitialization = undefined;
+      if (this.destroyed) { return; }
+      this.initializeSwipers();
+    }, { injector: this.viewInjector });
+  }
+
+  private initializeGroup(className: string, params: object): Swiper[] {
+    return (this.carouselElements?.toArray() ?? [])
+      .map(reference => reference.nativeElement)
+      .filter(element => element.isConnected && element.tagName === 'SWIPER-CONTAINER' && element.classList.contains(className))
+      .map(element => {
+        if (!element.swiper || element.swiper.destroyed) {
+          Object.assign(element, params);
+          element.initialize();
+        }
+        const swiper = element.swiper;
+        this.managedSwipers.add(swiper);
+        swiper.update();
+        return swiper;
+      });
+  }
+
+  private initializeSwipers(): void {
+    const swiperParams2 = {
+      simulateTouch: true,
+      allowTouchMove: true,
+      breakpoints:{
+        1020:{
+          simulateTouch: false,
+          allowTouchMove: false
+        }
+      },
+      on: {
+        init() {/*trava a inicilização e inicia por aqui */
+          // ...
+        }
+      }
+    };
+    const swiperParams3 = {
+      slidesPerView: 'auto',
+      breakpoints:{
+        1020:{
+          spaceBetween: 0
+        }
+      },
+      on: {
+        init() {/*trava a inicilização e inicia por aqui */
+          // ...
+        }
+      }
+    };
+    const swiperParams = {
+      updateOnWindowResize: true,
+
+      on: {
+        init() {/*trava a inicilização e inicia por aqui */
+          // ...
+        },
+      },
+    };
+    this.marker_Swiper = this.initializeGroup('marker_Swiper', swiperParams2);
+    if (this.sectionsLoaded) {
+      this.departments_Swiper = this.initializeGroup('departments_Swiper', swiperParams3);
+    }
+    if (this.productsLoaded) {
+      this.product_Swiper = this.initializeGroup('swiper_Product', swiperParams);
+    }
+    for (const index of this.pendingProductResets) {
+      const swiper = this.product_Swiper[index];
+      if (!swiper) { continue; }
+      const count = index === 0 ? this.produto.length : this.mostSearch.length;
+      swiper.slideTo(0, 0);
+      if (count <= (index === 0 ? 5 : 4)) { swiper.disable(); }
+      else { swiper.enable(); }
+      this.pendingProductResets.delete(index);
+    }
+  }
 
   swipeMove(className: string, index: any){
     
@@ -161,7 +269,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
 
   getDadosSubsection(){
 
-    this.subSectionService.getDadosSubsection().subscribe(
+    this.subSectionService.getDadosSubsection().pipe(takeUntil(this.destroy$)).subscribe(
   
       (data: any[]) =>{
   
@@ -172,150 +280,15 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
     )
   }
   getDadosDoServico() {
-    this.dadosProdutos.getDados().subscribe(  
+    this.dadosProdutos.getDados().pipe(takeUntil(this.destroy$)).subscribe(
       (data: any[]) => {
         this.produtoAll = data;
-        this.produto = this.produtoAll
-        this.MostSearch('TODOS')
-        setTimeout(()=>{
-          
-          const marker_Swiper = document.querySelectorAll(".marker_Swiper")
-               
-          const product_Swiper = document.querySelectorAll(".swiper_Product")
-
-          const departments_Swiper = document.querySelectorAll(".departments_Swiper")
-    
-          const swiperParams2 = {
-            simulateTouch: true,
-            allowTouchMove: true,
-            breakpoints:{
-              1020:{
-                simulateTouch: false,
-                allowTouchMove: false
-              }
-            },
-            on: {
-              init() {/*trava a inicilização e inicia por aqui */
-                // ...
-              }
-            }
-          }
-          marker_Swiper.forEach((el: any)=>{
-            Object.assign(el, swiperParams2)
-            el.initialize();
-            this.marker_Swiper.push(el.swiper);
-           
-           
-          })
-          const swiperParams3 = {
-            slidesPerView: 'auto',
-            breakpoints:{
-              1020:{
-                spaceBetween: 0
-              }
-            },
-            on: {
-              init() {/*trava a inicilização e inicia por aqui */
-                // ...
-              }
-            }
-          }
-
-          departments_Swiper.forEach((el: any)=>{
-            Object.assign(el, swiperParams3)
-            el.initialize();
-            this.departments_Swiper.push(el.swiper);
-           
-          })
-
-         
-    
-          const swiperParams = {
-            updateOnWindowResize: true,
-            
-            on: {
-              init() {/*trava a inicilização e inicia por aqui */
-                // ...
-              },
-            },
-          };
-    
-          product_Swiper.forEach((el: any, index) => {
-            Object.assign(el, swiperParams);
-            el.initialize();
-            this.product_Swiper.push(el.swiper);
-          });
-    
-          const backButton = document.querySelectorAll(".marker_Back")
-          const nextButton = document.querySelectorAll(".marker_Next")
-    
-          const IconBackwardPair = document.querySelectorAll(".IconBackwardPair")
-          const IconForwardPair = document.querySelectorAll(".IconForwardPair")
-
-          const departments_Back = document.querySelectorAll(".departments_Back")
-          const departments_Next = document.querySelectorAll(".departments_Next")
-    
-      
-          if(backButton){
-    
-            backButton.forEach((el, index)=>{
-           
-              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-           
-            })
-            
-          }
-      
-          if(nextButton){
-           
-            nextButton.forEach((el, index)=>{
-           
-              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-           
-            })
-          
-          }
-    
-          if(IconBackwardPair){
-          
-            IconBackwardPair.forEach((el, index)=>{
-          
-              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-          
-            })
-         
-          }
-    
-          if(IconForwardPair){
-         
-            IconForwardPair.forEach((el, index)=>{
-         
-              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-            })
-          }
-
-          if(departments_Back){
-          
-            departments_Back.forEach((el, index)=>{
-          
-              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-          
-            })
-         
-          }
-    
-          if(departments_Next){
-         
-           departments_Next.forEach((el, index)=>{
-         
-              el.addEventListener('click', (event)=> this.swipeMove(el.classList.value, index))
-            })
-          }
-    
-        }, 0)
-        },
+        this.produto = this.produtoAll;
+        this.MostSearch('TODOS');
+        this.productsLoaded = true;
+        this.scheduleViewInitialization();
+      }
     );
-
   }
 
   teste(){
@@ -363,10 +336,11 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
 
   getDadosSection(){
    
-    this.sectionService.getDadosSection().subscribe(
+    this.sectionService.getDadosSection().pipe(takeUntil(this.destroy$)).subscribe(
       (data: any[]) => {
         this.section = data;
-        swiper_Section()
+        this.sectionsLoaded = true;
+        this.scheduleViewInitialization();
       },
     );
 
@@ -374,7 +348,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   
 
   getDadosBrands() {
-    this.dadosServiceBrands.getDadosBrands().subscribe(
+    this.dadosServiceBrands.getDadosBrands().pipe(takeUntil(this.destroy$)).subscribe(
       (data: any[]) => {
         this.dadosDoServiceBrands = data;
       },
@@ -383,7 +357,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   }
   
   getDadosDepartments() {
-    this.departService.getDadosDepartments().subscribe(
+    this.departService.getDadosDepartments().pipe(takeUntil(this.destroy$)).subscribe(
       (data: any[]) => {
         this.departments = data;
       },
@@ -435,6 +409,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
  }
 
  filter_Marker(category: string ,event: any){
+    if (this.destroyed) { return; }
 
   const filter = event.target.innerText
   
@@ -483,15 +458,8 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
 
     }
     
-    if(this.produto.length <= 5){
-      this.product_Swiper[0].slideTo(0, 0)
-      this.product_Swiper[0].disable()
-
-    }
-    else{
-      this.product_Swiper[0].enable()
-      this.product_Swiper[0].slideTo(0, 0)
-    }
+    this.pendingProductResets.add(0);
+    this.scheduleViewInitialization();
 
     break;
 
@@ -499,17 +467,8 @@ export class BannerPairComponent implements OnInit, AfterViewInit {
   
     this.MostSearch(filter)
 
-    if(this.mostSearch.length <= 4){
-      this.product_Swiper[1].slideTo(0, 0)
-      this.product_Swiper[1].disable()
-
-    }
-    else{
-      
-      this.product_Swiper[1].enable()
-      this.product_Swiper[1].slideTo(0, 0)
-
-    }
+    this.pendingProductResets.add(1);
+    this.scheduleViewInitialization();
 
     break;
 

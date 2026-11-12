@@ -1,4 +1,4 @@
 {
   "extends": "./tsconfig.spec.json",
-  "include": ["src/app/ui-visibility.spec.ts", "src/app/visits.spec.ts", "src/app/banner-pair-layout.spec.ts", "src/app/product-main-lifecycle.spec.ts", "src/app/product-filter-navigation.spec.ts", "src/app/banner-lifecycle.spec.ts", "src/app/product-filter-clear.spec.ts", "src/app/product-filter-loading.spec.ts", "src/app/product-filter-categories.spec.ts", "src/app/product-filter-state.spec.ts", "src/app/catalog-routing.spec.ts", "src/**/*.d.ts"]
+  "include": ["src/app/ui-visibility.spec.ts", "src/app/visits.spec.ts", "src/app/banner-pair-layout.spec.ts", "src/app/product-main-lifecycle.spec.ts", "src/app/product-filter-navigation.spec.ts", "src/app/banner-lifecycle.spec.ts", "src/app/product-filter-clear.spec.ts", "src/app/product-filter-loading.spec.ts", "src/app/product-filter-categories.spec.ts", "src/app/product-filter-state.spec.ts", "src/app/catalog-routing.spec.ts", "src/app/banner-pair-lifecycle.spec.ts", "src/**/*.d.ts"]
 }
