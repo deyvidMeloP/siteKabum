@@ -340,7 +340,7 @@
       </div>
       
       <swiper-container init="false" #pairSwiper #swiperContainer class="marker_Swiper" simulate-touch="false" [allowTouchMove]="false"
-       space-between="9"  loop="true" speed="350" style="display: flex; padding: 5px;">
+       slides-per-view="auto" space-between="9"  loop="true" speed="350" style="display: flex; padding: 5px;">
           
         <swiper-slide class="swiper-slide  marker_swiper_Button button_Todos" (click)="filter_Marker('search', $event)">
                   <h1>TODOS</h1>
