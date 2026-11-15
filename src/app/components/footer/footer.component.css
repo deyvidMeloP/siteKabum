@@ -29,6 +29,7 @@ footer{
 }
 
 .footer_Input{
+    min-width: 0;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -36,6 +37,7 @@ footer{
 }
 
 .footer_Input input{
+    min-width: 0;
     width: 29vw;
     height: 48px;
     border-radius: 5px;

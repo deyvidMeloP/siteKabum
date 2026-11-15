@@ -267,11 +267,12 @@
 
 .navbar_downMenu{
     background-color: #ff6500;
-    height: 33px;
+    min-height: 33px;
     width: 100%;
 }
 
 .navbar_downMenu ul{
+    flex-wrap: wrap;
     display: flex;
     list-style: none;
     font-size: 20px;
@@ -281,6 +282,7 @@
 }
 
 .downMenu_List{
+    min-height: 33px;
     position: relative;
     cursor: pointer;
     min-width: max-content;
