@@ -15,7 +15,6 @@ export class ApiKabumComponent implements OnInit{
  
  
   dadosDoServico: any[] = [];
-  dadosDoServicoImages: any[] = [];
   offer_Time1: string = '';
   offer_Time2: string = '';
   offer_Time3: string = '';
@@ -26,11 +25,10 @@ export class ApiKabumComponent implements OnInit{
   swiperProduct: any;
   product_Swiper: any = [];
 
-  constructor(private dadosService: KabumServiceService, private dadosServiceImages: KabumServiceService, private router: Router, private timerService: KabumServiceService) { }
+  constructor(private dadosService: KabumServiceService, private router: Router, private timerService: KabumServiceService) { }
   
   ngOnInit(): void {
     this.getDadosDoServico();
-    this.getDadosServiceImages();
     this.tempoRestante1Subscription = this.timerService.offerTime1$.subscribe(
       tempo => this.offer_Time1= tempo
     );
@@ -149,28 +147,6 @@ export class ApiKabumComponent implements OnInit{
 
   }
 
-  getDadosServiceImages(){
-    this.dadosServiceImages.getDadosImages().subscribe(
-      (data: any[])=> {
-        const uniqueProducts = new Set<number>();
-        this.dadosDoServicoImages = data.filter(image =>{
-          if(!uniqueProducts.has(image.productId)){
-            uniqueProducts.add(image.productId);
-            return true;
-          }
-     
-          return false;
-          
-        })
-        },
-      (error: any)=>{
-        console.error('Erro ao receber dados da imagem', error)
-      }
-      
-    )
-
-  }
-  
   enterProductItem(event: MouseEvent){
      
     const targetElem = event.currentTarget as HTMLElement;

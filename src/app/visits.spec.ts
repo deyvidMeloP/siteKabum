@@ -1,3 +1,5 @@
+import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
@@ -83,11 +85,38 @@ describe('Visits in product cards and ranking', () => {
         if (fails) service.registerProductVisit.and.returnValue(throwError(() => new Error('offline')));
         const product = { idProduct: 7, visits: -1, name_Product: 'A' };
         if (card === 'banner') component.navegarParaProductMain(product);
-        else new ApiKabumComponent(service, service, {} as any, service).navegarParaProductMain(product);
+        else new ApiKabumComponent(service, {} as any, service).navegarParaProductMain(product);
         expect(service.registerProductVisit).toHaveBeenCalledOnceWith(7);
         expect(service.changeProductMainName).toHaveBeenCalledOnceWith('A');
         expect(product.visits).toBe(-1);
       });
     }
   }
+});
+
+describe('Consultas de imagens do catálogo', () => {
+  let service: KabumServiceService; let http: HttpTestingController;
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ declarations: [ApiKabumComponent], imports: [CommonModule, HttpClientTestingModule], providers: [{ provide: Router, useValue: { navigate: jasmine.createSpy().and.returnValue(Promise.resolve(true)) } }], schemas: [CUSTOM_ELEMENTS_SCHEMA] }).compileComponents();
+    service = TestBed.inject(KabumServiceService); http = TestBed.inject(HttpTestingController);
+  });
+  afterEach(() => { http.verify(); service.ngOnDestroy(); });
+  it('renderiza as imagens dos produtos sem consultar a coleção de imagens', () => {
+    spyOn(window, 'setTimeout').and.stub();
+    const fixture = TestBed.createComponent(ApiKabumComponent); fixture.detectChanges();
+    const unused = http.match(request => new URL(request.url).pathname === '/api/images');
+    expect(unused.length).toBe(0); unused.forEach(request => request.flush([]));
+    const products = http.expectOne(request => new URL(request.url).pathname === '/api/products');
+    expect(products.request.method).toBe('GET');
+    products.flush([{ idProduct: 7, name_Product: 'Produto com imagem própria', imageUrl: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==', price: 100, discount: 10, stock_Quantity: 20 }]);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.product_Image').getAttribute('src')).toContain('data:image/gif');
+    expect(fixture.nativeElement.querySelector('.product_Name').textContent).toContain('Produto com imagem própria'); fixture.destroy();
+  });
+  it('preserva a consulta compartilhada usada pelos detalhes', () => {
+    let images: any[] = []; service.getDadosImages().subscribe(value => images = value);
+    const request = http.expectOne(request => new URL(request.url).pathname === '/api/images'); expect(request.request.method).toBe('GET');
+    request.flush([{ productId: 7, imageUrl: 'imagem-do-detalhe' }]);
+    expect(images).toEqual([{ productId: 7, imageUrl: 'imagem-do-detalhe' }]);
+  });
 });
