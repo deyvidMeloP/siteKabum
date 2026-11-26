@@ -225,4 +225,25 @@ describe('Limpeza dos filtros do catálogo', () => {
     expect(component.minPriceControl.pristine).toBeTrue(); expect(component.minPriceControl.untouched).toBeTrue();
     expect(component.maxPriceControl.pristine).toBeTrue(); expect(component.maxPriceControl.untouched).toBeTrue();
   }));
+
+  it('mantém os filtros reais sem os blocos de protótipo', fakeAsync(() => {
+    component.ngxSlide = 1; render(); const panel = fixture.nativeElement.querySelector('.filter_Mobile') as HTMLElement;
+    const walker = document.createTreeWalker(panel, NodeFilter.SHOW_TEXT), texts: string[] = [];
+    while (walker.nextNode()) { texts.push(walker.currentNode.textContent!.trim()); }
+    expect(texts.filter(text => text === 'teste' || text === 'lla')).toEqual([]);
+    expect(panel.querySelector('#mobile-category-2')).not.toBeNull();
+    expect(panel.querySelectorAll('input[type=number]').length).toBe(2);
+    expect(panel.querySelector('.filter_Button_Mobile')).not.toBeNull();
+  }));
+  it('preserva carregamento, falha e catálogo vazio', fakeAsync(() => {
+    component.testa = 1; render();
+    expect(fixture.nativeElement.querySelector('[role=status]').textContent).toContain('Carregando produtos');
+    expect(fixture.nativeElement.querySelector('.product-filter-page')).toBeNull();
+    component.testa = 0; component.loadError = 'Falha simulada'; render();
+    expect(fixture.nativeElement.querySelector('[role=alert]').textContent).toContain('Falha simulada');
+    expect(fixture.nativeElement.querySelector('.product-filter-page')).toBeNull();
+    component.loadError = ''; component.filterProduct = []; render();
+    expect(fixture.nativeElement.querySelectorAll('.product_Item').length).toBe(0);
+    expect(fixture.nativeElement.querySelector('.filter_Mobile #mobile-category-2')).not.toBeNull();
+  }));
 });
