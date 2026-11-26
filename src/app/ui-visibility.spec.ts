@@ -1,3 +1,4 @@
+import { HomeComponent } from './components/home/home.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -185,4 +186,13 @@ describe('Page visibility and responsive layout', () => {
       expect(style('.button_Sort_Mobile').display).toBe(width <= 1020 ? 'flex' : 'none');
     });
   }
+});
+
+describe('Home sem aviso obsoleto', () => {
+  it('inicializa sem modal e preserva a cor inicial', () => {
+    const alert = spyOn(window, 'alert');
+    TestBed.configureTestingModule({ declarations: [HomeComponent], providers: [{ provide: KabumServiceService, useValue: { command$: EMPTY, changeBanner: of('#870700') } }], schemas: [CUSTOM_ELEMENTS_SCHEMA] });
+    const fixture = TestBed.createComponent(HomeComponent); fixture.detectChanges();
+    expect(alert).not.toHaveBeenCalled(); expect(fixture.componentInstance.backgroundColor).toBe('#870700'); fixture.destroy();
+  });
 });
