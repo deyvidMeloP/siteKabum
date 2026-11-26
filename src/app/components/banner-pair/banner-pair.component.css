@@ -1072,3 +1072,38 @@
     }
 
  }
+.carousel_Control {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 0;
+    flex-shrink: 0;
+}
+.IconBackwardPair.carousel_Control, .IconForwardPair.carousel_Control,
+.departments_Back.carousel_Control, .departments_Next.carousel_Control {
+    width: 32px;
+    height: 32px;
+}
+.marker_swiper_Button {
+    padding: 0;
+}
+.category_Control {
+    display: block;
+    padding: 8px 15px;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    cursor: pointer;
+}
+.carousel_Control:focus-visible, .category_Control:focus-visible {
+    outline: 3px solid #0060b1;
+    outline-offset: -3px;
+}
+.carousel_Control:disabled {
+    cursor: default;
+}

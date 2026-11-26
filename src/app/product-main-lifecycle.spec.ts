@@ -65,6 +65,17 @@ describe('Ciclo de vida do ProductMain', () => {
           const element = this as any;
           initializers.set(this, jasmine.createSpy().and.callFake(() => {
             element.swiper = swiper();
+            const cleanups: Array<() => void> = [];
+            for (const [button, method] of [[element.navigation?.prevEl, 'slidePrev'], [element.navigation?.nextEl, 'slideNext']] as const) {
+              if (!button) { continue; }
+              const move = () => element.swiper[method]();
+              button.addEventListener('click', move);
+              cleanups.push(() => button.removeEventListener('click', move));
+            }
+            element.swiper.destroy.and.callFake(() => {
+              element.swiper.destroyed = true;
+              cleanups.forEach(cleanup => cleanup());
+            });
             element.on?.slideChange?.();
           }));
         }
@@ -308,7 +319,7 @@ describe('Ciclo de vida do ProductMain', () => {
     expect(() => fixture.componentInstance.changeSlide(0)).not.toThrow();
   }));
 
-  it('usa handlers Angular nas setas sem acumular listeners entre produtos', fakeAsync(() => {
+  it('libera os listeners de navegação da galeria entre produtos', fakeAsync(() => {
     load();
     fixture.nativeElement.querySelector('.arrow_Back').click();
     expect(fixture.componentInstance.swiperFocus[0].slideNext).toHaveBeenCalledTimes(1);

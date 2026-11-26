@@ -99,7 +99,7 @@ describe('Indicadores de Mais Procurados', () => {
   function select(text: string, occurrence = 0): void {
     const slides = Array.from(indicator().querySelectorAll('swiper-slide'));
     const slide = slides.filter(element => element.textContent?.trim() === text)[occurrence];
-    slide.querySelector('h1')!.click(); fixture.detectChanges(); tick();
+    slide.querySelector('button')!.click(); fixture.detectChanges(); tick();
   }
 
   it('seleciona categorias e TODOS com IDs exatos sem alterar Destaque Ninja', fakeAsync(() => {

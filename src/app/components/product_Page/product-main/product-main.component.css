@@ -131,7 +131,11 @@
     gap: 5px;
 }
 .swiper_Radio{
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip-path: inset(50%);
+    overflow: hidden;
 }
 
 .swiper_Radio_Label{
@@ -785,4 +789,31 @@ ng-magnizoom{
     .information_Price{
         padding-left: 16px;
     }
+}
+.carousel_Control, .gallery_Thumbnail {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 0;
+}
+.gallery_Thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.carousel_Control:focus-visible, .gallery_Thumbnail:focus-visible,
+.swiper_Radio:focus-visible + .swiper_Radio_Label {
+    outline: 3px solid #0060b1;
+    outline-offset: -3px;
+}
+.swiper_Radio:focus-visible + .swiper_Radio_Label {
+    outline-offset: 2px;
+}
+.carousel_Control:disabled {
+    cursor: default;
 }

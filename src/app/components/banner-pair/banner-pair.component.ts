@@ -39,6 +39,7 @@ export class BannerPairComponent implements OnInit, AfterViewInit, OnDestroy {
   marker_Swiper: any = [];
   product_Swiper: any = [];
   departments_Swiper: any = [];
+  readonly selectedMarkers = { highlight: 'TODOS', search: 'TODOS' };
   mostSearch:any = [];
   swiperMobile: any = []
   @ViewChildren('pairSwiper', { read: ElementRef }) private carouselElements?: QueryList<ElementRef<SwiperContainer>>;
@@ -149,6 +150,8 @@ export class BannerPairComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private initializeSwipers(): void {
     const swiperParams2 = {
+      a11y: { enabled: false },
+      focusableElements: 'input, select, option, textarea, video, label',
       simulateTouch: true,
       allowTouchMove: true,
       breakpoints:{
@@ -284,6 +287,8 @@ export class BannerPairComponent implements OnInit, AfterViewInit, OnDestroy {
       (data: any[]) => {
         this.produtoAll = data;
         this.produto = this.produtoAll;
+        this.selectedMarkers.highlight = 'TODOS';
+        this.selectedMarkers.search = 'TODOS';
         this.MostSearch('TODOS');
         this.productsLoaded = true;
         this.scheduleViewInitialization();
@@ -408,10 +413,30 @@ export class BannerPairComponent implements OnInit, AfterViewInit, OnDestroy {
     
  }
 
+ revealMarker(event: FocusEvent, index: number): void {
+    const control = event.target as HTMLElement | null;
+    const swiper = this.marker_Swiper[index];
+    if (this.destroyed || !control?.matches(':focus-visible') || !swiper || swiper.destroyed) {
+      return;
+    }
+    const slide = control.closest('swiper-slide');
+    const position = swiper.slides.indexOf(slide);
+    if (position < 0) { return; }
+    swiper.el.scrollLeft = 0;
+    swiper.slideTo(position, 0);
+ }
+
  filter_Marker(category: string ,event: any){
     if (this.destroyed) { return; }
 
-  const filter = event.target.innerText
+  const index = category === 'highlight' ? 0 : 1;
+  if (event.defaultPrevented || (event.detail !== 0 && this.marker_Swiper[index]?.allowClick === false)) {
+    return;
+  }
+  const filter = (event.currentTarget ?? event.target).innerText;
+  if (category === 'highlight' || category === 'search') {
+    this.selectedMarkers[category] = filter;
+  }
   
 
   switch(category){

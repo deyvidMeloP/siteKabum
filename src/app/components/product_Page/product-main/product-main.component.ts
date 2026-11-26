@@ -261,6 +261,11 @@ export class ProductMainComponent implements OnInit, OnDestroy{
 
 
       const swiperParams = {
+        navigation: {
+          prevEl: this.elementRef.nativeElement.querySelector('.arrow_Top'),
+          nextEl: this.elementRef.nativeElement.querySelector('.arrow_Back')
+        },
+        a11y: { enabled: false },
         simulateTouch: false,
         allowTouchMove: false,
         slidesPerView: 'auto',
@@ -304,7 +309,7 @@ export class ProductMainComponent implements OnInit, OnDestroy{
     Swiper.use([A11y, Navigation]);
     const controls = element.parentElement!;
     return new Swiper(element, {
-      a11y: { slideRole: '', slideLabelMessage: '' },
+      a11y: { enabled: false },
       slidesPerView: 'auto',
       spaceBetween: 40,
       slidesOffsetBefore: 15,
@@ -314,6 +319,19 @@ export class ProductMainComponent implements OnInit, OnDestroy{
         nextEl: controls.querySelector<HTMLElement>('.siblings_Next')
       }
     });
+  }
+
+revealSlide(event: FocusEvent, swiper?: Swiper): void {
+    const control = event.target as HTMLElement | null;
+    if (this.destroyed || !control?.matches(':focus-visible') || !swiper || swiper.destroyed) {
+      return;
+    }
+    const slide = control.closest<HTMLElement>('.swiper-slide, swiper-slide');
+    const position = slide ? swiper.slides.indexOf(slide) : -1;
+    if (position < 0) { return; }
+    swiper.el.scrollLeft = 0;
+    swiper.el.scrollTop = 0;
+    swiper.slideTo(position, 0);
   }
 
 changeSlide(a: any){

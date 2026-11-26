@@ -42,29 +42,31 @@
                 
                     <div class="all_Item">
 
-                        <div class="arrow_Top" (click)="swiperMove('arrow_Top')">
+                        <button type="button" class="arrow_Top carousel_Control" aria-label="Imagens anteriores do produto" [disabled]="!images_Product.length">
             
-                            <svg width="24" height="15" viewBox="0 0 24 15" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-prev" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 12.8182L21.8182 15L12 5.18182L2.18182 15L2.60179e-08 12.8182L12 0.818182L24 12.8182Z" fill="#565C69"></path></svg>
+                            <svg aria-hidden="true" focusable="false" width="24" height="15" viewBox="0 0 24 15" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-prev" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 12.8182L21.8182 15L12 5.18182L2.18182 15L2.60179e-08 12.8182L12 0.818182L24 12.8182Z" fill="#565C69"></path></svg>
                 
-                        </div>
+                        </button>
                         
                     <div class="item_Selection">
                                     
-                        <swiper-container direction="vertical" loop="false" speed="500" class="swiper_Focus" [allowTouchMove]="false" init="false" *ngIf="images_Product">
+                        <swiper-container direction="vertical" loop="false" speed="500" class="swiper_Focus" (focusin)="revealSlide($event, swiperFocus[0])" [allowTouchMove]="false" init="false" *ngIf="images_Product">
                           
-                            <swiper-slide class="focus_Selection"  *ngFor="let images of images_Product">
-                                <img [src]="images.imageUrl"  (click)="change_Focus(images.imageUrl)"  alt="Product">
+                            <swiper-slide class="focus_Selection"  *ngFor="let images of images_Product; let i = index">
+                                <button type="button" class="gallery_Thumbnail" [attr.aria-label]="'Mostrar imagem ' + (i + 1) + ' de ' + images_Product.length" [attr.aria-pressed]="actual_Url === images.imageUrl" (click)="change_Focus(images.imageUrl)">
+                                    <img [src]="images.imageUrl" alt="">
+                                </button>
                             </swiper-slide>
 
                         </swiper-container>
                     
                     </div>
                     
-                    <div class="arrow_Back" (click)="swiperMove('arrow_Back')">
+                    <button type="button" class="arrow_Back carousel_Control" aria-label="Próximas imagens do produto" [disabled]="!images_Product.length">
             
-                        <svg width="24" height="15" viewBox="0 0 13 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-next" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M-5.37986e-08 1.23077L1.18182 -5.16589e-07L6.5 5.53846L11.8182 -5.16589e-08L13 1.23077L6.5 8L-5.37986e-08 1.23077Z" fill="#42464D"></path></svg>
+                        <svg aria-hidden="true" focusable="false" width="24" height="15" viewBox="0 0 13 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="slick-arrow slick-next" data-role="none" currentSlide="1" slideCount="9" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M-5.37986e-08 1.23077L1.18182 -5.16589e-07L6.5 5.53846L11.8182 -5.16589e-08L13 1.23077L6.5 8L-5.37986e-08 1.23077Z" fill="#42464D"></path></svg>
                 
-                    </div>
+                    </button>
                     
                     </div>
                 <div class="item_Focus" (click)="zoom_Focus()" (mouseenter)="zoom_Focus_Enter()" (mouseleave)="zoom_Focus_Leave()" *ngIf="this.actual_Url">
@@ -97,7 +99,7 @@
                             
                             <label for="{{i}}" class="swiper_Label" *ngFor="let images of images_Product; let i = index">
                               
-                                <input class="swiper_Radio" type="radio" name="option" id="{{i}}" value="{{i}}"  [checked]="i === 0" (change)="changeSlide(i)">
+                                <input class="swiper_Radio" type="radio" name="option" id="{{i}}" value="{{i}}"  [checked]="i === 0" [attr.aria-label]="'Mostrar imagem ' + (i + 1) + ' de ' + images_Product.length" (change)="changeSlide(i)">
                                
                                 <span class="swiper_Radio_Label"></span>
                             
@@ -263,13 +265,13 @@
 
                     <div class="siblings_Swiper">
                     
-                        <div class="siblings_Back">
+                        <button type="button" class="siblings_Back carousel_Control" aria-label="Produto relacionado anterior">
                         
-                            <svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconBackward"><g filter="url(#:r1f:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":r1f:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
+                            <svg aria-hidden="true" focusable="false" width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconBackward"><g filter="url(#:r1f:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M21.3335 26L22.7881 24.5455L16.2426 18L22.7881 11.4545L21.3335 10L13.3335 18L21.3335 26Z" fill="#7F858D"></path></g><defs><filter id=":r1f:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9815"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9815" result="effect2_dropShadow_8335_9815"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9815" result="shape"></feBlend></filter></defs></svg>
                     
-                        </div>
+                        </button>
                         
-                        <div class="swiper_All" *ngIf="siblingsList">
+                        <div class="swiper_All" (focusin)="revealSlide($event, swiper)" *ngIf="siblingsList">
 
                             <div class="siblings_Wrapper swiper-wrapper">
                                     
@@ -284,11 +286,11 @@
                         </div>
                     
                         
-                        <div class="siblings_Next">
+                        <button type="button" class="siblings_Next carousel_Control" aria-label="Próximo produto relacionado">
                         
-                            <svg width="32" height="33" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconForward"><g filter="url(#:r9:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M14.7878 26L13.3333 24.5455L19.8787 18L13.3333 11.4545L14.7878 10L22.7878 18L14.7878 26Z" fill="#7F858D"></path></g><defs><filter id=":r9:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9369"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9369" result="effect2_dropShadow_8335_9369"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9369" result="shape"></feBlend></filter></defs></svg>
+                            <svg aria-hidden="true" focusable="false" width="32" height="33" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="IconForward"><g filter="url(#:r9:)"><circle cx="18" cy="18" r="16" fill="white"></circle><rect width="16" height="16" transform="translate(10 10)" fill="white"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M14.7878 26L13.3333 24.5455L19.8787 18L13.3333 11.4545L14.7878 10L22.7878 18L14.7878 26Z" fill="#7F858D"></path></g><defs><filter id=":r9:" x="0" y="0.5" width="36" height="37" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="0.5"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.376471 0 0 0 0 0.380392 0 0 0 0 0.439216 0 0 0 0.16 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8335_9369"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.160784 0 0 0 0 0.239216 0 0 0 0.08 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_8335_9369" result="effect2_dropShadow_8335_9369"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_8335_9369" result="shape"></feBlend></filter></defs></svg>
 
-                        </div>
+                        </button>
                         
                     </div>
 
