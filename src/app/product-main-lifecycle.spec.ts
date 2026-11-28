@@ -329,4 +329,56 @@ describe('Ciclo de vida do ProductMain', () => {
     fixture.destroy();
     expect(() => fixture.componentInstance.changeSlide(0)).not.toThrow();
   }));
+
+  it('usa a imagem do catálogo na galeria quando não há imagens adicionais', fakeAsync(() => {
+    const picture = '/assets/catalogo.webp';
+    params.next({ productName: 'Produto A' });
+    products[0].next([{ ...productData[0], imageUrl: picture }]);
+    prepareImages([]);
+    TestBed.inject(ApplicationRef).tick();
+    tick();
+    expect(fixture.componentInstance.images_Product).toEqual([{ productId: 1, imageUrl: picture }]);
+    expect(fixture.componentInstance.actual_Url).toBe(picture);
+    expect(fixture.nativeElement.querySelector('.focus_Img').getAttribute('src')).toBe(picture);
+    expect(fixture.nativeElement.querySelector('.product_Mobile img').getAttribute('src')).toBe(picture);
+  }));
+
+  it('preserva as imagens adicionais sem acrescentar a imagem do catálogo', fakeAsync(() => {
+    params.next({ productName: 'Produto A' });
+    products[0].next([{ ...productData[0], imageUrl: '/catalogo.webp' }]);
+    prepareImages([{ productId: 1, imageUrl: '/adicional.webp' }]);
+    TestBed.inject(ApplicationRef).tick();
+    tick();
+    expect(fixture.componentInstance.images_Product).toEqual([{ productId: 1, imageUrl: '/adicional.webp' }]);
+    expect(fixture.componentInstance.actual_Url).toBe('/adicional.webp');
+  }));
+
+  it('substitui a imagem alternativa ao navegar entre produtos', fakeAsync(() => {
+    for (const [index, product] of productData.entries()) {
+      params.next({ productName: product.name_Product });
+      products[index].next([{ ...product, imageUrl: '/produto-' + product.idProduct + '.webp' }]);
+      prepareImages([]);
+      TestBed.inject(ApplicationRef).tick();
+      tick();
+      expect(fixture.componentInstance.images_Product.length).toBe(1);
+      expect(fixture.componentInstance.images_Product[0].productId).toBe(product.idProduct);
+      expect(fixture.componentInstance.actual_Url).toBe('/produto-' + product.idProduct + '.webp');
+    }
+  }));
+
+  for (const [stock, expected] of [[0, 'Indisponível'], [5, 'Em estoque'], [null, 'Indisponível']] as const) {
+    it('apresenta disponibilidade coerente com estoque ' + stock, fakeAsync(() => {
+      params.next({ productName: 'Produto A' });
+      products[0].next([{ ...productData[0], stock_Quantity: stock }]);
+      prepareImages([]);
+      TestBed.inject(ApplicationRef).tick();
+      tick();
+      const labels = [...fixture.nativeElement.querySelectorAll('.price_Subtitle h1:first-child')];
+      expect(labels.length).toBe(2);
+      for (const label of labels) {
+        expect((label as HTMLElement).innerText).toContain(expected);
+        if (!stock) { expect((label as HTMLElement).innerText).not.toContain('Em estoque'); }
+      }
+    }));
+  }
 });

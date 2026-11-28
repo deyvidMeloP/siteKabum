@@ -115,7 +115,7 @@
             </div>
             <div class="price_Subtitle price_Subtitle_Mobile">
 
-                <h1>Vendido e entregue por: <strong>{{produto.delivery}}</strong> | <strong>Em estoque</strong></h1>
+                <h1>Vendido e entregue por: <strong>{{produto.delivery}}</strong> | <strong>{{ produto.stock_Quantity > 0 ? 'Em estoque' : 'Indisponível' }}</strong></h1>
                 <h1>Ver mais ofertas</h1>
         
         </div>
@@ -195,7 +195,7 @@
 
             <div class="price_Subtitle">
 
-                    <h1>Vendido e entregue por: <strong>{{produto.delivery}}</strong> | <strong>Em estoque</strong></h1>
+                    <h1>Vendido e entregue por: <strong>{{produto.delivery}}</strong> | <strong>{{ produto.stock_Quantity > 0 ? 'Em estoque' : 'Indisponível' }}</strong></h1>
                     <h1>Ver mais ofertas</h1>
             
             </div>

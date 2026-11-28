@@ -366,6 +366,10 @@ changeSlide(a: any){
           return false;
         });
 
+        if (!this.images_Product.length && this.produto.imageUrl) {
+          this.images_Product = [{ productId: this.produto.idProduct, imageUrl: this.produto.imageUrl }];
+        }
+
         this.getDadosDepartments()  
         this.start(this.images_Product[0]?.imageUrl ?? '');
         this.scheduleViewInitialization();
