@@ -1,3 +1,4 @@
+import { API_ORIGIN } from './services/api-configuration';
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -14,7 +15,7 @@ describe('Visits HTTP contract', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [{ provide: Router, useValue: { navigate: jasmine.createSpy() } }]
+      providers: [{ provide: Router, useValue: { navigate: jasmine.createSpy() } }, { provide: API_ORIGIN, useValue: 'http://visits.test.invalid' }]
     });
     service = TestBed.inject(KabumServiceService);
     http = TestBed.inject(HttpTestingController);
@@ -24,7 +25,7 @@ describe('Visits HTTP contract', () => {
   it('posts to the product endpoint without a client total', () => {
     let completed = false;
     service.registerProductVisit(7).subscribe({ complete: () => completed = true });
-    const request = http.expectOne('https://apikabum.onrender.com/api/products/7/visits');
+    const request = http.expectOne('http://visits.test.invalid/api/products/7/visits');
     expect(request.request.method).toBe('POST');
     expect(request.request.body).toBeNull();
     request.flush(null, { status: 204, statusText: 'No Content' });
@@ -34,7 +35,7 @@ describe('Visits HTTP contract', () => {
   it('propagates errors without retrying an increment', () => {
     let status = 0;
     service.registerProductVisit(7).subscribe({ error: error => status = error.status });
-    http.expectOne('https://apikabum.onrender.com/api/products/7/visits')
+    http.expectOne('http://visits.test.invalid/api/products/7/visits')
       .flush(null, { status: 404, statusText: 'Not Found' });
     expect(status).toBe(404);
   });

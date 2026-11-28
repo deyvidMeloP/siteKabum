@@ -1,24 +1,19 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { FilterRouteContext } from './product-filter-state.service';
+import { API_ORIGIN, createApiBaseUrl } from './api-configuration';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KabumServiceService implements OnDestroy {
 
-  private apiUrl = 'https://apikabum.onrender.com/api/products';
-  private apiUrlImages = 'https://apikabum.onrender.com/api/images';
-  private apiUrlBrands = 'https://apikabum.onrender.com/api/brands';
-  private apiUrlDepartments = 'https://apikabum.onrender.com/api/departments';
-  private apiUrlSection = 'https://apikabum.onrender.com/api/section';
-  private apiUrlSubsection = 'https://apikabum.onrender.com/api/subsection';
-  private apiUrlCategories = 'https://apikabum.onrender.com/api/categories';
-  private apiUrlProductCategory = 'https://apikabum.onrender.com/api/productCategory'
+  private readonly apiUrl: string;
 
   offer_Time1: string = '';
   offer_Time2: string = '';
@@ -56,7 +51,8 @@ export class KabumServiceService implements OnDestroy {
 
   private lastName: any;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, @Inject(API_ORIGIN) apiOrigin: string = environment.apiOrigin) {
+    this.apiUrl = createApiBaseUrl(apiOrigin);
     const savedName = localStorage.getItem('filterName') || '';
     this.filterNameSource = new BehaviorSubject<string>(savedName);
     this.filterName$ = this.filterNameSource.asObservable();
@@ -92,12 +88,12 @@ sendNavbar(command: string){
 }
 
   getDados(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl)
+    return this.http.get<any[]>(this.apiUrl + "/products")
   }
 
   getProductCategory(): Observable<any[]> {
     
-    return this.http.get<any[]>(this.apiUrlProductCategory)
+    return this.http.get<any[]>(this.apiUrl + "/productCategory")
   }
   
 
@@ -145,32 +141,32 @@ sendNavbar(command: string){
 
   registerProductVisit(id: number): Observable<void> {
 
-    const url = `${this.apiUrl}/${id}/visits`;
+    const url = `${this.apiUrl}/products/${id}/visits`;
     return this.http.post<void>(url, null);
   }
   
   getDadosImages(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlImages)
+    return this.http.get<any[]>(this.apiUrl + "/images")
   }
 
   getDadosBrands(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlBrands)
+    return this.http.get<any[]>(this.apiUrl + "/brands")
   }
 
   getDadosDepartments(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlDepartments)
+    return this.http.get<any[]>(this.apiUrl + "/departments")
   }
   
   getDadosSection(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlSection)
+    return this.http.get<any[]>(this.apiUrl + "/section")
   }
 
   getDadosSubsection(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlSubsection)
+    return this.http.get<any[]>(this.apiUrl + "/subsection")
   }
 
   getDadosCategories(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiUrlCategories)
+    return this.http.get<any[]>(this.apiUrl + "/categories")
   }
 
   private createOfferStream(index: number, subject: Subject<string>): Observable<string> {
