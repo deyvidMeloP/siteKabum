@@ -63,6 +63,33 @@ describe('Page visibility and responsive layout', () => {
     }
   });
 
+
+  for (const menu of [1, 2]) {
+    it('abre os produtos de uma subseção sem filhos no menu ' + menu, () => {
+      const component = navbar.componentInstance;
+      const leaf = { id: 101, name: 'Processadores', scId: 10, parentId: 0 };
+      component.nameSection = ['HARDWARE'];
+      component.subSection = [leaf];
+      const navigate = spyOn(component, 'NavigationPage');
+      component.submenu_SubOpt(leaf, menu);
+      expect(navigate).toHaveBeenCalledOnceWith('Processadores', 'subsection');
+      expect(component.parent).toEqual([]);
+    });
+  }
+
+  it('mantém o painel de filhos quando a subseção possui descendentes', () => {
+    const component = navbar.componentInstance;
+    const parent = { id: 420, name: 'Notebooks', scId: 42, parentId: 0 };
+    const child = { id: 421, name: 'Gamer', scId: 42, parentId: 420 };
+    component.nameSection = ['COMPUTADORES'];
+    component.subSection = [child, parent];
+    const navigate = spyOn(component, 'NavigationPage');
+    component.submenu_SubOpt(parent, 2);
+    expect(navigate).not.toHaveBeenCalled();
+    expect(component.parent).toEqual([child]);
+    expect(navbar.nativeElement.querySelector('.hbg_Swiper_Parent').style.display).toBe('block');
+  });
+
   afterEach(() => {
     frame?.remove();
     commands.complete();

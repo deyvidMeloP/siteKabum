@@ -581,8 +581,12 @@ else if(op == 1){
 }
 
 submenu_SubOpt(subsection: any, op: number){
-  this.parent = []
+  this.parent = this.subSection.filter((child: { parentId: number }) => child.parentId === subsection.id);
   this.nameSection[1] = subsection.name
+  if (!this.parent.length) {
+    this.NavigationPage(subsection.name, 'subsection');
+    return;
+  }
   let submenu_Opt
   if(op == 2){
    
@@ -590,14 +594,7 @@ submenu_SubOpt(subsection: any, op: number){
    
     submenu_Opt = document.querySelector(".hbg_Swiper_Parent") as HTMLElement
     
-    for(let parent of this.subSection){
-  
-      if(subsection.id == parent.parentId){
-        this.parent.push(parent)
-        
-      }
-   
-    }
+
 
     submenu_Father.style.display = "none"
     submenu_Opt.style.display = "block"
@@ -610,14 +607,7 @@ submenu_SubOpt(subsection: any, op: number){
     const buttonNext = document.querySelector(".arrow_Up_3") as HTMLElement
     buttonNext.style.display = "none"
   
-    for(let parent of this.subSection){
-    
-      if(subsection.id == parent.parentId){
-        this.parent.push(parent)
-        
-      }
-   
-    }
+
   
     const buttonBack = document.querySelector(".arrow_Down_3") as HTMLElement
   
